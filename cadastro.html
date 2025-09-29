@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>NOTADEZ</title>
+<!--Link para o arquivo base de CSS-->
+    <link rel="stylesheet" href="Styles/base.css">
+    <link rel="stylesheet" href="Styles/login.css">
+    <!--Link para os icones-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<!--Link para o arquivo de JavaScript-->
+    <script src="Scripts/main.js"></script>
+
+
+</head>
+<body>
+
+    <header>
+        <div class="logo">NotaDez</div>
+        <nav>
+            <a href="login.html" ><strong>LOGIN</strong></a>
+            <a href="cadastro.html" class="btn-cadastro"><strong>CADASTRO</strong></a>
+        </nav>
+    </header>
+
+    <div class="login-container">
+
+        <div class="image-side">
+            <!-- fundo cinza -->
+             <img src="img/computador.png" alt="Computador">
+        </div>
+
+        <div class="form">
+            <h3>Seja bem-vindo(a)!</h3>
+
+            <form method="post" action="#">
+                <label for="nome"><strong>Nome:</strong></label><br>
+                <input type="text" id="nome" name="nome" placeholder="Digite seu nome"><br><br>
+
+                <label for="email"><strong>Email:</strong></label><br>
+                <input type="email" id="email" name="email" placeholder="Digite seu email" required><br><br>
+
+                <label for="telefone"><strong>Telefone:</strong></label><br>
+                <input type="tel" id="telefone" name="telefone" placeholder="Digite seu telefone"><br><br>
+
+                <label for="senha"><strong>Senha:</strong></label><br>
+                <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required><br><br>
+
+                <div class="btn-container">
+                    <button type="submit" class="btn-entrar"><strong>Entrar</strong></button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+
+</body>
+</html>
