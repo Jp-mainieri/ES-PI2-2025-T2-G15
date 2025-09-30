@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NotaDez Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <h1>NotaDez</h1>
+            <nav>
+                <div class="menu-section">
+                    <p class="section-title">MENU</p>
+                    <ul>
+                        <li class="active"><a href="#"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+                        <li><a href="#"><i class="fas fa-building"></i> Instituições</a></li>
+                        <li><a href="#"><i class="fas fa-user-graduate"></i> Alunos</a></li>
+                        <li><a href="#"><i class="fas fa-book"></i> Notas</a></li>
+                        <li><a href="#"><i class="fas fa-calculator"></i> Cálculo da Nota</a></li>
+                        <li><a href="#"><i class="fas fa-clipboard-check"></i> Auditoria</a></li>
+                    </ul>
+                </div>
+                <div class="menu-section">
+                    <p class="section-title">OUTROS</p>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-user-circle"></i> Perfil</a></li>
+                        <li><a href="#"><i class="fas fa-cog"></i> Configurações</a></li>
+                        <li><a href="#"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="stats-cards">
+                <div class="card card-blue">
+                    <div class="icon-box"><i class="fas fa-user-graduate"></i></div>
+                    <p class="card-title">Alunos Cadastrados</p>
+                    <p class="card-value">1.200</p>
+                </div>
+
+                <div class="card card-green">
+                    <div class="icon-box"><i class="fas fa-building"></i></div>
+                    <p class="card-title">Instituições Ativas</p>
+                    <p class="card-value">20</p>
+                </div>
+
+                <div class="card card-orange">
+                    <div class="icon-box"><i class="fas fa-book"></i></div>
+                    <p class="card-title">Notas Lançadas</p>
+                    <p class="card-value">320</p>
+                </div>
+
+                <div class="card card-yellow">
+                    <div class="icon-box"><i class="fas fa-chart-pie"></i></div>
+                    <p class="card-title">Média Geral</p>
+                    <p class="card-value">7,5</p>
+                </div>
+            </div>
+
+                <div class="updates-box">
+                    <h2>Últimas atualizações</h2>
+                    <ul>
+                        <li><i class="fas fa-circle update-dot"></i> Nota lançada para João</li>
+                        <li><i class="fas fa-circle update-dot"></i> Novo aluno 'Maria Clara' Cadastrada</li>
+                        <li><i class="fas fa-circle update-dot"></i> Nova Instituição incluída 'PUC Campinas'</li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
