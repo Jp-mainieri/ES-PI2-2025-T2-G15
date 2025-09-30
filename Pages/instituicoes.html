@@ -53,8 +53,8 @@
                 </table>
                 <div class="tabela-acoes">
                     <div class="tabela-botoes">
-                        <button class="btn-editar-instituicao"><i class="fa-solid fa-pencil"></i></button>
-                        <button class="btn-excluir-instituicao"><i class="fa-solid fa-trash"></i></button>
+                        <button id="btn-editar-instituicao"><i class="fa-solid fa-pencil"></i></button>
+                        <button id="btn-excluir-instituicao"><i class="fa-solid fa-trash"></i></button>
                     </div>
                     <button class="ver-mais" id="btn-ver-mais-instituicao">Ver mais</button>
                 </div>
@@ -62,7 +62,7 @@
         </section><section class="instituicoes-container">
             <div class="instituicoes-container-header">
                 <h1>Minhas Disciplinas</h1>
-                <button class="btn-nova-instituicao"><i class="fa-solid fa-plus"></i> Nova Instituição</button>
+                <button id="btn-nova-disciplina"><i class="fa-solid fa-plus"></i> Nova Disciplina</button>
             </div>
             <div class="instituicoes-container-content">
                 <table class="tabelas" id="tabela-disciplinas">
@@ -81,8 +81,8 @@
                 </table>
                 <div class="tabela-acoes">
                     <div class="tabela-botoes">
-                        <button class="btn-editar-instituicao"><i class="fa-solid fa-pencil"></i></button>
-                        <button class="btn-excluir-instituicao"><i class="fa-solid fa-trash"></i></button>
+                        <button id="btn-editar-disciplina"><i class="fa-solid fa-pencil"></i></button>
+                        <button id="btn-excluir-disciplina"><i class="fa-solid fa-trash"></i></button>
                     </div>
                     <button class="ver-mais" id="btn-ver-mais-disciplinas">Ver mais</button>
                 </div>
@@ -90,7 +90,7 @@
         </section><section class="instituicoes-container">
             <div class="instituicoes-container-header">
                 <h1>Minhas Turmas</h1>
-                <button class="btn-nova-instituicao"><i class="fa-solid fa-plus"></i> Nova Instituição</button>
+                <button class="btn-nova-turma"><i class="fa-solid fa-plus"></i> Nova Turma</button>
             </div>
             <div class="instituicoes-container-content">
                 <table class="tabelas">
@@ -107,13 +107,50 @@
                 </table>
                 <div class="tabela-acoes">
                     <div class="tabela-botoes">
-                        <button class="btn-editar-instituicao"><i class="fa-solid fa-pencil"></i></button>
-                        <button class="btn-excluir-instituicao"><i class="fa-solid fa-trash"></i></button>
+                        <button id="btn-editar-turma"><i class="fa-solid fa-pencil"></i></button>
+                        <button id="btn-excluir-turma"><i class="fa-solid fa-trash"></i></button>
                     </div>
                     <button class="ver-mais" id="btn-ver-mais-turmas">Ver mais</button>
                 </div>
             </div>
         </section>
+        <div class="novo-elemento-popup">
+            <div class="popup-content">
+                <!--Essa parte vai mudar com Js de acordo com o botão que foi clicado-->
+                <h1 id="novo-elemento-title">Nova Instituição</h1>
+                <form id="nova-instituicao-form">
+                    <label for="input-nome-instituicao">Nome:</label>
+                    <input type="text" id="input-nome-instituicao" placeholder="Digite o nome" required>
+
+                    <label for="input-curso-instituicao">Curso:</label>
+                    <input type="text" id="input-curso-instituicao" placeholder="Digite o curso" required>
+                </form>
+                <form id="nova-disciplina-form">
+                    <label for="input-nome-disciplina">Nome:</label>
+                    <input type="text" id="input-nome-disciplina" placeholder="Digite o nome" required>
+
+                    <label for="input-sigla-disciplina">Sigla:</label>
+                    <input type="text" id="input-sigla-disciplina" placeholder="Digite a sigla" required>
+
+                    <label for="input-codigo-disciplina">Código:</label>
+                    <input type="text" id="input-codigo-disciplina" placeholder="Digite o código" required>
+
+                    <label for="input-periodo-disciplina">Período:</label>
+                    <input type="text" id="input-periodo-disciplina" placeholder="Digite o período" required>
+                </form>
+                <form id="nova-turma-form">
+                    <label for="input-nome-turma">Nome:</label>
+                    <input type="text" id="input-nome-turma" placeholder="Digite o nome" required>
+                    <label for="input-codigo-turma">Código:</label>
+                    <input type="text" id="input-codigo-turma" placeholder="Digite o código" required>
+                    <label for="input-turno-turma">Turno:</label>
+                    <input type="text" id="input-turno-turma" placeholder="Digite o turno" required>
+
+                </form>
+                    <button type="submit" id="btn-confirmar-novo-elemento">Confirmar</button>
+                    <button id="btn-cancelar-novo-elemento">Cancelar</button>
+            </div>
+        </div>
     </div>
 </div>
 </body>
