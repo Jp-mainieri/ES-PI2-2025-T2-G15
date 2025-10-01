@@ -107,5 +107,43 @@
     padding: 5px 20px 0 0;
 }
 .novo-elemento-popup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 20px;
+    width: 25%;
+    border: 1px solid var(--cinzaClaro);
+}
+.popup-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+    padding: 20px;
+}
+.popup-content form{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.popup-content form input{
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid var(--azulMarinho);
+    border-radius: 20px;
+    width: 100%;
+}
+.popup-content form input::placeholder{
+    font-style: italic;
+    color: var(--cinzaClaro);
+}
+#nova-disciplina-form {
+    display: none;
+}
+#nova-turma-form {
     display: none;
 }
