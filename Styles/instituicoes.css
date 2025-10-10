@@ -1,0 +1,149 @@
+@import url(home.css);
+
+/* Estilos para a seção de instituições do menu do usuário - João Pedro Panza Mainieri*/
+
+.content {
+    overflow: scroll;
+    scrollbar-width: none;
+    padding: 25px 50px 0 50px;
+}
+
+.instituicoes-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding:20px 20px 0px 0px;
+    /*border: 2px solid var(--azulMarinhoClaro);*/
+    color: var(--azulMarinho);
+}
+
+.instituicoes-container-header {
+    text-align: center;
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 100%;
+}
+
+.instituicoes-container-header h1 {
+    font-size: 1.5em;
+    margin: 0;
+}
+
+.instituicoes-container-header button{
+    background-color: var(--azulMarinhoClaro);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    height:fit-content;
+    padding: 10px 10px;
+    font-family: 'montserrat',sans-serif;
+}
+.instituicoes-container-header button:hover {
+    background-color: var(--azulMarinho);
+    cursor: pointer;
+}
+.instituicoes-container-content{
+    width: 100%;
+}
+
+.tabelas {
+    width: 100%;
+    text-align: left;
+    vertical-align: center;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid var(--cinzaClaro);
+    border-radius: 10px;
+}
+
+.tabelas th{
+    font-weight: bold;
+    padding: 20px 0px 10px 20px;
+    border-bottom: 1px solid var(--cinzaClaro);
+
+}
+
+.tabelas tr td{
+    padding: 10px 20px;
+}
+.tabela-botoes{
+    width: fit-content;
+    position: relative;
+    top: -35px;
+}
+.tabela-botoes button{
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+.tabela-botoes button:hover i{
+    color: var(--azulMarinho);
+}
+.tabela-botoes button i{
+    font-size: 1.5em;
+    color: var(--cinzaEscuro);
+}
+.ver-mais{
+    color: var(--azulMarinhoClaro);
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    font-weight: bold;
+    font-family: 'montserrat',sans-serif;
+    font-size: 13.333px;
+    position: relative;
+    top: -20px;
+}
+.tabelas tr td:first-of-type{
+    width: 350px;
+}
+.tabela-acoes{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding: 5px 20px 0 0;
+}
+.novo-elemento-popup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 20px;
+    width: 25%;
+    border: 1px solid var(--cinzaClaro);
+}
+.popup-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+    padding: 20px;
+}
+.popup-content form{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.popup-content form input{
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid var(--azulMarinho);
+    border-radius: 20px;
+    width: 100%;
+}
+.popup-content form input::placeholder{
+    font-style: italic;
+    color: var(--cinzaClaro);
+}
+#nova-disciplina-form {
+    display: none;
+}
+#nova-turma-form {
+    display: none;
+}
