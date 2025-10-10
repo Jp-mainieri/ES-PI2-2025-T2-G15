@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alunos</title>
+  <link rel="stylesheet" href="../Styles/alunos.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+<div class="container">
+  <div class="sidebar">
+    <div>
+      <h2>NotaDez</h2>
+
+      <p class="section-title">MENU</p>
+      <div class="menu">
+        <a href="dash.html" class="menu-item"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+        <a href="instituicoes.html" class="menu-item"><i class="fa-solid fa-school"></i> Instituições</a>
+        <a href="#" class="menu-item active"><i class="fa-solid fa-user-graduate"></i> Alunos</a>
+        <a href="notas.html " class="menu-item"><i class="fa-solid fa-file-lines"></i> Notas</a>
+        <a href="#" class="menu-item"><i class="fa-solid fa-calculator"></i> Cálculo da Nota</a>
+        <a href="#" class="menu-item"><i class="fa-solid fa-magnifying-glass"></i> Auditoria</a>
+      </div>
+    </div>
+
+    <div class="outros">
+      <p class="section-title">OUTROS</p>
+      <a href="../index.html" class="menu-item"><i class="fa-solid fa-right-from-bracket"></i> Sair</a>
+    </div>
+  </div>
+
+  <div class="content">
+    <section class="alunos-container">
+      <div class="alunos-container-header">
+        <h1>Alunos</h1>
+      </div>
+
+      <div class="filtros-container">
+        <select class="select-instituicao">
+          <option selected>Selecionar Instituição</option>
+          <option>PUC Campinas</option>
+          <option>Unicamp</option>
+        </select>
+
+        <a href="#" id="btnCadastrar" class="btn-cadastrar"><i class="fa-solid fa-plus"></i>Cadastrar Aluno</a>
+        <a href="#" id="btnImportar" class="btn-importar"><i class="fa-solid fa-file-import"></i>Importar Alunos</a>
+
+      </div>
+
+      <div class="busca-container">
+        <input type="text" placeholder="Pesquisar aluno por nome ou matrícula">
+        <button class="btn-filtrar"><i class="fa-solid fa-filter"></i> Filtrar</button>
+      </div>
+
+      <div class="tabela-container">
+        <table class="tabelas">
+
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Matrícula</th>
+              <th>Instituição</th>
+              <th>Turma</th>
+              <th>Situação</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>Maria Clara</td>
+              <td>123456</td>
+              <td>PUC Campinas</td>
+              <td>102</td>
+              <td>Ativo</td>
+              <td class="acoes">
+                <button class="btn-acao"><i class="fa-solid fa-pen"></i></button>
+                <button class="btn-acao"><i class="fa-solid fa-trash"></i></button>
+              </td>
+            </tr>
+
+            <tr>
+              <td>Maria Clara</td>
+              <td>123456</td>
+              <td>PUC Campinas</td>
+              <td>102</td>
+              <td>Ativo</td>
+              <td class="acoes">
+                <button class="btn-acao"><i class="fa-solid fa-pen"></i></button>
+                <button class="btn-acao"><i class="fa-solid fa-trash"></i></button>
+              </td>
+            </tr>
+
+            <tr>
+              <td>Maria Clara</td>
+              <td>123456</td>
+              <td>PUC Campinas</td>
+              <td>102</td>
+              <td>Ativo</td>
+              <td class="acoes">
+                <button class="btn-acao"><i class="fa-solid fa-pen"></i></button>
+                <button class="btn-acao"><i class="fa-solid fa-trash"></i></button>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<!-- ===== Modal Cadastrar Aluno ===== -->
+<div id="modalCadastrar" class="modal">
+  <div class="modal-content">
+    <h2>Cadastrar Aluno</h2>
+    <form id="formCadastrarAluno">
+      <div class="form-group">
+        <label for="nomeAluno">Nome</label>
+        <input type="text" id="nomeAluno" name="nomeAluno" required>
+      </div>
+
+      <div class="form-group">
+        <label for="matriculaAluno">Matrícula</label>
+        <input type="text" id="matriculaAluno" name="matriculaAluno" required>
+      </div>
+
+      <div class="form-group">
+        <label for="instituicaoAluno">Instituição</label>
+        <select id="instituicaoAluno" name="instituicaoAluno" required>
+          <option value="">Selecione</option>
+          <option value="ifce">PUC - Campinas</option>
+          <option value="ufc">Unicamp</option>
+          <option value="outra">Outra</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="turmaAluno">Turma</label>
+        <input type="text" id="turmaAluno" name="turmaAluno" required>
+      </div>
+
+      <div class="form-group">
+        <label for="situacaoAluno">Situação</label>
+        <select id="situacaoAluno" name="situacaoAluno" required>
+          <option value="">Selecione</option>
+          <option value="ativo">Ativo</option>
+          <option value="inativo">Inativo</option>
+        </select>
+      </div>
+
+      <div class="modal-buttons">
+        <button type="button" class="cancelar" onclick="fecharModal('modalCadastrar')">Cancelar</button>
+        <button type="submit" class="confirmar">Salvar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ===== Modal Importar Alunos ===== -->
+<div id="modalImportar" class="modal">
+  <div class="modal-content">
+    <h2>Importar Alunos</h2>
+    <form id="formImportarAlunos">
+      
+      <div class="form-group">
+        <label for="turmaImportar">Turma</label>
+        <select id="turmaImportar" name="turmaImportar" required>
+          <option value="">Selecionar</option>
+          <option value="101">101</option>
+          <option value="102">102</option>
+          <option value="103">103</option>
+        </select>
+        <p style="font-size: 0.9em; color: #555; margin-top: 4px;">
+          Alunos importados serão adicionados a esta turma.
+        </p>
+      </div>
+
+      <div class="form-group">
+        <label>Formato do arquivo:</label>
+        <div class="radio-group">
+          <label><input type="radio" name="formato" value="csv" checked> CSV</label>
+          <label><input type="radio" name="formato" value="json"> JSON</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="arquivoAlunos">Arquivo:</label>
+        <input type="file" id="arquivoAlunos" name="arquivoAlunos" accept=".csv,.json" required>
+      </div>
+
+      <div class="modal-buttons">
+        <button type="button" class="cancelar" onclick="fecharModal('modalImportar')">Cancelar</button>
+        <button type="submit" class="confirmar">Confirmar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+
+<script src="../Scripts/alunos.js"></script>
+
+</body>
+</html>

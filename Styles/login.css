@@ -24,6 +24,7 @@ header {
     font-size: 12px;
 }
 
+
 .login-container {
     position: absolute;
     display: flex;
@@ -99,13 +100,15 @@ input{
 }
 
 .btn-entrar {
-    padding: 13px 170px;
+    padding: 13px 164px;
     border: none;
     border-radius: 25px;
     background-color: #17356D;
     color: #fff;
     cursor: pointer;
+    text-decoration: none;
 }
+
 
 #esqueceu-senha {
     font-size: 13px;

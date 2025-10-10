@@ -1,0 +1,225 @@
+@import url(dash.css);
+
+.content {
+  overflow: scroll;
+  scrollbar-width: none;
+  padding: 25px 50px 0 50px;
+}
+
+.alunos-container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+  color: var(--azulMarinho);
+}
+
+.alunos-container-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.alunos-container-header h1 {
+  font-size: 1.5em;
+  margin: 0;
+}
+
+.filtros-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.select-instituicao {
+  flex: 1;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-family: 'montserrat', sans-serif;
+  padding: 13px;
+}
+
+.btn-cadastrar,
+.btn-importar {
+  background-color: var(--azulMarinhoClaro);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-family: 'montserrat', sans-serif;
+  text-decoration: none;
+}
+
+.btn-cadastrar:hover,
+.btn-importar:hover {
+  background-color: var(--azulMarinho);
+}
+
+.busca-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.busca-container input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-family: 'montserrat', sans-serif;
+  padding: 13px;
+}
+
+.btn-filtrar {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-family: 'montserrat', sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-filtrar:hover {
+  background-color: #f0f0f0;
+}
+
+.tabela-container {
+  width: 100%;
+  padding-top: 40px;
+  overflow: hidden; /* faz o border-radius da tabela aparecer corretamente */
+
+}
+
+.tabelas {
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+  border-spacing: 0;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: white;
+}
+
+.tabelas th,
+.tabelas td {
+  padding: 15px 20px;
+  border-bottom: 1px solid #ddd; /* linha contínua */
+}
+
+.acoes {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-acao {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--cinzaEscuro);
+  font-size: 1.2em;
+}
+
+.btn-acao:hover i {
+  color: var(--azulMarinho);
+}
+
+/* ===== Modal de Cadastrar Aluno ===== */
+
+.modal {
+  display: none; /* fica invisível até ser aberto pelo JS */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* fundo escurecido */
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 25px 30px;
+  border-radius: 15px;
+  width: 400px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  animation: aparecer 0.2s ease-in-out;
+}
+
+@keyframes aparecer {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.modal-content h2 {
+  margin-bottom: 20px;
+  color: #17356D; /* azul do projeto */
+  text-align: center;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #333;
+}
+
+.form-group input,
+.form-group select {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #17356D;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.modal-buttons button {
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+button.confirmar {
+  background-color: #17356D; /* azul */
+  color: white;
+}
+
+button.confirmar:hover {
+  background-color: #17356D;
+}
+
+button.cancelar {
+  background: none;
+  color: #17356D;
+}
+
+button.cancelar:hover {
+  text-decoration: underline;
+}
