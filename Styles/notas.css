@@ -1,0 +1,118 @@
+@import url(dash.css);
+
+.content {
+  overflow: scroll;
+  scrollbar-width: none;
+  padding: 25px 50px 0 50px;
+}
+
+.notas-container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+  color: var(--azulMarinho);
+}
+
+.notas-container-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.notas-container-header h1 {
+  font-size: 1.5em;
+  margin: 0;
+}
+
+.filtros-container {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    margin-top: 10px;
+    background-color: #f5f6f7;
+    padding: 20px;
+    border-radius: 10px;
+    
+
+  }
+  
+  .filtro-select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background-color: #fff;
+    font-size: 14px;
+    color: #333;
+    width: 500px;
+    cursor: pointer;
+    margin-left: -20px;
+  }
+  
+  .botoes-container {
+    display: flex;
+    gap: 10px;
+    margin-left: auto;
+    margin-right: 20px;
+  }
+  
+  .btn-exportar,
+  .btn-salvar {
+    background-color: #0a1e50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .btn-exportar:hover,
+  .btn-salvar:hover {
+    background-color: #13317c;
+  }
+  
+  
+  .tabela-notas {
+    margin-top: 40px;
+    width: 98%;
+    text-align: left;
+    font-size: 14px;
+    border-collapse: collapse; /* adiciona essa linha */
+    border: 1px solid #ddd;
+    border-radius: 30px;
+
+  }
+
+  
+  .tabela-notas th {
+    padding: 15px;
+    font-weight: 600;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .tabela-notas td {
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+    background-color: #fff;
+  }
+  
+  .tabela-notas input {
+    width: 60px;
+    text-align: center;
+    padding: 6px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background-color: #fafafa;
+  }
+
+
+  
+  .tabela-notas input:focus {
+    outline: none;
+    border-color: #0a1e50;
+    background-color: #fff;
+  }
+  
