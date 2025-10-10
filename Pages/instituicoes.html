@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instituições</title>
+
+    <link rel="stylesheet" href="../Styles/instituicoes.css">
+    <script src="../Scripts/instituicoes.js"></script>
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+<div class="container">
+    <div class="sidebar">
+        <div>
+            <h2>NotaDez</h2>
+
+            <p class="section-title">MENU</p>
+            <div class="menu">
+                <a href="dash.html" class="menu-item "><i class="fa-solid fa-gauge"></i> Dashboard</a>
+                <a href="#" class="menu-item active"><i class="fa-solid fa-school"></i> Instituições</a>
+                <a href="alunos.html" class="menu-item"><i class="fa-solid fa-user-graduate"></i> Alunos</a>
+                <a href="notas.html" class="menu-item"><i class="fa-solid fa-file-lines"></i> Notas</a>
+                <a href="#" class="menu-item"><i class="fa-solid fa-calculator"></i> Cálculo da Nota</a>
+                <a href="#" class="menu-item"><i class="fa-solid fa-magnifying-glass"></i> Auditoria</a>
+            </div>
+        </div>
+
+        <div class="outros">
+            <p class="section-title">OUTROS</p>
+            <a href="../index.html" class="menu-item"><i class="fa-solid fa-right-from-bracket"></i> Sair</a>
+        </div>
+    </div>
+
+    <div class="content">
+        <!--Aqui vão ficar as tabelas com as instituições, disciplinas e turmas - João Pedro Panza Mainieri-->
+        <section class="instituicoes-container">
+            <div class="instituicoes-container-header">
+                <h1>Minhas Instituições</h1>
+                <button class="btn-nova-instituicao"><i class="fa-solid fa-plus"></i> Nova Instituição</button>
+            </div>
+            <div class="instituicoes-container-content">
+                <table class="tabelas" id="tabela-instituicoes">
+                    <tr>
+                        <th>Instituição</th>
+                        <th>Curso</th>
+                    </tr>
+                    <tr>
+                        <td>PUC-Campinas</td>
+                        <td>Engenharia de Software</td>
+                    </tr>
+                </table>
+                <div class="tabela-acoes">
+                    <div class="tabela-botoes">
+                        <button id="btn-editar-instituicao"><i class="fa-solid fa-pen"></i></button>
+                        <button id="btn-excluir-instituicao"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                    <button class="ver-mais" id="btn-ver-mais-instituicao">Ver mais</button>
+                </div>
+            </div>
+        </section><section class="instituicoes-container">
+            <div class="instituicoes-container-header">
+                <h1>Minhas Disciplinas</h1>
+                <button id="btn-nova-disciplina"><i class="fa-solid fa-plus"></i> Nova Disciplina</button>
+            </div>
+            <div class="instituicoes-container-content">
+                <table class="tabelas" id="tabela-disciplinas">
+                    <tr>
+                        <th>Nome</th>
+                        <th>Sigla</th>
+                        <th>Código</th>
+                        <th>Período</th>
+                    </tr>
+                    <tr>
+                        <td>Projeto Integrador</td>
+                        <td>PI</td>
+                        <td>218131</td>
+                        <td>1</td>
+                    </tr>
+                </table>
+                <div class="tabela-acoes">
+                    <div class="tabela-botoes">
+                        <button id="btn-editar-disciplina"><i class="fa-solid fa-pen"></i></button>
+                        <button id="btn-excluir-disciplina"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                    <button class="ver-mais" id="btn-ver-mais-disciplinas">Ver mais</button>
+                </div>
+            </div>
+        </section><section class="instituicoes-container">
+            <div class="instituicoes-container-header">
+                <h1>Minhas Turmas</h1>
+                <button class="btn-nova-turma"><i class="fa-solid fa-plus"></i> Nova Turma</button>
+            </div>
+            <div class="instituicoes-container-content">
+                <table class="tabelas">
+                    <tr>
+                        <th>Nome</th>
+                        <th>Código</th>
+                        <th>Turno</th>
+                    </tr>
+                    <tr>
+                        <td>Turma 2</td>
+                        <td>T102</td>
+                        <td>Matutino</td>
+                    </tr>
+                </table>
+                <div class="tabela-acoes">
+                    <div class="tabela-botoes">
+                        <button id="btn-editar-turma"><i class="fa-solid fa-pen"></i></button>
+                        <button id="btn-excluir-turma"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                    <button class="ver-mais" id="btn-ver-mais-turmas">Ver mais</button>
+                </div>
+            </div>
+        </section>
+
+    <!-- ===== Modal Nova Instituição/Disciplina/Turma ===== -->
+<div id="popup-novo-elemento" class="modal">
+    <div class="modal-content">
+      <h2 id="novo-elemento-title">Nova Instituição</h2>
+  
+      <!-- Formulário de Instituição -->
+      <form id="nova-instituicao-form">
+        <label for="input-nome-instituicao">Nome:</label>
+        <input type="text" id="input-nome-instituicao" placeholder="Digite o nome" required>
+  
+        <label for="input-curso-instituicao">Curso:</label>
+        <input type="text" id="input-curso-instituicao" placeholder="Digite o curso" required>
+      </form>
+  
+      <!-- Formulário de Disciplina -->
+      <form id="nova-disciplina-form">
+        <label for="input-nome-disciplina">Nome:</label>
+        <input type="text" id="input-nome-disciplina" placeholder="Digite o nome" required>
+        <label for="input-sigla-disciplina">Sigla:</label>
+        <input type="text" id="input-sigla-disciplina" placeholder="Digite a sigla" required>
+        <label for="input-codigo-disciplina">Código:</label>
+        <input type="text" id="input-codigo-disciplina" placeholder="Digite o código" required>
+        <label for="input-periodo-disciplina">Período:</label>
+        <input type="text" id="input-periodo-disciplina" placeholder="Digite o período" required>
+      </form>
+  
+      <!-- Formulário de Turma -->
+      <form id="nova-turma-form">
+        <label for="input-nome-turma">Nome:</label>
+        <input type="text" id="input-nome-turma" placeholder="Digite o nome" required>
+        <label for="input-codigo-turma">Código:</label>
+        <input type="text" id="input-codigo-turma" placeholder="Digite o código" required>
+        <label for="input-turno-turma">Turno:</label>
+        <input type="text" id="input-turno-turma" placeholder="Digite o turno" required>
+      </form>
+  
+      <div class="modal-buttons">
+        <button type="button" class="cancelar" id="btn-cancelar-novo-elemento">Cancelar</button>
+        <button type="submit" class="confirmar" id="btn-confirmar-novo-elemento">Salvar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+</body>
+</html>
