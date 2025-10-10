@@ -1,0 +1,137 @@
+@import url(dash.css);
+
+.content {
+  overflow: scroll;
+  scrollbar-width: none;
+  padding: 25px 50px 0 50px;
+}
+
+.alunos-container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+  color: var(--azulMarinho);
+}
+
+.alunos-container-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.alunos-container-header h1 {
+  font-size: 1.5em;
+  margin: 0;
+}
+
+.filtros-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.select-instituicao {
+  flex: 1;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-family: 'montserrat', sans-serif;
+  padding: 13px;
+}
+
+.btn-cadastrar,
+.btn-importar {
+  background-color: var(--azulMarinhoClaro);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-family: 'montserrat', sans-serif;
+}
+
+.btn-cadastrar:hover,
+.btn-importar:hover {
+  background-color: var(--azulMarinho);
+}
+
+.busca-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.busca-container input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-family: 'montserrat', sans-serif;
+  padding: 13px;
+}
+
+.btn-filtrar {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-family: 'montserrat', sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-filtrar:hover {
+  background-color: #f0f0f0;
+}
+
+.tabela-container {
+  width: 100%;
+  padding-top: 40px;
+}
+
+.tabelas {
+  width: 100%;
+  text-align: left;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid #a3a3a3;
+  border-radius: 10px;
+  background-color: white;
+}
+
+.tabelas th {
+  font-weight: bold;
+  padding: 15px 20px;
+  border-bottom: 1px solid var(--cinzaClaro);
+}
+
+.tabelas td {
+  padding: 10px 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.tabelas tr:last-child td {
+  border-bottom: none;
+}
+
+.acoes {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-acao {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--cinzaEscuro);
+  font-size: 1.2em;
+}
+
+.btn-acao:hover i {
+  color: var(--azulMarinho);
+}
