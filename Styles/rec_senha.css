@@ -12,7 +12,7 @@ header {
     padding: 30px 90px;
 }
 
-.btn-cadastro {
+.btn-login {
     background-color: #17356D;
     color: #fff;
     border: none;
@@ -23,6 +23,7 @@ header {
     transition: background-color 0.3s;
     font-size: 12px;
 }
+
 
 .login-container {
     position: absolute;
@@ -48,6 +49,15 @@ header {
     margin-bottom: 30px; 
 }
 
+.form h4 {
+    text-align: center;
+    margin-bottom: 30px; 
+    font-weight: normal; 
+    color: #7b7b7b; 
+    font-size: 13px; 
+    margin-top: -12px;
+}
+
 
 /*lado direito*/
 .image-side {
@@ -60,7 +70,21 @@ header {
     margin: 0; 
 }
 
+.imagem {
+    position: absolute; 
+    top: 45%;           
+    left: 53%;          
+    transform: translate(-20%, -50%); 
+    z-index: 5;  
+    width: 55%;       
+}
 
+.imagem img {
+    transform: rotate(10deg); 
+    width: 58%; /* garante que o img ocupe todo o container .imagem */
+
+    
+}
 
 label{
     color: #17356D;
@@ -88,25 +112,18 @@ input{
 }
 
 .btn-entrar {
-    padding: 13px 167px;
+    padding: 13px 145px;
     border: none;
     border-radius: 25px;
     background-color: #17356D;
     color: #fff;
     cursor: pointer;
-}
-
-#esqueceu-senha {
-    font-size: 13px;
-    margin-top: 10px; 
-}
-
-#esqueceu-senha a {
     text-decoration: none;
-    color: #17356D;
 }
 
-#esqueceu-senha a:hover {
-    text-decoration: underline;
-    color: #17356D;
-}
+
+
+
+
+
+
