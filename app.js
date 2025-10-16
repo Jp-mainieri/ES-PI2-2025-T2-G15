@@ -14,7 +14,9 @@ app.get('/', (req, res) => {
     res.send('Tudo Funcionando');
 });
 
-app.listen(port, () => {});
+app.listen(port, () => {
+    console.log(`servidor rodando na porta: ${port}`);
+});
 
 
 
