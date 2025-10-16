@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alunos</title>
+  <link rel="stylesheet" href="../Styles/notas.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+<div class="container">
+  <div class="sidebar">
+    <div>
+      <h2>NotaDez</h2>
+
+      <p class="section-title">MENU</p>
+      <div class="menu">
+        <a href="dash.html" class="menu-item"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+        <a href="instituicoes.html" class="menu-item"><i class="fa-solid fa-school"></i> Instituições</a>
+        <a href="alunos.html" class="menu-item"><i class="fa-solid fa-user-graduate"></i> Alunos</a>
+        <a href="#" class="menu-item active"><i class="fa-solid fa-file-lines"></i> Notas</a>
+        <a href="calcular.html" class="menu-item"><i class="fa-solid fa-calculator"></i> Cálculo da Nota</a>
+      </div>
+    </div>
+
+    <div class="outros">
+      <p class="section-title">OUTROS</p>
+      <a href="../index.html" class="menu-item"><i class="fa-solid fa-right-from-bracket"></i> Sair</a>
+    </div>
+  </div>
+
+  <div class="content">
+    <section class="notas-container">
+      <div class="notas-container-header">
+        <h1>Notas</h1>
+      </div>
+
+      <div class="filtros-container">
+        <select class="filtro-select">
+          <option value="">Instituição</option>
+        </select>
+      
+        <select class="filtro-select">
+          <option value="">Curso</option>
+        </select>
+      
+        <select class="filtro-select">
+          <option value="">Turma</option>
+        </select>
+      
+        
+        
+      </div>
+
+      <div class="botoes-container">
+        
+        <button class="btn-exportar">Exportar</button>
+        <button class="btn-salvar">Salvar alterações</button>
+      </div>
+      
+
+
+        <table class="tabela-notas">
+          <thead>
+            <tr>
+              <th>Matrícula</th>
+              <th>Nome</th>
+              <th>P1</th>
+              <th>P2</th>
+              <th>Trabalho</th>
+              <th>Nota Final</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1234567</td>
+              <td>João Silva</td>
+              <td><input type="text" value="8.50"></td>
+              <td><input type="text" value="5.50"></td>
+              <td><input type="text" value="9.50"></td>
+              <td><input type="text" value="7.83"></td>
+            </tr>
+            <tr>
+              <td>1234567</td>
+              <td>Maria Souza</td>
+              <td><input type="text" value="6.00"></td>
+              <td><input type="text" value="5.50"></td>
+              <td><input type="text" value="7.50"></td>
+              <td><input type="text" value="6.30"></td>
+            </tr>
+            <tr>
+              <td>1234567</td>
+              <td>Pedro Costa</td>
+              <td><input type="text" value="6.00"></td>
+              <td><input type="text" value="5.50"></td>
+              <td><input type="text" value="7.50"></td>
+              <td><input type="text" value="6.30"></td>
+            </tr>
+            <tr>
+              <td>1234567</td>
+              <td>Ana Pereira</td>
+              <td><input type="text" value="6.00"></td>
+              <td><input type="text" value="5.50"></td>
+              <td><input type="text" value="7.50"></td>
+              <td><input type="text" value="6.30"></td>
+            </tr>
+            <tr>
+              <td>1234567</td>
+              <td>Alice Maria</td>
+              <td><input type="text" value="6.00"></td>
+              <td><input type="text" value="5.50"></td>
+              <td><input type="text" value="7.50"></td>
+              <td><input type="text" value="6.30"></td>
+            </tr>
+            <tr>
+              <td>1234567</td>
+              <td>José Carlos</td>
+              <td><input type="text" value="6.00"></td>
+              <td><input type="text" value="5.50"></td>
+              <td><input type="text" value="7.50"></td>
+              <td><input type="text" value="6.30"></td>
+            </tr>
+
+          </tbody>
+        </table>
+      
+    
+            
+    </section>
+
+  </div>
+</div>
+
+<!-- ===== Modal Exportar Notas ===== -->
+<div id="modalExportar" class="modal">
+  <div class="modal-content">
+    <h2>Exportar Notas</h2>
+
+    <form id="formExportarNotas">
+      <div class="form-group">
+        <label for="instituicaoExportar">Instituição</label>
+        <select id="instituicaoExportar" name="instituicaoExportar" required>
+          <option value="">Selecionar</option>
+          <option value="1">Escola Modelo</option>
+          <option value="2">Colégio Central</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="cursoExportar">Curso</label>
+        <select id="cursoExportar" name="cursoExportar" required>
+          <option value="">Selecionar</option>
+          <option value="1">Informática</option>
+          <option value="2">Administração</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="turmaExportar">Turma</label>
+        <select id="turmaExportar" name="turmaExportar" required>
+          <option value="">Selecionar</option>
+          <option value="A">1ºA</option>
+          <option value="B">1ºB</option>
+        </select>
+        <p style="font-size: 0.9em; color: #555; margin-top: 4px;">
+          As notas exportadas corresponderão à turma selecionada.
+        </p>
+      </div>
+
+      <div class="form-group">
+        <label>Formato do arquivo:</label>
+        <div class="radio-group">
+          <label><input type="radio" name="formato" value="csv" checked> CSV</label>
+        </div>
+      </div>
+
+      <div class="modal-buttons">
+        <button type="button" class="cancelar" onclick="fecharModal('modalExportar')">Cancelar</button>
+        <button type="submit" class="confirmar">Confirmar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="../Scripts/notas.js"></script>
+
+</body>
+</html>
