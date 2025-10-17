@@ -132,69 +132,99 @@
     
 }
 
-.popup-content {
-    display: flex;
-    flex-direction: column;
+
+.modal {
+    display: none; /* invisível até ser aberto */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* fundo escuro */
+    justify-content: center;
     align-items: center;
-    gap: 15px;
-    width: 100%;
-    padding: 20px;
-
-}
-
-.popup-content form{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-}
-.popup-content form input{
-    margin-bottom: 15px;
-    padding: 10px;
-    border: 1px solid #17356D;
-    border-radius: 20px;
-    width: 100%;
-}
-.popup-content form input::placeholder{
-    font-style: italic;
-    color: var(--cinzaClaro);
-}
-#nova-disciplina-form {
-    display: none;
-}
-#nova-turma-form {
-    display: none;
-}
-
-#novo-elemento-title {
-    color: #17356D; 
-    font-size: 26px;
-    
-}
-#btn-confirmar-novo-elemento {
-    background-color: var(--azulMarinhoClaro);
-    color: #fff;
-    border: none;
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    background: #fff;
+    padding: 25px 30px;
     border-radius: 15px;
-    width: 110px;
-    height: 38px;
-    margin-top: 6px;
-    transition: transform 0.2s ease; /* suaviza a animação */
-
-}
-
-#btn-confirmar-novo-elemento:hover {
-    transform: scale(1.05);
-}
-
-#btn-cancelar-novo-elemento {
-    font-size: 13px;
-    margin-top: -8px;
-    transition: transform 0.2s ease; /* suaviza a animação */
-}
-
-#btn-cancelar-novo-elemento:hover {
-    transform: scale(1.05);
-}
-
-
-
+    width: 400px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    animation: aparecer 0.2s ease-in-out;
+  }
+  
+  @keyframes aparecer {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+  
+  .modal-content h2 {
+    margin-bottom: 20px;
+    color: #17356D; /* azul */
+    text-align: center;
+  }
+  
+  .modal-content form {
+    display: none;
+    flex-direction: column;
+    margin-bottom: 15px;
+  }
+  
+  .modal-content form.active {
+    display: flex;
+  }
+  
+  .modal-content label {
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  .modal-content input {
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    outline: none;
+    margin-bottom: 10px;
+  }
+  
+  .modal-content input:focus {
+    border-color: #17356D;
+  }
+  
+  .modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 15px;
+  }
+  
+  .modal-buttons button {
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s;
+  }
+  
+  button.confirmar {
+    background-color: #17356D;
+    color: white;
+  }
+  
+  button.confirmar:hover {
+    background-color: #17356D;
+  }
+  
+  button.cancelar {
+    background: none;
+    color: #17356D;
+  }
+  
+  button.cancelar:hover {
+    text-decoration: underline;
+  }
+  

@@ -139,5 +139,60 @@
   </div>
 </div>
 
+<!-- ===== Modal Exportar Notas ===== -->
+<div id="modalExportar" class="modal">
+  <div class="modal-content">
+    <h2>Exportar Notas</h2>
+
+    <form id="formExportarNotas">
+      <div class="form-group">
+        <label for="instituicaoExportar">Instituição</label>
+        <select id="instituicaoExportar" name="instituicaoExportar" required>
+          <option value="">Selecionar</option>
+          <option value="1">Escola Modelo</option>
+          <option value="2">Colégio Central</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="cursoExportar">Curso</label>
+        <select id="cursoExportar" name="cursoExportar" required>
+          <option value="">Selecionar</option>
+          <option value="1">Informática</option>
+          <option value="2">Administração</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="turmaExportar">Turma</label>
+        <select id="turmaExportar" name="turmaExportar" required>
+          <option value="">Selecionar</option>
+          <option value="A">1ºA</option>
+          <option value="B">1ºB</option>
+        </select>
+        <p style="font-size: 0.9em; color: #555; margin-top: 4px;">
+          As notas exportadas corresponderão à turma selecionada.
+        </p>
+      </div>
+
+      <div class="form-group">
+        <label>Formato do arquivo:</label>
+        <div class="radio-group">
+          <label><input type="radio" name="formato" value="csv" checked> CSV</label>
+          <label><input type="radio" name="formato" value="json"> JSON</label>
+        </div>
+      </div>
+
+      <div class="modal-buttons">
+        <button type="submit" class="confirmar">Confirmar</button>
+        <button type="button" class="cancelar" onclick="fecharModal('modalExportar')">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<script src="../Scripts/notas.js"></script>
+
 </body>
 </html>

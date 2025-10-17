@@ -43,8 +43,14 @@
           <option>Unicamp</option>
         </select>
 
+<<<<<<< HEAD
+        <a href="#" id="btnCadastrar" class="btn-cadastrar"><i class="fa-solid fa-plus"></i>Cadastrar Aluno</a>
+        <a href="#" id="btnImportar" class="btn-importar"><i class="fa-solid fa-file-import"></i>Importar Alunos</a>
+
+=======
         <button class="btn-cadastrar"><i class="fa-solid fa-plus"></i> Cadastrar Aluno</button>
         <button class="btn-importar"><i class="fa-solid fa-file-import"></i> Importar Alunos</button>
+>>>>>>> Develop
       </div>
 
       <div class="busca-container">
@@ -110,6 +116,97 @@
 
   </div>
 </div>
+
+<!-- ===== Modal Cadastrar Aluno ===== -->
+<div id="modalCadastrar" class="modal">
+  <div class="modal-content">
+    <h2>Cadastrar Aluno</h2>
+    <form id="formCadastrarAluno">
+      <div class="form-group">
+        <label for="nomeAluno">Nome</label>
+        <input type="text" id="nomeAluno" name="nomeAluno" required>
+      </div>
+
+      <div class="form-group">
+        <label for="matriculaAluno">Matrícula</label>
+        <input type="text" id="matriculaAluno" name="matriculaAluno" required>
+      </div>
+
+      <div class="form-group">
+        <label for="instituicaoAluno">Instituição</label>
+        <select id="instituicaoAluno" name="instituicaoAluno" required>
+          <option value="">Selecione</option>
+          <option value="ifce">PUC - Campinas</option>
+          <option value="ufc">Unicamp</option>
+          <option value="outra">Outra</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="turmaAluno">Turma</label>
+        <input type="text" id="turmaAluno" name="turmaAluno" required>
+      </div>
+
+      <div class="form-group">
+        <label for="situacaoAluno">Situação</label>
+        <select id="situacaoAluno" name="situacaoAluno" required>
+          <option value="">Selecione</option>
+          <option value="ativo">Ativo</option>
+          <option value="inativo">Inativo</option>
+        </select>
+      </div>
+
+      <div class="modal-buttons">
+        <button type="button" class="cancelar" onclick="fecharModal('modalCadastrar')">Cancelar</button>
+        <button type="submit" class="confirmar">Salvar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ===== Modal Importar Alunos ===== -->
+<div id="modalImportar" class="modal">
+  <div class="modal-content">
+    <h2>Importar Alunos</h2>
+    <form id="formImportarAlunos">
+      
+      <div class="form-group">
+        <label for="turmaImportar">Turma</label>
+        <select id="turmaImportar" name="turmaImportar" required>
+          <option value="">Selecionar</option>
+          <option value="101">101</option>
+          <option value="102">102</option>
+          <option value="103">103</option>
+        </select>
+        <p style="font-size: 0.9em; color: #555; margin-top: 4px;">
+          Alunos importados serão adicionados a esta turma.
+        </p>
+      </div>
+
+      <div class="form-group">
+        <label>Formato do arquivo:</label>
+        <div class="radio-group">
+          <label><input type="radio" name="formato" value="csv" checked> CSV</label><br>
+          <label><input type="radio" name="formato" value="json"> JSON</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="arquivoAlunos">Arquivo:</label>
+        <input type="file" id="arquivoAlunos" name="arquivoAlunos" accept=".csv,.json" required>
+      </div>
+
+      <div class="modal-buttons">
+        <button type="button" class="cancelar" onclick="fecharModal('modalImportar')">Cancelar</button>
+        <button type="submit" class="confirmar">Confirmar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+
+<script src="../Scripts/alunos.js"></script>
 
 </body>
 </html>
