@@ -16,7 +16,8 @@
     padding:20px 20px 0px 0px;
     /*border: 2px solid var(--azulMarinhoClaro);*/
     color: var(--azulMarinho);
-    
+    transition: all 0.3s ease;
+
 }
 
 .instituicoes-container-header {
@@ -46,12 +47,10 @@
     padding: 10px 10px;
     font-family: 'montserrat',sans-serif;
 }
-
 .instituicoes-container-header button:hover {
     background-color: var(--azulMarinho);
     cursor: pointer;
 }
-
 .instituicoes-container-content{
     width: 100%;
     
@@ -84,13 +83,14 @@
 .tabela-botoes{
     width: fit-content;
     position: relative;
-    top: -35px;
 }
+
 .tabela-botoes button{
     background-color: transparent;
     border: none;
     cursor: pointer;
 }
+
 .tabela-botoes button:hover i{
     color: var(--azulMarinho);
 }
@@ -229,4 +229,23 @@
   button.cancelar:hover {
     text-decoration: underline;
   }
+
+
+
+  /* ==== Botões Ver/Ocultar ==== */
+button.btn-ver-disciplinas,
+button.btn-ver-turmas {
+  
+  color: #010057;
+  padding: 4px 20px;
+  font-family: 'montserrat', sans-serif;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+button.btn-ver-disciplinas:hover,
+button.btn-ver-turmas:hover {
+  transform: scale(1.03);
+}
+
   

@@ -36,7 +36,7 @@
 
     <div class="content">
         <!--Aqui vão ficar as tabelas com as instituições, disciplinas e turmas - João Pedro Panza Mainieri-->
-        <section class="instituicoes-container">
+        <section id="sec-instituicoes" class="instituicoes-container">
             <div class="instituicoes-container-header">
                 <h1>Minhas Instituições</h1>
                 <button class="btn-nova-instituicao"><i class="fa-solid fa-plus"></i> Nova Instituição</button>
@@ -46,21 +46,28 @@
                     <tr>
                         <th>Instituição</th>
                         <th>Curso</th>
+                        <th></th>
                     </tr>
                     <tr>
                         <td>PUC-Campinas</td>
                         <td>Engenharia de Software</td>
+
+                        <td><div class="tabela-acoes">
+                            <div class="tabela-botoes">
+                                <button class="btn-ver-disciplinas">Ver disciplinas</button>
+                                <button class="btn-editar-instituicao"><i class="fa-solid fa-pen"></i></button>
+                                <button class="btn-excluir-instituicao"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        </div></td>
                     </tr>
+                    
+                    
                 </table>
-                <div class="tabela-acoes">
-                    <div class="tabela-botoes">
-                        <button id="btn-editar-instituicao"><i class="fa-solid fa-pen"></i></button>
-                        <button id="btn-excluir-instituicao"><i class="fa-solid fa-trash"></i></button>
-                    </div>
-                    <button class="ver-mais" id="btn-ver-mais-instituicao">Ver mais</button>
-                </div>
+                
             </div>
-        </section><section class="instituicoes-container">
+        </section>
+        
+        <section id="sec-disciplinas" class="instituicoes-container" style="display:none;">
             <div class="instituicoes-container-header">
                 <h1>Minhas Disciplinas</h1>
                 <button id="btn-nova-disciplina"><i class="fa-solid fa-plus"></i> Nova Disciplina</button>
@@ -72,23 +79,33 @@
                         <th>Sigla</th>
                         <th>Código</th>
                         <th>Período</th>
+                        <th></th>   
                     </tr>
                     <tr>
                         <td>Projeto Integrador</td>
                         <td>PI</td>
                         <td>218131</td>
                         <td>1</td>
+                       
+
+
+                        <td><div class="tabela-acoes">
+                            <div class="tabela-botoes">
+                                <button class="btn-ver-turmas">Ver turmas</button>
+                                <button class="btn-editar-disciplina"><i class="fa-solid fa-pen"></i></button>
+                                <button class="btn-excluir-disciplina"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        </div></td>
                     </tr>
+
+                    
+                    
                 </table>
-                <div class="tabela-acoes">
-                    <div class="tabela-botoes">
-                        <button id="btn-editar-disciplina"><i class="fa-solid fa-pen"></i></button>
-                        <button id="btn-excluir-disciplina"><i class="fa-solid fa-trash"></i></button>
-                    </div>
-                    <button class="ver-mais" id="btn-ver-mais-disciplinas">Ver mais</button>
-                </div>
+                
             </div>
-        </section><section class="instituicoes-container">
+        </section>
+        
+        <section id="sec-turmas" class="instituicoes-container" style="display:none;">
             <div class="instituicoes-container-header">
                 <h1>Minhas Turmas</h1>
                 <button class="btn-nova-turma"><i class="fa-solid fa-plus"></i> Nova Turma</button>
@@ -105,16 +122,12 @@
                         <td>T102</td>
                         <td>Matutino</td>
                     </tr>
+                    
                 </table>
-                <div class="tabela-acoes">
-                    <div class="tabela-botoes">
-                        <button id="btn-editar-turma"><i class="fa-solid fa-pen"></i></button>
-                        <button id="btn-excluir-turma"><i class="fa-solid fa-trash"></i></button>
-                    </div>
-                    <button class="ver-mais" id="btn-ver-mais-turmas">Ver mais</button>
-                </div>
+                
             </div>
         </section>
+        
 
     <!-- ===== Modal Nova Instituição/Disciplina/Turma ===== -->
 <div id="popup-novo-elemento" class="modal">

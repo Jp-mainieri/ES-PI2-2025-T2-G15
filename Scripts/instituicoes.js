@@ -39,4 +39,43 @@ document.addEventListener("DOMContentLoaded", () => {
       if (e.target === popup) fecharPopup();
     });
   });
+
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const secDisciplinas = document.getElementById("sec-disciplinas");
+    const secTurmas = document.getElementById("sec-turmas");
+  
+    // Seleciona TODOS os botões de ver disciplinas
+    document.querySelectorAll(".btn-ver-disciplinas").forEach(botao => {
+      botao.addEventListener("click", () => {
+        const estaVisivel = secDisciplinas.style.display === "flex";
+        if (!estaVisivel) {
+          secDisciplinas.style.display = "flex";
+          secDisciplinas.style.flexDirection = "column";
+          botao.textContent = "Ocultar disciplinas";
+        } else {
+          secDisciplinas.style.display = "none";
+          botao.textContent = "Ver disciplinas";
+          // Esconde também as turmas se estiverem abertas
+          secTurmas.style.display = "none";
+          document.querySelectorAll(".btn-ver-turmas").forEach(btn => btn.textContent = "Ver turmas");
+        }
+      });
+    });
+  
+    // Seleciona TODOS os botões de ver turmas
+    document.querySelectorAll(".btn-ver-turmas").forEach(botao => {
+      botao.addEventListener("click", () => {
+        const estaVisivel = secTurmas.style.display === "flex";
+        if (!estaVisivel) {
+          secTurmas.style.display = "flex";
+          secTurmas.style.flexDirection = "column";
+          botao.textContent = "Ocultar turmas";
+        } else {
+          secTurmas.style.display = "none";
+          botao.textContent = "Ver turmas";
+        }
+      });
+    });
+  });
   
