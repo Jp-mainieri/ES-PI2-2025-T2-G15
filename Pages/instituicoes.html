@@ -6,6 +6,9 @@
     <title>Instituições</title>
 
     <link rel="stylesheet" href="../Styles/instituicoes.css">
+    <script src="../Scripts/instituicoes.js"></script>
+
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
@@ -16,7 +19,7 @@
 
             <p class="section-title">MENU</p>
             <div class="menu">
-                <a href="home.html" class="menu-item "><i class="fa-solid fa-gauge"></i> Dashboard</a>
+                <a href="dash.html" class="menu-item "><i class="fa-solid fa-gauge"></i> Dashboard</a>
                 <a href="#" class="menu-item active"><i class="fa-solid fa-school"></i> Instituições</a>
                 <a href="#" class="menu-item"><i class="fa-solid fa-user-graduate"></i> Alunos</a>
                 <a href="#" class="menu-item"><i class="fa-solid fa-file-lines"></i> Notas</a>
@@ -114,44 +117,52 @@
                 </div>
             </div>
         </section>
-        <div class="novo-elemento-popup">
-            <div class="popup-content">
-                <!--Essa parte vai mudar com Js de acordo com o botão que foi clicado-->
-                <h1 id="novo-elemento-title">Nova Instituição</h1>
-                <form id="nova-instituicao-form">
-                    <label for="input-nome-instituicao">Nome:</label>
-                    <input type="text" id="input-nome-instituicao" placeholder="Digite o nome" required>
 
-                    <label for="input-curso-instituicao">Curso:</label>
-                    <input type="text" id="input-curso-instituicao" placeholder="Digite o curso" required>
-                </form>
-                <form id="nova-disciplina-form">
-                    <label for="input-nome-disciplina">Nome:</label>
-                    <input type="text" id="input-nome-disciplina" placeholder="Digite o nome" required>
+    <div class="novo-elemento-popup" id="popup-novo-elemento">
+    <div class="popup-content">
+        <h1 id="novo-elemento-title">Nova Instituição</h1>
 
-                    <label for="input-sigla-disciplina">Sigla:</label>
-                    <input type="text" id="input-sigla-disciplina" placeholder="Digite a sigla" required>
+        <form id="nova-instituicao-form">
+            <label for="input-nome-instituicao">Nome:</label>
+            <input type="text" id="input-nome-instituicao" placeholder="Digite o nome" required>
 
-                    <label for="input-codigo-disciplina">Código:</label>
-                    <input type="text" id="input-codigo-disciplina" placeholder="Digite o código" required>
+            <label for="input-curso-instituicao">Curso:</label>
+            <input type="text" id="input-curso-instituicao" placeholder="Digite o curso" required>
+        </form>
 
-                    <label for="input-periodo-disciplina">Período:</label>
-                    <input type="text" id="input-periodo-disciplina" placeholder="Digite o período" required>
-                </form>
-                <form id="nova-turma-form">
-                    <label for="input-nome-turma">Nome:</label>
-                    <input type="text" id="input-nome-turma" placeholder="Digite o nome" required>
-                    <label for="input-codigo-turma">Código:</label>
-                    <input type="text" id="input-codigo-turma" placeholder="Digite o código" required>
-                    <label for="input-turno-turma">Turno:</label>
-                    <input type="text" id="input-turno-turma" placeholder="Digite o turno" required>
+        <form id="nova-disciplina-form">
+            <label for="input-nome-disciplina">Nome:</label>
+            <input type="text" id="input-nome-disciplina" placeholder="Digite o nome" required>
+            <label for="input-sigla-disciplina">Sigla:</label>
+            <input type="text" id="input-sigla-disciplina" placeholder="Digite a sigla" required>
+            <label for="input-codigo-disciplina">Código:</label>
+            <input type="text" id="input-codigo-disciplina" placeholder="Digite o código" required>
+            <label for="input-periodo-disciplina">Período:</label>
+            <input type="text" id="input-periodo-disciplina" placeholder="Digite o período" required>
+        </form>
 
-                </form>
-                    <button type="submit" id="btn-confirmar-novo-elemento">Confirmar</button>
-                    <button id="btn-cancelar-novo-elemento">Cancelar</button>
-            </div>
-        </div>
+        <form id="nova-turma-form">
+            <label for="input-nome-turma">Nome:</label>
+            <input type="text" id="input-nome-turma" placeholder="Digite o nome" required>
+            <label for="input-codigo-turma">Código:</label>
+            <input type="text" id="input-codigo-turma" placeholder="Digite o código" required>
+            <label for="input-turno-turma">Turno:</label>
+            <input type="text" id="input-turno-turma" placeholder="Digite o turno" required>
+        </form>
+
+        <button type="submit" id="btn-confirmar-novo-elemento">Confirmar</button>
+        <a id="btn-cancelar-novo-elemento">Cancelar</a>
+
+
+
+        
     </div>
+</div>
+
+
+
+
+
 </div>
 </body>
 </html>
