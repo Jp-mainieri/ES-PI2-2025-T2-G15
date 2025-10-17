@@ -46,10 +46,12 @@
     padding: 10px 10px;
     font-family: 'montserrat',sans-serif;
 }
+
 .instituicoes-container-header button:hover {
     background-color: var(--azulMarinho);
     cursor: pointer;
 }
+
 .instituicoes-container-content{
     width: 100%;
     
