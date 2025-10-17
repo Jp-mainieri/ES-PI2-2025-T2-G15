@@ -1,0 +1,358 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+* {
+    box-sizing: border-box;
+  }
+/*Adicionei variaveis para facilitar e padronizar as cores no projeto - João Pedro Panza Mainieri*/
+:root{
+    --azulMarinho: #111827;
+    --azulMarinhoClaro: #17356D;
+    --cinzaClaro: #9aa0a6;
+    --cinzaEscuro: #475569;
+}
+
+  body {
+    font-family: "Poppins", sans-serif;;
+    background-color: #f8f9fa;
+    color: var(--azulMarinho);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    height: 100%;
+    margin: 0;
+    padding: 0;
+
+  }
+
+  .container {
+    display: flex;
+    height: 100vh;
+  }
+
+  .sidebar {
+    width: 240px;
+    background-color: #ffffff;
+    border-right: 2px solid #e6e6e6;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px 0;
+  }
+
+  .sidebar h2 {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0 20px 18px 20px;
+    color: var(--azulMarinhoClaro);
+  }
+
+  .section-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #9aa0a6;
+    margin: 0 20px 8px 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .menu, .outros {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 0 12px;
+  }
+
+  .menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #475569;
+    text-decoration: none;
+    transition: background-color 0.12s ease, color 0.12s ease;
+    width: calc(100% - 24px);
+  }
+
+  .menu-item:link,
+  .menu-item:visited,
+  .menu-item:hover,
+  .menu-item:active,
+  .menu-item:focus {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .menu-item i {
+    width: 22px;
+    height: 22px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: #9aa0a6;
+  }
+
+  .menu-item:hover {
+    background-color: #f3f4f6;
+    color: #0f172a;
+  }
+  .menu-item:hover i {
+    color: var(--azulMarinhoClaro);
+  }
+
+  .menu-item.active {
+    background-color: var(--azulMarinhoClaro);
+    color: #ffffff;
+    font-weight: 600;
+    box-shadow: none;
+  }
+  .menu-item.active i {
+    color: #ffffff;
+    background: rgba(255,255,255,0.08);
+    padding: 4px;
+    border-radius: 6px;
+  }
+
+  .outros {
+    margin-top: auto;
+    margin-bottom: 18px;
+  }
+
+  .content {
+    flex: 1;
+    background-color: #f8f9fa; 
+    padding: 30px; 
+    overflow-y: auto; 
+  }
+  
+  .card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+                0 2px 4px -2px rgba(0, 0, 0, 0.06);
+    padding: 24px;
+    width: 100%;
+  }
+  
+  .card h2 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 24px 0;
+    color: #111827;
+  }
+  
+  /* --- Estilos de Formulário --- */
+  .form-group {
+    margin-bottom: 16px;
+    position: relative;
+  }
+  
+  label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #475569;
+    margin-bottom: 8px;
+  }
+  
+  .select-field {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #e6e6e6;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #111827;
+    background-color: #ffffff;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    height: 40px;
+    padding-right: 40px;
+  }
+  
+  .select-icon {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    font-size: 10px;
+    color: #475569;
+    pointer-events: none;
+  }
+  
+  .select-field:focus {
+    border-color: #17356D;
+    outline: none;
+  }
+  
+  /* Seção de Fórmula */
+  .formula-section {
+      margin-top: 24px;
+      margin-bottom: 24px;
+  }
+  
+  .formula-input-group {
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+  }
+  
+  .text-field {
+    flex: 1;
+    padding: 10px 12px;
+    border: 1px solid #e6e6e6;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #111827;
+    height: 40px;
+  }
+  
+  .text-field:focus {
+    border-color: #17356D;
+    outline: none;
+  }
+  
+  /* Seção de Componentes */
+  .components-section {
+      margin-bottom: 24px;
+  }
+  
+  /* --- Área Componentes: */
+  .textarea-field {
+    width: 100%;
+    min-height: 120px;
+    padding: 12px;
+    border: 1px solid #e6e6e6;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #111827;
+    background-color: #ffffff; 
+    resize: vertical;
+    line-height: 1.5;
+    font-family: 'Poppins', sans-serif;
+    text-align: left;
+    white-space: pre-line;
+  }
+  
+  /* --- Toggle Switch --- */
+  .toggle-section {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 12px;
+      margin-top: 20px;
+  }
+  
+  .toggle-section label {
+      margin-bottom: 0;
+      font-weight: 400; 
+  }
+  
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+    flex-shrink: 0; 
+  }
+  
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+  }
+  
+  input:checked + .slider {
+    background-color: #17356D;
+  }
+  
+  input:checked + .slider:before {
+    transform: translateX(20px);
+  }
+  
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
+  
+  /* --- Botões de Ação --- */
+  .btn {
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.15s ease;
+    height: 40px;
+  }
+  
+  .btn-validate {
+    background-color: #17356D;
+    color: #ffffff;
+  }
+  
+  .btn-validate:hover {
+    background-color: #112850;
+  }
+  
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+  }
+  
+  .btn-save {
+    background-color: #17356D;
+    color: #ffffff;
+  }
+  
+  .btn-save:hover {
+    background-color: #112850;
+  }
+  
+
+  .btn-cancel {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 10px 16px;
+    cursor: pointer;
+    font-family: 'montserrat', sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-cancel:hover{
+    background-color: #f0f0f0;
+  }
