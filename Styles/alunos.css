@@ -92,32 +92,28 @@
 .tabela-container {
   width: 100%;
   padding-top: 40px;
+  overflow: hidden; /* faz o border-radius da tabela aparecer corretamente */
+
 }
 
 .tabelas {
   width: 100%;
   text-align: left;
-  border-collapse: separate;
+  border-collapse: collapse;
   border-spacing: 0;
-  border: 1px solid #a3a3a3;
+  border: 1px solid #ddd;
   border-radius: 10px;
   background-color: white;
 }
 
-.tabelas th {
-  font-weight: bold;
-  padding: 15px 20px;
-  border-bottom: 1px solid var(--cinzaClaro);
-}
-
+.tabelas th,
 .tabelas td {
-  padding: 10px 20px;
-  border-bottom: 1px solid #eee;
+  padding: 15px 20px;
+  border-bottom: 1px solid #ddd; /* linha contínua */
 }
 
-.tabelas tr:last-child td {
-  border-bottom: none;
-}
+
+
 
 .acoes {
   display: flex;
@@ -135,3 +131,5 @@
 .btn-acao:hover i {
   color: var(--azulMarinho);
 }
+
+  

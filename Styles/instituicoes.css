@@ -64,8 +64,7 @@
     vertical-align: center;
     border-collapse: separate;
     border-spacing: 0;
-    border: 1px solid #a3a3a3;
-    border-radius: 10px;
+    border: 1px solid #ddd;
     background-color: rgb(255, 255, 255);
 
 }
@@ -73,7 +72,7 @@
 .tabelas th{
     font-weight: bold;
     padding: 20px 0px 10px 20px;
-    border-bottom: 1px solid var(--cinzaClaro);
+    border-bottom: 1px solid #ddd;
 
 }
 
@@ -129,7 +128,7 @@
     padding: 20px;
     border-radius: 20px;
     width: 25%;
-    border: 1px solid #b2b2b2;
+    border: 1px solid #ddd;
     
 }
 
