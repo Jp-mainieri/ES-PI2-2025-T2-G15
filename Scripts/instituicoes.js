@@ -40,6 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
     switch(tipo) {
         case "instituicao":
             titulo.textContent = "Nova Instituição"; 
+            break;
         case "disciplina":
             titulo.textContent = "Nova Disciplina";
             break;
