@@ -1,4 +1,4 @@
-CREATE USER WEBAPP IDENTIFIED BY PIGrupo15;
+CREATE USER WEBAPP IDENTIFIED BY PI2Grupo15$$;
 GRANT CREATE SESSION TO WEBAPP;
 
 SELECT username, authentication_type
@@ -10,11 +10,11 @@ TEMPORARY TABLESPACE TEMP;
 
 ALTER USER WEBAPP QUOTA 100M ON DATA;
 
-SELECT username, default_tables, temporary_tablespace
+SELECT username, default_tablespace, temporary_tablespace
 FROM dba_users
 WHERE username = 'WEBAPP';
 
-SELECT tablespace_name, bytes, maxbytes
+SELECT tablespace_name, bytes, max_bytes
 FROM dba_ts_quotas
 WHERE username = 'WEBAPP';
 
