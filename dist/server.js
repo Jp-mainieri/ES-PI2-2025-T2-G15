@@ -53,7 +53,7 @@ app.get('/estudantes/:id', (req, res) => __awaiter(void 0, void 0, void 0, funct
     }
 }));
 // rota para inserir um estudante
-app.post('/estudante', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.post('/estudantes', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { ra, nome, email } = req.body;
         if (!ra || !nome || !email) {

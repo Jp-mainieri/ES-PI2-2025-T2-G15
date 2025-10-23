@@ -47,7 +47,7 @@ app.get('/estudantes/:id', async(req:Request,res:Response)=>{
 })
 
 // rota para inserir um estudante
-app.post('/estudante', async (req:Request,res:Response)=>{
+app.post('/estudantes', async (req:Request,res:Response)=>{
     try {
         const {ra,nome,email} = req.body;
         if (!ra || !nome || !email){

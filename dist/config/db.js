@@ -16,7 +16,7 @@ exports.open = open;
 exports.close = close;
 const oracledb_1 = __importDefault(require("oracledb"));
 // caminho da wallet de conexão com o oracle.
-const walletPath = "C:\\oracle\\Wallet_jpDB01";
+const walletPath = "C:/oracle/Wallet_jpDB01";
 // inicializar o cliente oracle, usando a wallet.
 oracledb_1.default.initOracleClient({ configDir: walletPath });
 // formato de saida dos dados, vai ser objetos JS estruturados.
