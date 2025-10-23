@@ -26,6 +26,21 @@ CREATE TABLE WEBAPP.ESTUDANTES (
     CREATED_AT TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+INSERT INTO ESTUDANTES (RA, NOME, EMAIL)
+VALUES ('20230001', 'Ana Clara Silva', 'ana.silva@email.com');
+
+INSERT INTO ESTUDANTES (RA, NOME, EMAIL)
+VALUES ('20230002', 'Bruno Souza', 'bruno.souza@email.com');
+
+INSERT INTO ESTUDANTES (RA, NOME, EMAIL)
+VALUES ('20230003', 'Carla Mendes', 'carla.mendes@email.com');
+
+INSERT INTO ESTUDANTES (RA, NOME, EMAIL)
+VALUES ('20230004', 'Diego Oliveira', 'diego.oliveira@email.com');
+
+INSERT INTO ESTUDANTES (RA, NOME, EMAIL)
+VALUES ('20230005', 'Eduarda Lima', 'eduarda.lima@email.com');
+
 COMMIT;
 
 SELECT * FROM ESTUDANTES;
