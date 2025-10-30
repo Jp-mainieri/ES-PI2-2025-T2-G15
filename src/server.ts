@@ -84,6 +84,7 @@ app.get("/instituicoes", async (req:Request,res:Response) => {
     }
 })
 
+// Rota para obter uma instituição por id
 app.get('/instituicoes/:id', async(req:Request,res:Response)=>{
     try{
         const id = Number(req.params.id);
@@ -103,9 +104,10 @@ app.get('/instituicoes/:id', async(req:Request,res:Response)=>{
     }
 })
 
+// Rota para adicionar uma instituição
 app.post("/instituicoes", async (req:Request,res:Response) => {
     try {
-        const {nome} = req.body();
+        const {nome} = req.body;
 
         if (!nome) {
             return res.status(400).json({
