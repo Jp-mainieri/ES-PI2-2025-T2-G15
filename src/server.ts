@@ -11,7 +11,9 @@ import {
 import {
     getAllInstituicoes,
     addInstituicao,
-    getInstituicaoById
+    getInstituicaoById,
+    updateInstituicao,
+    deleteInstituicao
 } from "./db/instituicoes";
 
 const app = express();
@@ -20,6 +22,8 @@ const port = 3000;
 app.use(bodyParser.json());
 
 // ROTAS:
+
+// Rotas de Estudantes:
 
 // Rota para obter todos os estudantes
 app.get('/estudantes', async (req :Request,res:Response)=>{
@@ -77,6 +81,7 @@ app.post('/estudantes', async (req:Request,res:Response)=>{
     }
 })
 
+// Rotas de Instituições:
 
 // Rota para listar todas as instituições
 app.get("/instituicoes", async (req:Request,res:Response) => {
@@ -112,13 +117,13 @@ app.get('/instituicoes/:id', async(req:Request,res:Response)=>{
 })
 
 // Rota para adicionar uma instituição
-app.post("/instituicoes", async (req:Request,res:Response) => {
+app.post("/instituicoes/adicionar", async (req:Request,res:Response) => {
     try {
         const {nome} = req.body;
 
         if (!nome) {
             return res.status(400).json({
-                erro: "Campos Nome, ... são Obrigatórios."
+                erro: "Campo Nome é Obrigatórios."
             })
         }
         const id = await addInstituicao(nome);
@@ -131,6 +136,26 @@ app.post("/instituicoes", async (req:Request,res:Response) => {
         res.status(500).json({
             error:"Erro ao inserir instituição."
         })
+    }
+})
+
+// Rota para editar uma instituição
+app.post("/instituicoes/editar/:id", async (req:Request,res:Response)=>{
+    try{
+        const {nome} = req.body;
+        const id = Number(req.params.id);
+        if (!nome) {
+            return res.status(400).json({
+                erro: "Campo Nome é Obrigatório"
+            });
+        }
+        await updateInstituicao(id,nome);
+        res.status(200).json({
+            message: "Instituição alterada com sucesso.", id
+        })
+    }catch (err) {
+        console.error(err);
+
     }
 })
 
