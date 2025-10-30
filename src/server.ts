@@ -1,20 +1,27 @@
 import express, {Request, Response} from "express";
 import bodyParser from "body-parser"
 
+// Imports de funções do CRUD
 import {
     getAllEstudantes,
     getEstudanteById,
     addEstudante
 } from "./db/estudantes";
 
-import {getAllInstituicoes, addInstituicao, getInstituicaoById} from "./db/instituicoes";
+import {
+    getAllInstituicoes,
+    addInstituicao,
+    getInstituicaoById
+} from "./db/instituicoes";
 
 const app = express();
 const port = 3000;
 
 app.use(bodyParser.json());
 
-// rota para obter todos os estudantes
+// ROTAS:
+
+// Rota para obter todos os estudantes
 app.get('/estudantes', async (req :Request,res:Response)=>{
     try {
         const estudantes = await getAllEstudantes();
@@ -27,7 +34,7 @@ app.get('/estudantes', async (req :Request,res:Response)=>{
     }
 })
 
-// rota para obter um estudante por id
+// Rota para obter um estudante por id
 app.get('/estudantes/:id', async(req:Request,res:Response)=>{
     try{
         
@@ -48,7 +55,7 @@ app.get('/estudantes/:id', async(req:Request,res:Response)=>{
     }
 })
 
-// rota para inserir um estudante
+// Rota para inserir um estudante
 app.post('/estudantes', async (req:Request,res:Response)=>{
     try {
         const {ra,nome,email} = req.body;

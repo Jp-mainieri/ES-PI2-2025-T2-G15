@@ -87,6 +87,7 @@ app.get("/instituicoes", (req, res) => __awaiter(void 0, void 0, void 0, functio
         });
     }
 }));
+// Rota para obter uma instituição por id
 app.get('/instituicoes/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const id = Number(req.params.id);
@@ -107,9 +108,10 @@ app.get('/instituicoes/:id', (req, res) => __awaiter(void 0, void 0, void 0, fun
         });
     }
 }));
+// Rota para adicionar uma instituição
 app.post("/instituicoes", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { nome } = req.body();
+        const { nome } = req.body;
         if (!nome) {
             return res.status(400).json({
                 erro: "Campos Nome, ... são Obrigatórios."
