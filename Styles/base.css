@@ -7,6 +7,11 @@ body {
   font-family: "Poppins", sans-serif;
 }
 
+html, body {
+    height: 100%;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+}
   
 header {
 
@@ -185,3 +190,4 @@ nav a {
   text-align: left;
   letter-spacing: 1px;
 }
+

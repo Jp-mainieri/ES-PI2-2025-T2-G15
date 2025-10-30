@@ -14,15 +14,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const body_parser_1 = __importDefault(require("body-parser"));
-//import {getAllInstituicoes, addInstituicao} from ../db/instituicoes.ts
+const instituicoes_1 = require("../db/instituicoes");
 const app = (0, express_1.default)();
 const port = 3000;
 app.use(body_parser_1.default.json());
 // Rota para listar todas as instituições
 app.get("/instituicoes", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        //const instituicoes = await getAllInstituicoes();
-        //res.json(instituicoes);
+        const instituicoes = yield (0, instituicoes_1.getAllInstituicoes)();
+        res.json(instituicoes);
     }
     catch (err) {
         console.error(err);
@@ -31,20 +31,38 @@ app.get("/instituicoes", (req, res) => __awaiter(void 0, void 0, void 0, functio
         });
     }
 }));
+app.get('/instituicoes/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const id = Number(req.params.id);
+        const instituicao = yield (0, instituicoes_1.getInstituicaoById)(id);
+        if (instituicao) {
+            res.json(instituicao);
+        }
+        else {
+            res.status(404).json({
+                message: "Instituição nao foi encontrado com o id fornecido."
+            });
+        }
+    }
+    catch (err) {
+        console.error(err);
+        res.status(500).json({
+            error: "Erro ao buscar instituição pelo ID fornecido."
+        });
+    }
+}));
 app.post("/instituicoes", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        //const {nome, ...} = req.body();
-        /*
-        if (!nome || ...) {
+        const { nome } = req.body();
+        if (!nome) {
             return res.status(400).json({
                 erro: "Campos Nome, ... são Obrigatórios."
-            })
+            });
         }
-        const id = await addInstituicao(nome, ...);
+        const id = yield (0, instituicoes_1.addInstituicao)(nome);
         res.status(200).json({
             message: "Instituição inserida com sucesso.", id
-        })
-        */
+        });
     }
     catch (err) {
         console.error(err);
