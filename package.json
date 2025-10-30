@@ -6,7 +6,7 @@
   "scripts": {
     "verifyts": "ts-node src/teste.ts",
     "build": "tsc",
-    "start": "npm run build && node dist/server.js && node dist/routes/instituicoes.js"
+    "start": "npm run build && node dist/server.js"
   },
   "author": "",
   "license": "ISC",
