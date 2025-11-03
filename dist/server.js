@@ -14,12 +14,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const body_parser_1 = __importDefault(require("body-parser"));
+// Imports de funções do CRUD
 const estudantes_1 = require("./db/estudantes");
 const instituicoes_1 = require("./db/instituicoes");
 const app = (0, express_1.default)();
 const port = 3000;
 app.use(body_parser_1.default.json());
-// rota para obter todos os estudantes
+// ROTAS:
+// Rotas de Estudantes:
+// Rota para obter todos os estudantes
 app.get('/estudantes', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const estudantes = yield (0, estudantes_1.getAllEstudantes)();
@@ -32,7 +35,7 @@ app.get('/estudantes', (req, res) => __awaiter(void 0, void 0, void 0, function*
         });
     }
 }));
-// rota para obter um estudante por id
+// Rota para obter um estudante por id
 app.get('/estudantes/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const id = Number(req.params.id);
@@ -53,7 +56,7 @@ app.get('/estudantes/:id', (req, res) => __awaiter(void 0, void 0, void 0, funct
         });
     }
 }));
-// rota para inserir um estudante
+// Rota para inserir um estudante
 app.post('/estudantes', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { ra, nome, email } = req.body;
@@ -74,6 +77,7 @@ app.post('/estudantes', (req, res) => __awaiter(void 0, void 0, void 0, function
         });
     }
 }));
+// Rotas de Instituições:
 // Rota para listar todas as instituições
 app.get("/instituicoes", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -109,12 +113,12 @@ app.get('/instituicoes/:id', (req, res) => __awaiter(void 0, void 0, void 0, fun
     }
 }));
 // Rota para adicionar uma instituição
-app.post("/instituicoes", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.post("/instituicoes/adicionar", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { nome } = req.body;
         if (!nome) {
             return res.status(400).json({
-                erro: "Campos Nome, ... são Obrigatórios."
+                erro: "Campo Nome é Obrigatórios."
             });
         }
         const id = yield (0, instituicoes_1.addInstituicao)(nome);
@@ -127,6 +131,25 @@ app.post("/instituicoes", (req, res) => __awaiter(void 0, void 0, void 0, functi
         res.status(500).json({
             error: "Erro ao inserir instituição."
         });
+    }
+}));
+// Rota para editar uma instituição
+app.post("/instituicoes/editar/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { nome } = req.body;
+        const id = Number(req.params.id);
+        if (!nome) {
+            return res.status(400).json({
+                erro: "Campo Nome é Obrigatório"
+            });
+        }
+        yield (0, instituicoes_1.updateInstituicao)(id, nome);
+        res.status(200).json({
+            message: "Instituição alterada com sucesso.", id
+        });
+    }
+    catch (err) {
+        console.error(err);
     }
 }));
 app.listen(port, () => {
