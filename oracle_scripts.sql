@@ -50,3 +50,116 @@ CREATE TABLE WEBAPP.INSTITUICOES (
     NOME VARCHAR2(100) NOT NULL,
     CREATED_AT TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+CREATE TABLE INSTITUICAO (
+  id_instituicao NUMBER PRIMARY KEY,
+  nome VARCHAR2(200) NOT NULL
+);
+
+CREATE TABLE CURSO (
+  id_curso NUMBER PRIMARY KEY,
+  nome VARCHAR2(100) NOT NULL,
+  sala VARCHAR2(20),
+  id_instituicao NUMBER,
+  CONSTRAINT fk_curso_instituicao
+    FOREIGN KEY (id_instituicao)
+    REFERENCES INSTITUICAO(id_instituicao)
+);
+
+CREATE TABLE DISCIPLINA (
+  id_disciplina NUMBER PRIMARY KEY,
+  sigla VARCHAR2(10) NOT NULL,
+  codigo VARCHAR2(20) UNIQUE NOT NULL,
+  periodo NUMBER,
+  id_curso NUMBER,
+  CONSTRAINT fk_disciplina_curso
+    FOREIGN KEY (id_curso)
+    REFERENCES CURSO(id_curso)
+);
+
+CREATE TABLE TURMAS (
+  id_turma NUMBER PRIMARY KEY,
+  sigla VARCHAR2(10) NOT NULL,
+  id_disciplina NUMBER NOT NULL,
+  CONSTRAINT fk_turma_disciplina
+    FOREIGN KEY (id_disciplina)
+    REFERENCES DISCIPLINA(id_disciplina)
+);
+
+CREATE TABLE PROFESSORES (
+  id_professor NUMBER PRIMARY KEY,
+  nome VARCHAR2(100) NOT NULL,
+  telefone VARCHAR2(20),
+  senha VARCHAR2(100),
+  disciplina VARCHAR2(100),
+  e_mail VARCHAR2(100) UNIQUE NOT NULL,
+  id_instituicao NUMBER,
+  CONSTRAINT fk_professor_instituicao
+    FOREIGN KEY (id_instituicao)
+    REFERENCES INSTITUICAO(id_instituicao)
+);
+
+CREATE TABLE ALUNOS (
+  RA_aluno VARCHAR2(20) PRIMARY KEY,
+  Nome VARCHAR2(100) NOT NULL,
+  Matricula VARCHAR2(20) UNIQUE NOT NULL,
+  Curso VARCHAR2(100),
+  Data_Nascimento DATE
+);
+
+CREATE TABLE COMPONENTE_NOTA (
+  id_componente NUMBER PRIMARY KEY,
+  nome VARCHAR2(50) NOT NULL,
+  sigla VARCHAR2(10),
+  descricao VARCHAR2(200),
+  id_disciplina NUMBER NOT NULL,
+  CONSTRAINT fk_comp_disciplina
+    FOREIGN KEY (id_disciplina)
+    REFERENCES DISCIPLINA(id_disciplina)
+);
+
+CREATE TABLE NOTA (
+  id_nota NUMBER PRIMARY KEY,
+  valor NUMBER(4, 2),
+  id_componente NUMBER NOT NULL,
+  RA_aluno VARCHAR2(20) NOT NULL,
+  CONSTRAINT fk_nota_componente
+    FOREIGN KEY (id_componente)
+    REFERENCES COMPONENTE_NOTA(id_componente),
+  CONSTRAINT fk_nota_aluno
+    FOREIGN KEY (RA_aluno)
+    REFERENCES ALUNOS(RA_aluno)
+);
+
+CREATE TABLE AUDITORIA (
+  id_auditoria NUMBER PRIMARY KEY,
+  data_hora TIMESTAMP DEFAULT SYSTIMESTAMP,
+  descricao VARCHAR2(500),
+  id_nota NUMBER,
+  CONSTRAINT fk_auditoria_nota
+    FOREIGN KEY (id_nota)
+    REFERENCES NOTA(id_nota)
+);
+
+CREATE TABLE TURMAS_ALUNOS (
+  id_turma NUMBER NOT NULL,
+  RA_aluno VARCHAR2(20) NOT NULL,
+  PRIMARY KEY (id_turma, RA_aluno),
+  CONSTRAINT fk_ta_turma
+    FOREIGN KEY (id_turma)
+    REFERENCES TURMAS(id_turma),
+  CONSTRAINT fk_ta_aluno
+    FOREIGN KEY (RA_aluno)
+    REFERENCES ALUNOS(RA_aluno)
+);
+
+CREATE TABLE PROFESSORES_TURMAS (
+  id_professor NUMBER NOT NULL,
+  id_turma NUMBER NOT NULL,
+  PRIMARY KEY (id_professor, id_turma),
+  CONSTRAINT fk_pt_professor
+    FOREIGN KEY (id_professor)
+    REFERENCES PROFESSORES(id_professor),
+  CONSTRAINT fk_pt_turma
+    FOREIGN KEY (id_turma)
+    REFERENCES TURMAS(id_turma)
+);
