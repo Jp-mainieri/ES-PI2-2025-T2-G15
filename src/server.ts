@@ -159,6 +159,20 @@ app.post("/instituicoes/editar/:id", async (req:Request,res:Response)=>{
     }
 })
 
+// Rota para excluir uma instituição
+app.post("/instituicoes/excluir/:id", async (req:Request,res:Response)=>{
+    try{
+        const id = Number(req.params.id);
+        await deleteInstituicao(id);
+        res.status(200).json({
+            message: "Instituição exluida com sucesso.", id
+        })
+    }catch (err) {
+        console.error(err);
+    }
+})
+
+
 app.listen(port, ()=>{
     console.log(`Servidor rodando: http://localhost:${port}`)
 })
