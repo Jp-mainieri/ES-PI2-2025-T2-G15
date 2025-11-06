@@ -5,6 +5,7 @@ import bodyParser from "body-parser"
 
 import {
     getAllInstituicoes,
+    getAllInstituicoesByProfessor,
     addInstituicao,
     getInstituicaoById,
     updateInstituicao,
