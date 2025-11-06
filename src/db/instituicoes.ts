@@ -1,9 +1,9 @@
 import {open,close} from "../config/db";
-import OracleDB, {autoCommit} from "oracledb";
+import OracleDB from "oracledb";
 
 export interface Instituicao{
-    id:number,
-    nome:string
+    id_instituicao:number,
+    nome:string,
 }
 
 // Função para obter instituições
@@ -12,8 +12,23 @@ export async function getAllInstituicoes(): Promise<Instituicao[]> {
     const connection = await open();
     try{
         const result = await connection.execute(
-            'SELECT ID as "id", NOME as "nome" FROM INSTITUICOES'
+            'SELECT id_instituicao as "id", NOME as "nome" FROM INSTITUICOES'
         );
+        return result.rows as Instituicao[];
+    }finally {
+        await close(connection);
+    }
+}
+
+// Função para obter instituição por professor
+
+export async function getAllInstituicoesByProfessor(id_professor: number): Promise<Instituicao[]> {
+    const connection = await open();
+    try{
+        const result = await connection.execute(
+            'SELECT id_instituicao as "id", nome FROM INSTITUICOES WHERE id_professor = :id_professor',
+            [id_professor]
+        )
         return result.rows as Instituicao[];
     }finally {
         await close(connection);
@@ -22,11 +37,11 @@ export async function getAllInstituicoes(): Promise<Instituicao[]> {
 
 // Função para obter instituição por id
 
-export async function getInstituicaoById(id:number): Promise<Instituicao | null> {
+export async function getInstituicaoById(id: number): Promise<Instituicao | null> {
     const connection = await open();
     try{
         const result = await connection.execute(
-            'SELECT ID as "id", NOME as "nome" FROM INSTITUICOES WHERE ID = :id',
+            'SELECT id_instituicao as "id", nome FROM INSTITUICOES WHERE id_instituicao = :id',
             [id]
         )
         return (result.rows && result.rows[0]) as Instituicao | null;
@@ -37,16 +52,16 @@ export async function getInstituicaoById(id:number): Promise<Instituicao | null>
 
 // Função para adicionar uma instituição
 
-export async function addInstituicao(nome: string): Promise <number> {
+export async function addInstituicao(nome: string, id_professor: number): Promise <number> {
     const connection = await open()
     try {
         const result = await connection.execute<{outBinds : {id:number}}>(
             `
-            INSERT INTO INSTITUICOES (NOME)
-            VALUES (:nome)
-            RETURNING ID INTO :id
+            INSERT INTO INSTITUICOES (NOME, ID_PROFESSOR)
+            VALUES (:nome,:id_professor)
+            RETURNING id_instituicao INTO :id
             `,
-            {nome, id: {dir:OracleDB.BIND_OUT, type: OracleDB.NUMBER}},
+            {nome,id_professor ,id: {dir:OracleDB.BIND_OUT, type: OracleDB.NUMBER}},
             {autoCommit: true}
         );
 
@@ -71,8 +86,8 @@ export async function updateInstituicao(id:number, nome: string){
         const result = await connection.execute(
             `
                 UPDATE INSTITUICOES
-                SET NOME = :nome
-                WHERE ID = :id
+                SET nome = :nome
+                WHERE id_instituicao = :id
             `,
             {nome, id},
             {autoCommit: true}
@@ -90,7 +105,7 @@ export async function deleteInstituicao(id:number) {
         const result = await connection.execute(
             `
                 DELETE FROM INSTITUICOES
-                WHERE ID = :id
+                WHERE id_instituicao = :id
             `,
             [id],
             {autoCommit: true}

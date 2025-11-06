@@ -5,6 +5,7 @@ import bodyParser from "body-parser"
 
 import {
     getAllInstituicoes,
+    getAllInstituicoesByProfessor,
     addInstituicao,
     getInstituicaoById,
     updateInstituicao,
@@ -13,6 +14,7 @@ import {
 
 import {
     getAllCursos,
+    getAllCursosByInstituicao,
     getCursoById,
     addCurso,
     updateCurso,
@@ -29,6 +31,7 @@ import {
 
 import {
     getAllDisciplinas,
+    getAllDisciplinasByCurso,
     getDisciplinaById,
     addDisciplina,
     updateDisciplina,
@@ -37,6 +40,7 @@ import {
 
 import {
     getAllTurmas,
+    getAllTurmasByCurso,
     getTurmaById,
     addTurma,
     updateTurma,

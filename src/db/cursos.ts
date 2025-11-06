@@ -4,14 +4,13 @@ import OracleDB from "oracledb";
 export interface Curso{
     id_curso:number,
     nome:string,
-    sigla:string
 }
 
 export async function getAllCursos(): Promise<Curso[]> {
     const connection = await open();
     try{
         const result = await connection.execute(
-            `SELECT ID_CURSO as "id_curso", NOME as "nome", SIGLA as "sigla" FROM CURSOS`
+            `SELECT ID_CURSO as "id_curso", NOME FROM CURSOS`
         );
         return result.rows as Curso[];
     }finally{
@@ -19,11 +18,27 @@ export async function getAllCursos(): Promise<Curso[]> {
     }
 }
 
+export async function getAllCursosByInstituicao(id_instituicao: number): Promise<Curso[]> {
+    const connection = await open();
+    try {
+        const result = await connection.execute(
+            `SELECT ID_CURSO as "id", NOME
+             FROM CURSOS 
+             WHERE ID_INSTITUICAO = :id_instituicao`,
+            [id_instituicao]
+        )
+        return result.rows as Curso[];
+    }finally{
+        await close(connection);
+    }
+}
+
+
 export async function getCursoById(id:number): Promise<Curso | null> {
     const connection = await open();
     try{
         const result = await connection.execute(
-            `SELECT ID_CURSO as "id_curso", NOME as "nome", SIGLA as "sigla" FROM CURSOS
+            `SELECT ID_CURSO as "id", NOME as "nome" FROM CURSOS
             WHERE ID_CURSO = :id`,
             [id]
         );
@@ -33,16 +48,16 @@ export async function getCursoById(id:number): Promise<Curso | null> {
     }
 }
 
-export async function addCurso(nome: string, sigla: string): Promise <number> {
+export async function addCurso(nome: string, id_instituicao: number): Promise <number> {
     const connection = await open()
     try {
         const result = await connection.execute<{outBinds : {id:number}}>(
             `
-            INSERT INTO CURSOS (NOME, SIGLA)
-            VALUES (:nome, :sigla)
+            INSERT INTO CURSOS (NOME, ID_INSTITUICAO)
+            VALUES (:nome, :id_instituicao)
             RETURNING ID_CURSO INTO :id
             `,
-            {nome, sigla, id: {dir:OracleDB.BIND_OUT, type: OracleDB.NUMBER}},
+            {nome, id_instituicao, id: {dir:OracleDB.BIND_OUT, type: OracleDB.NUMBER}},
             {autoCommit: true}
         );
 
@@ -59,14 +74,14 @@ export async function addCurso(nome: string, sigla: string): Promise <number> {
     }
 }
 
-export async function updateCurso(id: number, nome: string, sigla: string): Promise<boolean> {
+export async function updateCurso(id: number, nome: string): Promise<boolean> {
     const connection = await open();
     try {
         const result = await connection.execute(
             `UPDATE CURSOS 
-            SET NOME = :nome, SIGLA = :sigla 
+            SET NOME = :nome
             WHERE ID_CURSO = :id`,
-            {id, nome, sigla},
+            {id, nome},
             {autoCommit: true}
         );
 

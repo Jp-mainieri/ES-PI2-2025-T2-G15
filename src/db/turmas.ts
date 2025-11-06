@@ -4,14 +4,29 @@ import OracleDB from "oracledb";
 export interface Turma{
     id_turma:number,
     nome:string,
-    sigla:string
+    codigo:string,
+    turno:string,
 }
 
 export async function getAllTurmas(): Promise<Turma[]> {
     const connection = await open();
     try{
         const result = await connection.execute(
-            `SELECT ID_TURMA as "id_turma", NOME as "nome", SIGLA as "sigla" FROM TURMAS`
+            `SELECT ID_TURMA as "id", NOME, CODIGO, TURNO FROM TURMAS`
+        );
+        return result.rows as Turma[];
+    }finally{
+        await close(connection);
+    }
+}
+
+export async function getAllTurmasByCurso(id_disciplina:number): Promise<Turma[]> {
+    const connection = await open();
+    try{
+        const result = await connection.execute(
+            `SELECT ID_TURMA as "id", NOME, CODIGO, 
+            TURNO FROM TURMAS WHERE ID_DISCIPLINA = :id_disciplina`,
+            [id_disciplina]
         );
         return result.rows as Turma[];
     }finally{
@@ -23,7 +38,7 @@ export async function getTurmaById(id:number): Promise<Turma | null> {
     const connection = await open();
     try{
         const result = await connection.execute(
-            `SELECT ID_TURMA as "id_turma", NOME as "nome", SIGLA as "sigla" FROM TURMAS
+            `SELECT ID_TURMA as "ID", NOME, CODIGO, TURNO FROM TURMAS
             WHERE ID_TURMA = :id`,
             [id]
         );
@@ -33,16 +48,16 @@ export async function getTurmaById(id:number): Promise<Turma | null> {
     }
 }
 
-export async function addTurma(nome: string, sigla: string): Promise <number> {
+export async function addTurma(nome: string, codigo: string, turno:string, id_disciplina:number): Promise <number> {
     const connection = await open()
     try {
         const result = await connection.execute<{outBinds : {id:number}}>(
             `
-            INSERT INTO TURMAS (NOME, SIGLA)
-            VALUES (:nome, :sigla)
+            INSERT INTO TURMAS (NOME, CODIGO, TURNO, ID_DISCIPLINA)
+            VALUES (:nome, :codigo, :turno, :id_disciplina)
             RETURNING ID_TURMA INTO :id
             `,
-            {nome, sigla, id: {dir:OracleDB.BIND_OUT, type: OracleDB.NUMBER}},
+            {nome, codigo, turno, id_disciplina, id: {dir:OracleDB.BIND_OUT, type: OracleDB.NUMBER}},
             {autoCommit: true}
         );
 
@@ -59,14 +74,14 @@ export async function addTurma(nome: string, sigla: string): Promise <number> {
     }
 }
 
-export async function updateTurma(id: number, nome: string, sigla: string): Promise<boolean> {
+export async function updateTurma(id: number, nome: string, codigo: string, turno:string): Promise<boolean> {
     const connection = await open();
     try {
         const result = await connection.execute(
             `UPDATE TURMAS 
-            SET NOME = :nome, SIGLA = :sigla 
+            SET NOME = :nome, CODIGO = :sigla, TURNO = :turno
             WHERE ID_TURMA = :id`,
-            {id, nome, sigla},
+            {id, nome, codigo, turno},
             {autoCommit: true}
         );
 
