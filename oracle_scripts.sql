@@ -55,15 +55,23 @@ FOREIGN KEY (id_disciplina) REFERENCES DISCIPLINA(id_disciplina)
 );
 
 CREATE TABLE PROFESSORES (
-id_professor NUMBER PRIMARY KEY,
-nome VARCHAR2(100) NOT NULL,
-telefone VARCHAR2(20),
-senha VARCHAR2(100),
-e_mail VARCHAR2(100) UNIQUE NOT NULL,
-id_instituicao NUMBER NOT NULL,
-CONSTRAINT fk_professor_instituicao
-FOREIGN KEY (id_instituicao) REFERENCES INSTITUICAO(id_instituicao)
+ id_professor NUMBER PRIMARY KEY,
+ nome VARCHAR2(100) NOT NULL,
+ telefone VARCHAR2(20),
+ senha VARCHAR2(100),
+ e_mail VARCHAR2(100) UNIQUE NOT NULL
 );
+
+CREATE TABLE PROFESSORES_INSTITUICOES (
+ id_professor NUMBER NOT NULL,
+ id_instituicao NUMBER NOT NULL,
+ PRIMARY KEY (id_professor, id_instituicao),
+ CONSTRAINT fk_pi_professor FOREIGN KEY (id_professor) REFERENCES
+PROFESSORES(id_professor),
+ CONSTRAINT fk_pi_instituicao FOREIGN KEY (id_instituicao) REFERENCES
+INSTITUICAO(id_instituicao)
+);
+
 
 CREATE TABLE ALUNOS (
 RA_aluno VARCHAR2(20) PRIMARY KEY,
