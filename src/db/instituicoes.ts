@@ -2,8 +2,9 @@ import {open,close} from "../config/db";
 import OracleDB, {autoCommit} from "oracledb";
 
 export interface Instituicao{
-    id:number,
-    nome:string
+    id_instituicao:number,
+    nome:string,
+    id_professor:number
 }
 
 // Função para obter instituições
@@ -12,7 +13,7 @@ export async function getAllInstituicoes(): Promise<Instituicao[]> {
     const connection = await open();
     try{
         const result = await connection.execute(
-            'SELECT ID as "id", NOME as "nome" FROM INSTITUICOES'
+            'SELECT id_instituicao as "id", NOME as "nome" FROM INSTITUICOES'
         );
         return result.rows as Instituicao[];
     }finally {
