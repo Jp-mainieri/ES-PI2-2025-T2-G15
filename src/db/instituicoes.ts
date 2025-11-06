@@ -80,7 +80,7 @@ export async function addInstituicao(nome: string, id_professor: number): Promis
 
 // Função para editar instituicao
 
-export async function updateInstituicao(id:number, nome: string){
+export async function updateInstituicao(id:number, nome: string): Promise<boolean>{
     const connection = await open();
     try {
         const result = await connection.execute(
@@ -92,6 +92,7 @@ export async function updateInstituicao(id:number, nome: string){
             {nome, id},
             {autoCommit: true}
         );
+        return (result.rowsAffected ?? 0) > 0;
     }finally {
         await close(connection);
     }
@@ -99,7 +100,7 @@ export async function updateInstituicao(id:number, nome: string){
 
 // Função para excluir instituicao
 
-export async function deleteInstituicao(id:number) {
+export async function deleteInstituicao(id:number): Promise<boolean> {
     const connection = await open();
     try {
         const result = await connection.execute(
@@ -111,7 +112,7 @@ export async function deleteInstituicao(id:number) {
             {autoCommit: true}
         )
 
-        return id;
+        return (result.rowsAffected ?? 0) > 0;
     }finally {
         await close(connection);
     }
