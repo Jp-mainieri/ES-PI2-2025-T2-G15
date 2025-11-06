@@ -35,7 +35,7 @@ CREATE TABLE PROFESSORES (
  nome VARCHAR2(100) NOT NULL,
  telefone VARCHAR2(20),
  senha VARCHAR2(100),
- e_mail VARCHAR2(100) UNIQUE NOT NULL
+ email VARCHAR2(100) UNIQUE NOT NULL
 );
 
 CREATE TABLE INSTITUICOES (
@@ -201,5 +201,9 @@ BEGIN
   SELECT seq_auditoria.NEXTVAL INTO :NEW.id_auditoria FROM DUAL;
 END;
 /
+
+COMMIT;
+
+INSERT INTO PROFESSORES (nome, telefone, senha, email) VALUES ('Renata', '123456789', 'password123', 'renata@example.com');
 
 COMMIT;
