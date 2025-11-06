@@ -14,6 +14,7 @@ import {
 
 import {
     getAllCursos,
+    getAllCursosByInstituicao,
     getCursoById,
     addCurso,
     updateCurso,
@@ -30,6 +31,7 @@ import {
 
 import {
     getAllDisciplinas,
+    getAllDisciplinasByCurso,
     getDisciplinaById,
     addDisciplina,
     updateDisciplina,
@@ -38,6 +40,7 @@ import {
 
 import {
     getAllTurmas,
+    getAllTurmasByCurso,
     getTurmaById,
     addTurma,
     updateTurma,
