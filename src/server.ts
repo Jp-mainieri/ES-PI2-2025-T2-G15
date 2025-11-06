@@ -105,9 +105,30 @@ app.get('/instituicoes/:id', async(req:Request,res:Response)=>{
     }
 })
 
+//Obter Instituições Por Professor
+app.get('/instituicoes/:id_professor', async(req:Request,res:Response)=>{
+    try{
+        const id_professor = Number(req.params.id);
+        const instituicao = await getAllInstituicoesByProfessor(id_professor);
+        if (instituicao) {
+            res.json(instituicao);
+        }else {
+            res.status(404).json({
+                message: "Nenhuma instituição foi cadastrada para esse professor."
+            })
+        }
+    }catch (err) {
+        console.error(err)
+        res.status(500).json({
+            error: "Erro ao buscar instituições pelo id do professor."
+        })
+    }
+})
+
 // Rota para adicionar uma instituição
-app.post("/instituicoes", async (req:Request,res:Response) => {
+app.post("/instituicoes/:id_professor", async (req:Request,res:Response) => {
     try {
+        const id_professor = Number(req.params.id_professor);
         const {nome} = req.body;
 
         if (!nome) {
@@ -115,7 +136,7 @@ app.post("/instituicoes", async (req:Request,res:Response) => {
                 erro: "Campo Nome é Obrigatórios."
             })
         }
-        const id = await addInstituicao(nome);
+        const id = await addInstituicao(nome, id_professor);
         res.status(200).json({
             message: "Instituição inserida com sucesso.", id
         })
@@ -220,14 +241,14 @@ app.post('/cursos', async (req:Request, res:Response) => {
 // Rota para editar um curso
 app.post('/cursos/editar/:id', async (req:Request, res:Response) => {
     try {
-        const {nome, sigla} = req.body;
+        const {nome, sigla, codigo} = req.body;
         const id = Number(req.params.id);
         if (!nome || !sigla) {
             return res.status(400).json({
                 error: "Campos Nome e Sigla são Obrigatórios."
             });
         }
-        const updated = await updateCurso(id, nome, sigla);
+        const updated = await updateCurso(id, nome, codigo);
         if (updated) {
             res.status(200).json({
                 message: "Curso atualizado com sucesso.", id
@@ -403,13 +424,13 @@ app.get('/disciplinas/:id', async (req:Request, res:Response) => {
 
 app.post('/disciplinas', async (req:Request, res:Response) => {
     try {
-        const {nome, sigla, codigo, periodo} = req.body;
+        const {nome, sigla, codigo, periodo,id_curso} = req.body;
         if (!nome || !sigla || !codigo || !periodo) {
             return res.status(400).json({
                 error: "Todos os campos são obrigatórios."
             });
         }
-        const id = await addDisciplina(nome, sigla, codigo, Number(periodo));
+        const id = await addDisciplina(nome, sigla, codigo, periodo, id_curso);
         res.status(200).json({
             message: "Disciplina adicionada com sucesso.", id
         });
@@ -430,7 +451,7 @@ app.post('/disciplinas/editar/:id', async (req:Request, res:Response) => {
                 error: "Todos os campos são obrigatórios."
             });
         }
-        const updated = await updateDisciplina(id, nome, sigla, codigo, Number(periodo));
+        const updated = await updateDisciplina(id, nome, sigla, codigo, periodo);
         if (updated) {
             res.status(200).json({
                 message: "Disciplina atualizada com sucesso.", id
@@ -504,13 +525,13 @@ app.get('/turmas/:id', async (req:Request, res:Response) => {
 
 app.post('/turmas', async (req:Request, res:Response) => {
     try {
-        const {nome, sigla} = req.body;
-        if (!nome || !sigla) {
+        const {nome, codigo, turno, id_disciplina} = req.body;
+        if (!nome || !codigo || !turno || !id_disciplina) {
             return res.status(400).json({
                 error: "Campos Nome e Sigla são obrigatórios."
             });
         }
-        const id = await addTurma(nome, sigla);
+        const id = await addTurma(nome, codigo, turno, id_disciplina);
         res.status(200).json({
             message: "Turma adicionada com sucesso.", id
         });
@@ -524,14 +545,14 @@ app.post('/turmas', async (req:Request, res:Response) => {
 
 app.post('/turmas/editar/:id', async (req:Request, res:Response) => {
     try {
-        const {nome, sigla} = req.body;
+        const {nome, codigo,turno} = req.body;
         const id = Number(req.params.id);
-        if (!nome || !sigla) {
+        if (!nome || !codigo || !turno) {
             return res.status(400).json({
                 error: "Campos Nome e Sigla são obrigatórios."
             });
         }
-        const updated = await updateTurma(id, nome, sigla);
+        const updated = await updateTurma(id, nome, codigo, turno );
         if (updated) {
             res.status(200).json({
                 message: "Turma atualizada com sucesso.", id

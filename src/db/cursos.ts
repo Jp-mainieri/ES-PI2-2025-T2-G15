@@ -74,14 +74,14 @@ export async function addCurso(nome: string, id_instituicao: number): Promise <n
     }
 }
 
-export async function updateCurso(id: number, nome: string): Promise<boolean> {
+export async function updateCurso(id: number, nome: string, codigo:string): Promise<boolean> {
     const connection = await open();
     try {
         const result = await connection.execute(
             `UPDATE CURSOS 
-            SET NOME = :nome
+            SET NOME = :nome, CODIGO = :codigo
             WHERE ID_CURSO = :id`,
-            {id, nome},
+            {id, nome, codigo},
             {autoCommit: true}
         );
 
