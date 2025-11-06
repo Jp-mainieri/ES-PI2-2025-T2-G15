@@ -21,13 +21,17 @@ WHERE username = 'WEBAPP';
 
 CREATE TABLE INSTITUICOES (
 id_instituicao NUMBER PRIMARY KEY,
-nome VARCHAR2(200) NOT NULL
+nome VARCHAR2(200) NOT NULL, 
+id_PROFESSOR Number NOT NULL,
+CONSTRAINT fk_instituicao_professor
+FOREIGN KEY (id_professor) REFERENCES PROFESSORES(id_professor)
+
 );
 
 CREATE TABLE CURSOS (
 id_curso NUMBER PRIMARY KEY,
 nome VARCHAR2(100) NOT NULL,
-sala VARCHAR2(20),
+codigo VARCHAR2(20) NOT NULL,
 id_instituicao NUMBER NOT NULL,
 CONSTRAINT fk_curso_instituicao
 FOREIGN KEY (id_instituicao) REFERENCES INSTITUICOES(id_instituicao)
@@ -48,7 +52,7 @@ CREATE TABLE TURMAS (
 id_turma NUMBER PRIMARY KEY,
 nome VARCHAR2(100) NOT NULL,
 codigo VARCHAR2(20),
-sigla VARCHAR2(10),
+turno VARCHAR2(10),
 id_disciplina NUMBER NOT NULL,
 CONSTRAINT fk_turma_disciplina
 FOREIGN KEY (id_disciplina) REFERENCES DISCIPLINAS(id_disciplina)
