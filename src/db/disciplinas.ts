@@ -14,7 +14,21 @@ export async function getAllDisciplinas(): Promise<Disciplina[]> {
     try{
         const result = await connection.execute(
             `SELECT ID_DISCIPLINA as "id_disciplina", NOME as "nome", SIGLA as "sigla", 
-            "CÓDIGO" as "codigo", PERIODO as "periodo" FROM DISCIPLINAS`
+            CODIGO as "codigo", PERIODO as "periodo" FROM DISCIPLINAS`
+        );
+        return result.rows as Disciplina[];
+    }finally{
+        await close(connection);
+    }
+}
+
+export async function getAllDisciplinasByCurso(id_curso:number): Promise<Disciplina[]> {
+    const connection = await open();
+    try{
+        const result = await connection.execute(
+            `SELECT ID_DISCIPLINA as "id", NOME, SIGLA, 
+            CODIGO, PERIODO FROM DISCIPLINAS WHERE ID_CURSO = :id_curso`,
+            [id_curso]
         );
         return result.rows as Disciplina[];
     }finally{
@@ -26,8 +40,8 @@ export async function getDisciplinaById(id:number): Promise<Disciplina | null> {
     const connection = await open();
     try{
         const result = await connection.execute(
-            `SELECT ID_DISCIPLINA as "id_disciplina", NOME as "nome", SIGLA as "sigla", 
-            "CÓDIGO" as "codigo", PERIODO as "periodo" FROM DISCIPLINAS
+            `SELECT ID_DISCIPLINA as "id", NOME, SIGLA, 
+            CODIGO, PERIODO FROM DISCIPLINAS
             WHERE ID_DISCIPLINA = :id`,
             [id]
         );
@@ -37,16 +51,16 @@ export async function getDisciplinaById(id:number): Promise<Disciplina | null> {
     }
 }
 
-export async function addDisciplina(nome: string, sigla: string, codigo: string, periodo: number): Promise <number> {
+export async function addDisciplina(nome: string, sigla: string, codigo: string, periodo: number, id_curso:number): Promise <number> {
     const connection = await open()
     try {
         const result = await connection.execute<{outBinds : {id:number}}>(
             `
-            INSERT INTO DISCIPLINAS (NOME, SIGLA, "CÓDIGO", PERIODO)
-            VALUES (:nome, :sigla, :codigo, :periodo)
+            INSERT INTO DISCIPLINAS (NOME, SIGLA, CODIGO, PERIODO, ID_CURSO)
+            VALUES (:nome, :sigla, :codigo, :periodo, :id_curso)
             RETURNING ID_DISCIPLINA INTO :id
             `,
-            {nome, sigla, codigo, periodo, id: {dir:OracleDB.BIND_OUT, type: OracleDB.NUMBER}},
+            {nome, sigla, codigo, periodo, id_curso, id: {dir:OracleDB.BIND_OUT, type: OracleDB.NUMBER}},
             {autoCommit: true}
         );
 
@@ -68,7 +82,7 @@ export async function updateDisciplina(id: number, nome: string, sigla: string, 
     try {
         const result = await connection.execute(
             `UPDATE DISCIPLINAS 
-            SET NOME = :nome, SIGLA = :sigla, "CÓDIGO" = :codigo, PERIODO = :periodo 
+            SET NOME = :nome, SIGLA = :sigla, CODIGO = :codigo, PERIODO = :periodo 
             WHERE ID_DISCIPLINA = :id`,
             {id, nome, sigla, codigo, periodo},
             {autoCommit: true}

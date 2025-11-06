@@ -30,7 +30,7 @@ nome VARCHAR2(100) NOT NULL,
 sala VARCHAR2(20),
 id_instituicao NUMBER NOT NULL,
 CONSTRAINT fk_curso_instituicao
-FOREIGN KEY (id_instituicao) REFERENCES INSTITUICAO(id_instituicao)
+FOREIGN KEY (id_instituicao) REFERENCES INSTITUICOES(id_instituicao)
 );
 
 CREATE TABLE DISCIPLINAS (
@@ -41,7 +41,7 @@ codigo VARCHAR2(20) UNIQUE NOT NULL,
 periodo NUMBER,
 id_curso NUMBER NOT NULL,
 CONSTRAINT fk_disciplina_curso
-FOREIGN KEY (id_curso) REFERENCES CURSO(id_curso)
+FOREIGN KEY (id_curso) REFERENCES CURSOS(id_curso)
 );
 
 CREATE TABLE TURMAS (
@@ -51,7 +51,7 @@ codigo VARCHAR2(20),
 sigla VARCHAR2(10),
 id_disciplina NUMBER NOT NULL,
 CONSTRAINT fk_turma_disciplina
-FOREIGN KEY (id_disciplina) REFERENCES DISCIPLINA(id_disciplina)
+FOREIGN KEY (id_disciplina) REFERENCES DISCIPLINAS(id_disciplina)
 );
 
 CREATE TABLE PROFESSORES (
@@ -69,7 +69,7 @@ CREATE TABLE PROFESSORES_INSTITUICOES (
  CONSTRAINT fk_pi_professor FOREIGN KEY (id_professor) REFERENCES
 PROFESSORES(id_professor),
  CONSTRAINT fk_pi_instituicao FOREIGN KEY (id_instituicao) REFERENCES
-INSTITUICAO(id_instituicao)
+INSTITUICOES(id_instituicao)
 );
 
 
@@ -88,7 +88,7 @@ sigla VARCHAR2(10),
 descricao VARCHAR2(200),
 id_disciplina NUMBER NOT NULL,
 CONSTRAINT fk_comp_disciplina
-FOREIGN KEY (id_disciplina) REFERENCES DISCIPLINA(id_disciplina)
+FOREIGN KEY (id_disciplina) REFERENCES DISCIPLINAS(id_disciplina)
 );
 
 CREATE TABLE NOTA (

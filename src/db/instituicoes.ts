@@ -58,7 +58,7 @@ export async function addInstituicao(nome: string, id_professor: number): Promis
     try {
         const result = await connection.execute<{outBinds : {id:number}}>(
             `
-            INSERT INTO INSTITUICOES (nome, id_professor)
+            INSERT INTO INSTITUICOES (NOME, ID_PROFESSOR)
             VALUES (:nome,:id_professor)
             RETURNING id_instituicao INTO :id
             `,
