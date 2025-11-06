@@ -6,7 +6,7 @@ export interface Disciplina{
     nome:string,
     sigla:string,
     codigo:string,
-    periodo:number
+    periodo:number,
 }
 
 export async function getAllDisciplinas(): Promise<Disciplina[]> {

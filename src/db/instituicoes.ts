@@ -1,10 +1,9 @@
 import {open,close} from "../config/db";
-import OracleDB, {autoCommit} from "oracledb";
+import OracleDB from "oracledb";
 
 export interface Instituicao{
     id_instituicao:number,
     nome:string,
-    id_professor:number
 }
 
 // Função para obter instituições

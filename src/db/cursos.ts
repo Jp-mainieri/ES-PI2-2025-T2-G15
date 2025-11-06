@@ -4,7 +4,6 @@ import OracleDB from "oracledb";
 export interface Curso{
     id_curso:number,
     nome:string,
-    id_instituicao:number
 }
 
 export async function getAllCursos(): Promise<Curso[]> {
