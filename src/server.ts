@@ -256,13 +256,13 @@ app.get("/cursos/:id", async (req: Request, res: Response) => {
 // Rota para inserir um curso
 app.post("/cursos", async (req: Request, res: Response) => {
   try {
-    const { nome, codigo, id_disciplina } = req.body;
+    const { nome, codigo, id_instituicao } = req.body;
     if (!nome || !codigo) {
       return res.status(400).json({
         error: "Campos Nome e Código são Obrigatórios.",
       });
     }
-    const id = await addCurso(nome, codigo, id_disciplina);
+    const id = await addCurso(nome, codigo, id_instituicao);
     res.status(201).json({
       message: "Curso adicionado com sucesso.",
       id,
