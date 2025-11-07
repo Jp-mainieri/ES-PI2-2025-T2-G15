@@ -205,6 +205,11 @@ font-weight: 600;
 transition: 0.2s;
 }
 
+.modal-content p {
+  text-align: center;
+}
+
+
 button.confirmar {
 background-color: #17356d;
 color: white;
