@@ -165,6 +165,16 @@
   text-align: center;
 }
 
+
+
+.modal-buttons {
+  justify-content: center; /* Centraliza os botões */
+}
+
+#textExcluir{
+  text-align: center;
+}
+
 .form-group {
   display: flex;
   flex-direction: column;

@@ -64,3 +64,53 @@ document
     fecharModal("modalImportar");
     this.reset();
   });
+
+
+  // === Função para abrir o modal de edição ===
+document.querySelectorAll(".btn-acao .fa-pen").forEach((btn) => {
+  btn.addEventListener("click", function () {
+    const linha = this.closest("tr");
+    const nome = linha.children[0].innerText;
+    const matricula = linha.children[1].innerText;
+    const instituicao = linha.children[2].innerText;
+    const turma = linha.children[3].innerText;
+    const situacao = linha.children[4].innerText;
+
+    // Preenche os campos do modal
+    document.getElementById("editarNomeAluno").value = nome;
+    document.getElementById("editarMatriculaAluno").value = matricula;
+    document.getElementById("editarInstituicaoAluno").value = instituicao;
+    document.getElementById("editarTurmaAluno").value = turma;
+    document.getElementById("editarSituacaoAluno").value = situacao;
+
+    abrirModal("modalEditar");
+  });
+});
+
+// === Enviar formulário de edição ===
+document.getElementById("formEditarAluno").addEventListener("submit", function (e) {
+  e.preventDefault();
+  alert("Dados do aluno atualizados com sucesso!");
+  fecharModal("modalEditar");
+});
+
+// === Função para abrir modal de exclusão ===
+let linhaParaExcluir = null;
+
+document.querySelectorAll(".btn-acao .fa-trash").forEach((btn) => {
+  btn.addEventListener("click", function () {
+    linhaParaExcluir = this.closest("tr");
+    abrirModal("modalExcluir");
+  });
+});
+
+// === Confirmar exclusão ===
+document.getElementById("confirmarExcluir").addEventListener("click", function () {
+  if (linhaParaExcluir) {
+    linhaParaExcluir.remove();
+    linhaParaExcluir = null;
+    alert("Aluno excluído com sucesso!");
+  }
+  fecharModal("modalExcluir");
+});
+
