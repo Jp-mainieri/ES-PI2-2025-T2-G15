@@ -58,7 +58,7 @@ export async function addCurso(
   try {
     const result = await connection.execute<{ outBinds: { id: number } }>(
       `
-            INSERT INTO CURSOS (NOME, ID_INSTITUICAO)
+            INSERT INTO CURSOS (NOME,CODIGO, ID_INSTITUICAO)
             VALUES (:nome, :codigo , :id_instituicao)
             RETURNING ID_CURSO INTO :id
             `,
