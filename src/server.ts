@@ -49,11 +49,12 @@ import {
 } from "./db/turmas";
 
 import {
-  getAllAlunos,
-  getAlunoByRA,
-  addAluno,
-  updateAluno,
-  deleteAluno,
+    getAllAlunos,
+    getAlunoByRA,
+    addAluno,
+    updateAluno,
+    deleteAluno,
+    getAllAlunosByTurma,
 } from "./db/alunos";
 
 import {
@@ -703,6 +704,24 @@ app.get("/alunos/:ra", async (req: Request, res: Response) => {
     } else {
       res.status(404).json({
         message: "Aluno não foi encontrado com o RA fornecido.",
+      });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      error: "Erro ao buscar aluno pelo RA fornecido.",
+    });
+  }
+});
+app.get("/alunos/turma/:id_turma", async (req: Request, res: Response) => {
+  try {
+    const id_turma = req.params.id_turma;
+    const alunos = await getAllAlunosByTurma(Number(id_turma));
+    if (alunos) {
+      res.json(alunos);
+    } else {
+      res.status(404).json({
+        message: "Alunos não foram encontrados no id da turma fornecido.",
       });
     }
   } catch (err) {
