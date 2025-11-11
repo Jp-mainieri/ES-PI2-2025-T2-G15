@@ -1,5 +1,9 @@
-const API_URL = 'http://localhost:3000'
-async function adicionarAluno(ra_aluno, nome, data_nascimento, id_turma){
+let turmasData = [];
+let alunosData = [];
+
+const API_URL = "http://localhost:3000";
+
+async function adicionarAluno(ra_aluno, nome, id_turma){
     try{
         const response = await fetch (`${API_URL}/alunos`, {
             method: "POST",
@@ -7,7 +11,6 @@ async function adicionarAluno(ra_aluno, nome, data_nascimento, id_turma){
             body: JSON.stringify({
                 ra_aluno,
                 nome,
-                data_nascimento,
                 id_turma
             }),
         });
@@ -22,12 +25,41 @@ async function adicionarAluno(ra_aluno, nome, data_nascimento, id_turma){
     }
 }
 
+async function carregarTurmas() {
+    try {
+        const response = await fetch(`${API_URL}/turmas`)
+        if (!response.ok) throw new Error("Erro ao carregar turmas");
+
+        turmasData = await response.json();
+        renderizarOpcoesTurmas();
+    } catch (error) {
+        console.error("Erro:", error);
+    }
+}
+
+function renderizarOpcoesTurmas() {
+    const sessao = document.getElementById("turmaAluno");
+    if (!sessao) return;
+
+    const opcoesExistentes = sessao.querySelectorAll("option:not(:first-child)");
+    opcoesExistentes.forEach((linha) => linha.remove());
+
+    turmasData.forEach((turma) => {
+        const nova_opcao = document.createElement('option');
+        nova_opcao.value = turma.id;
+        nova_opcao.textContent = turma.NOME;
+        sessao.appendChild(nova_opcao);
+    });
+}
+
+
 
 // === Abrir o modal quando clicar no botão "Cadastrar Aluno" ===
 const btnCadastrar = document.getElementById("btnCadastrar");
 btnCadastrar.addEventListener("click", function (e) {
   e.preventDefault();
   abrirModal("modalCadastrar");
+  carregarTurmas();
 });
 
 // === Funções para abrir e fechar o modal ===
@@ -54,13 +86,11 @@ document
     e.preventDefault();
     const ra = e.target.querySelector('input[name="raAluno"]').value;
     const nome = e.target.querySelector('input[name="nomeAluno"]').value;
-    const dataNascimento = e.target.querySelector('input[name="dataNascimento"]').value;
-    const turma = e.target.querySelector('input[name="turmaAluno"]').value;
-    const situacao = e.target.querySelector('input[name="situacaoAluno"]').value;
-    await adicionarAluno(ra, nome, dataNascimento, situacao, turma);
+    const turma = e.target.querySelector('select[name="turmaAluno"]')?.value;
+    await adicionarAluno(ra, nome, turma);
     alert("Aluno cadastrado com sucesso!");
     fecharModal("modalCadastrar");
-    this.reset();
+    e.target.reset();
   });
 
 // === Abrir o modal "Importar Alunos" ===
@@ -93,7 +123,7 @@ document
     alert(`Arquivo "${arquivo.name}" (${formato.toUpperCase()}) importado com sucesso para a turma ${turma}!`);
 
     fecharModal("modalImportar");
-    this.reset();
+    e.target.reset();
   });
 
 
