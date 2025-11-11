@@ -25,6 +25,40 @@ async function adicionarAluno(ra_aluno, nome, id_turma){
     }
 }
 
+async function editarAluno(ra, nome, turma) {
+    try {
+        const response = await fetch(`${API_URL}/alunos/${ra}`, {
+            method: "PUT",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                nome,
+                id_turma: turma
+            }),
+        });
+
+        if (!response.ok) throw new Error("Erro ao atualizar aluno");
+
+        alert("Dados do aluno atualizados com sucesso!");
+    } catch (error) {
+        console.error("Erro:", error);
+        alert("Erro ao atualizar aluno: " + error.message);
+    }
+}
+
+async function deleteAluno(ra){
+    try{
+        const response = await fetch(`${API_URL}/alunos/${ra}`, {
+            method: "delete",
+        });
+        if (!response.ok) throw new Error("Erro ao atualizar aluno");
+
+        alert("Aluno excluido com sucesso!");
+    }catch (err) {
+        console.error("Erro:", error);
+        alert("Erro ao excluir aluno: " + error.message);
+    }
+}
+
 async function carregarTurmas() {
     try {
         const response = await fetch(`${API_URL}/turmas`)
@@ -101,10 +135,10 @@ carregarAlunos();
 
 // Abrir o modal quando clicar no botão "Cadastrar Aluno"
 const btnCadastrar = document.getElementById("btnCadastrar");
-btnCadastrar.addEventListener("click", function (e) {
+btnCadastrar.addEventListener("click", async(e) => {
+  await carregarTurmas();
   e.preventDefault();
   abrirModal("modalCadastrar");
-  carregarTurmas();
 });
 
 // Funções para abrir e fechar o modal
@@ -172,8 +206,8 @@ document
   });
 
 
-// === Função para abrir o modal de edição ===
 document.getElementById("tabela-alunos").addEventListener("click", async (event) => {
+    // === Função para abrir o modal de edição ===
   if (event.target.closest(".btn-editar")) {
     const btn = event.target.closest(".btn-editar");
     const ra = btn.getAttribute("data-id");
@@ -189,53 +223,41 @@ document.getElementById("tabela-alunos").addEventListener("click", async (event)
 
     abrirModal("modalEditar");
   }
+
+// Função para abrir modal de exclusão
+  if (event.target.closest(".btn-excluir")) {
+    const btn = event.target.closest(".btn-excluir");
+    const ra = btn.getAttribute("data-id");
+
+    const aluno = alunosData.find(a => a.RA_ALUNO == ra);
+
+    if (!aluno) return;
+
+    document.getElementById("confirmarExcluir").setAttribute("data-ra", ra);
+    abrirModal("modalExcluir");
+  }
 });
 
 // === Enviar formulário de edição ===
 document.getElementById("formEditarAluno").addEventListener("submit", async (e) => {
   e.preventDefault();
-  
+
   const ra = document.getElementById("editarRaAluno").value;
   const nome = document.getElementById("editarNomeAluno").value;
   const turma = document.querySelector('select[name="editarTurmaAluno"]')?.value;
-  
-  try {
-    const response = await fetch(`${API_URL}/alunos/${ra}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        nome,
-        id_turma: turma
-      }),
-    });
 
-    if (!response.ok) throw new Error("Erro ao atualizar aluno");
-
-    alert("Dados do aluno atualizados com sucesso!");
+    await editarAluno(ra, nome, turma)
     fecharModal("modalEditar");
     carregarAlunos();
-  } catch (error) {
-    console.error("Erro:", error);
-    alert("Erro ao atualizar aluno: " + error.message);
-  }
-});
-// === Função para abrir modal de exclusão ===
-let linhaParaExcluir = null;
-
-document.querySelectorAll(".btn-acao .fa-trash").forEach((btn) => {
-  btn.addEventListener("click", function () {
-    linhaParaExcluir = this.closest("tr");
-    abrirModal("modalExcluir");
-  });
 });
 
-// === Confirmar exclusão ===
-document.getElementById("confirmarExcluir").addEventListener("click", function () {
-  if (linhaParaExcluir) {
-    linhaParaExcluir.remove();
-    linhaParaExcluir = null;
-    alert("Aluno excluído com sucesso!");
-  }
-  fecharModal("modalExcluir");
-});
+// Confirmar exclusão
+document.getElementById("confirmarExcluir").addEventListener("click", async (e) => {
+    const ra = e.target.getAttribute("data-ra");
+    
+    if (!ra) return;
 
+    await deleteAluno(ra);
+    fecharModal("modalExcluir");
+    carregarAlunos();
+});
