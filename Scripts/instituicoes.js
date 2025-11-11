@@ -508,11 +508,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (btn && btn.classList.contains("btn-ver-cursos")) {
       const visivel = secCursos.style.display === "flex";
       if (!visivel) {
-        secCursos.style.display = "flex";
-        secCursos.style.flexDirection = "column";
         btn.textContent = "Ocultar cursos";
         idIinstituicaoAtiva = btn.getAttribute("data-id");
         carregarCursos(idIinstituicaoAtiva);
+        secCursos.style.display = "flex";
+        secCursos.style.flexDirection = "column";
       } else {
         secCursos.style.display = "none";
         btn.textContent = "Ver cursos";
@@ -525,11 +525,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (btn && btn.classList.contains("btn-ver-disciplinas")) {
       const visivel = secDisciplinas.style.display === "flex";
       if (!visivel) {
-        secDisciplinas.style.display = "flex";
-        secDisciplinas.style.flexDirection = "column";
         btn.textContent = "Ocultar disciplinas";
         idCursoAtivo = btn.getAttribute("data-id");
         carregarDisciplinas(idCursoAtivo);
+        secDisciplinas.style.display = "flex";
+        secDisciplinas.style.flexDirection = "column";
       } else {
         secDisciplinas.style.display = "none";
         btn.textContent = "Ver disciplinas";
@@ -541,11 +541,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (btn && btn.classList.contains("btn-ver-turmas")) {
       const visivel = secTurmas.style.display === "flex";
       if (!visivel) {
-        secTurmas.style.display = "flex";
-        secTurmas.style.flexDirection = "column";
         btn.textContent = "Ocultar turmas";
         idDisciplinaAtiva = btn.getAttribute("data-id");
         carregarTurmas(idDisciplinaAtiva);
+        secTurmas.style.display = "flex";
+        secTurmas.style.flexDirection = "column";
       } else {
         secTurmas.style.display = "none";
         btn.textContent = "Ver turmas";
