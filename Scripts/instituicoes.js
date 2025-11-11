@@ -42,7 +42,7 @@ function renderizarInstituicoes() {
         <div class="tabela-acoes">
           <div class="tabela-botoes">
             <button class="btn-ver-cursos" data-id="${inst.id}">Ver cursos</button>
-            <button class="btn-editar-instituicao" data-id="${inst.id}"><i class="fa-solid fa-pen"></i></button>
+            <!--<button class="btn-editar-instituicao" data-id="${inst.id}"><i class="fa-solid fa-pen"></i></button>-->
             <button class="btn-excluir-instituicao" data-id="${inst.id}"><i class="fa-solid fa-trash"></i></button>
           </div>
         </div>
@@ -84,9 +84,9 @@ function renderizarCursos() {
             <button class="btn-ver-disciplinas" data-id="${
               curso.id
             }">Ver disciplinas</button>
-            <button class="btn-editar-curso" data-id="${
+            <!--<button class="btn-editar-curso" data-id="${
               curso.id
-            }"><i class="fa-solid fa-pen"></i></button>
+            }"><i class="fa-solid fa-pen"></i></button>-->
             <button class="btn-excluir-curso" data-id="${
               curso.id
             }"><i class="fa-solid fa-trash"></i></button>
@@ -146,9 +146,9 @@ function renderizarDisciplinas() {
             <button class="btn-ver-turmas" data-id="${
               disc.id
             }">Ver turmas</button>
-            <button class="btn-editar-disciplina" data-id="${
+            <!--<button class="btn-editar-disciplina" data-id="${
               disc.id
-            }"><i class="fa-solid fa-pen"></i></button>
+            }"><i class="fa-solid fa-pen"></i></button>-->
             <button class="btn-excluir-disciplina" data-id="${
               disc.id
             }"><i class="fa-solid fa-trash"></i></button>
@@ -187,7 +187,7 @@ function renderizarTurmas() {
       <td>
         <div class="tabela-acoes">
           <div class="tabela-botoes">
-            <button class="btn-editar-turma" data-id="${turma.id}"><i class="fa-solid fa-pen"></i></button>
+            <!--<button class="btn-editar-turma" data-id="${turma.id}"><i class="fa-solid fa-pen"></i></button>-->
             <button class="btn-excluir-turma" data-id="${turma.id}"><i class="fa-solid fa-trash"></i></button>
           </div>
         </div>
