@@ -324,6 +324,11 @@ async function deletarInstituicao(id) {
   if (!confirm("Tem certeza que deseja deletar esta instituição?")) return;
 
   try {
+      const conteudo = await fetch(`${API_URL}/cursos/instituicao/${id}`)
+      if (conteudo) {
+          alert("Ainda tem cursos cadastrados nesta instituicão");
+          return;
+      }
     const response = await fetch(`${API_URL}/instituicoes/${id}`, {
       method: "DELETE",
     });
@@ -342,6 +347,11 @@ async function deletarCurso(id) {
   if (!confirm("Tem certeza que deseja deletar este curso?")) return;
 
   try {
+      const conteudo = await fetch(`${API_URL}/disciplinas/curso/${id}`)
+      if (conteudo) {
+          alert("Ainda tem disciplinas cadastrados neste curso");
+          return;
+      }
     const response = await fetch(`${API_URL}/cursos/${id}`, {
       method: "DELETE",
     });
@@ -360,6 +370,11 @@ async function deletarDisciplina(id) {
   if (!confirm("Tem certeza que deseja deletar esta disciplina?")) return;
 
   try {
+      const conteudo = await fetch(`${API_URL}/turmas/disciplina/${id}`)
+      if (conteudo) {
+          alert("Ainda tem turmas cadastrados nesta disciplina");
+          return;
+      }
     const response = await fetch(`${API_URL}/disciplinas/${id}`, {
       method: "DELETE",
     });
@@ -376,8 +391,12 @@ async function deletarDisciplina(id) {
 
 async function deletarTurma(id) {
   if (!confirm("Tem certeza que deseja deletar esta turma?")) return;
-
   try {
+      const conteudo = await fetch(`${API_URL}/alunos/turma/${id}`)
+      if (conteudo) {
+          alert("Ainda tem alunos cadastrados nesta turma");
+          return;
+      }
     const response = await fetch(`${API_URL}/turmas/${id}`, {
       method: "DELETE",
     });
@@ -477,7 +496,6 @@ document.addEventListener("DOMContentLoaded", () => {
     e.target.reset();
   });
 
-  /* ======== MOSTRAR / OCULTAR SEÇÕES ======== */
   const secCursos = document.getElementById("sec-cursos");
   const secDisciplinas = document.getElementById("sec-disciplinas");
   const secTurmas = document.getElementById("sec-turmas");
@@ -503,6 +521,8 @@ document.addEventListener("DOMContentLoaded", () => {
       deletarTurma(id);
       return;
     }
+
+    // BOTÃO VER ...
 
     // Ver cursos
     if (btn && btn.classList.contains("btn-ver-cursos")) {
