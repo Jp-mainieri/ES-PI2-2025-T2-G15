@@ -10,7 +10,7 @@ export async function getAllAlunos(): Promise<Aluno[]> {
     const connection = await open();
     try{
         const result = await connection.execute(
-            `SELECT RA_ALUNO, NOME FROM ALUNOS`
+            `SELECT RA_ALUNO, NOME, ID_TURMA FROM ALUNOS`
         );
         return result.rows as Aluno[];
     }finally{

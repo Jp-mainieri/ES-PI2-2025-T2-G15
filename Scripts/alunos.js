@@ -37,6 +37,46 @@ async function carregarTurmas() {
     }
 }
 
+async function carregarAlunos() {
+    try {
+        const response = await fetch(
+            `${API_URL}/alunos`
+        );
+        if (!response.ok) throw new Error("Erro ao carregar alunos");
+
+        alunosData = await response.json();
+        renderizarAlunos();
+    } catch (error) {
+        console.error("Erro:", error);
+    }
+}
+
+function renderizarAlunos() {
+    const tabela = document.getElementById("tabela-alunos");
+    if (!tabela) return;
+
+    const linhasExistentes = tabela.querySelectorAll("tr:not(:first-child)");
+    linhasExistentes.forEach((linha) => linha.remove());
+
+    alunosData.forEach((aluno) => {
+        const nova_linha = document.createElement("tr");
+        nova_linha.innerHTML = `
+      <td>${aluno.NOME || "N/A"}</td>
+      <td>${aluno.RA_ALUNO}</td>
+      <td>${aluno.ID_TURMA}</td>
+      <td class="acoes">
+            <button class="btn-acao" data-id="${
+            aluno.RA_ALUNO
+        }"><i class="fa-solid fa-pen"></i></button>
+            <button class="btn-acao" data-id="${
+            aluno.RA_ALUNO
+        }"><i class="fa-solid fa-trash"></i></button>
+      </td>
+    `;
+        tabela.appendChild(nova_linha);
+    });
+}
+
 function renderizarOpcoesTurmas() {
     const sessao = document.getElementById("turmaAluno");
     if (!sessao) return;
@@ -52,7 +92,7 @@ function renderizarOpcoesTurmas() {
     });
 }
 
-
+carregarAlunos();
 
 // === Abrir o modal quando clicar no botão "Cadastrar Aluno" ===
 const btnCadastrar = document.getElementById("btnCadastrar");
@@ -91,6 +131,7 @@ document
     alert("Aluno cadastrado com sucesso!");
     fecharModal("modalCadastrar");
     e.target.reset();
+    carregarAlunos()
   });
 
 // === Abrir o modal "Importar Alunos" ===
