@@ -612,12 +612,12 @@ app.get(
 app.post("/turmas", async (req: Request, res: Response) => {
   try {
     const { nome, codigo, turno, id_disciplina } = req.body;
-    if (!nome || !codigo || !turno || !id_disciplina) {
+    if (!nome || !codigo || turno === undefined || !id_disciplina) {
       return res.status(400).json({
         error: "Campos Nome, Código e Turno são obrigatórios.",
       });
     }
-    const id = await addTurma(nome, codigo, turno, id_disciplina);
+    const id = await addTurma(nome, codigo, Number(turno), id_disciplina);
     res.status(201).json({
       message: "Turma adicionada com sucesso.",
       id,

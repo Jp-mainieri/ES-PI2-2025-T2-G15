@@ -179,11 +179,28 @@ function renderizarTurmas() {
   linhasExistentes.forEach((linha) => linha.remove());
 
   turmasData.forEach((turma) => {
+      let turnoTurma;
+      switch (turma.TURNO) {
+          case 1:
+              turnoTurma = "MATUTINO";
+              break;
+          case 2:
+              turnoTurma = "VESPERTINO";
+              break;
+          case 3:
+              turnoTurma = "NOTURNO";
+              break;
+          case 4:
+              turnoTurma = "INTEGRAL";
+              break;
+          default:
+              turnoTurma = "INVÁLIDO";
+      }
     const nova_linha = document.createElement("tr");
     nova_linha.innerHTML = `
       <td>${turma.NOME}</td>
       <td>${turma.CODIGO}</td>
-      <td>${turma.TURNO}</td>
+      <td>${turnoTurma}</td>
       <td>
         <div class="tabela-acoes">
           <div class="tabela-botoes">
@@ -273,14 +290,14 @@ async function adicionarDisciplina(nome, sigla, codigo, periodo) {
     if (!response.ok) throw new Error("Erro ao adicionar disciplina");
 
     alert("Disciplina adicionada com sucesso!");
-    await carregarDisciplinas();
+    await carregarDisciplinas(idCursoAtivo);
   } catch (error) {
     console.error("Erro:", error);
     alert("Erro ao adicionar disciplina: " + error.message);
   }
 }
 
-async function adicionarTurma(nome,codigo, turno) {
+async function adicionarTurma(nome, codigo, turno) {
     let turnoNumber;
     switch (turno) {
         case "MATUTINO":
@@ -313,7 +330,7 @@ async function adicionarTurma(nome,codigo, turno) {
     if (!response.ok) throw new Error("Erro ao adicionar turma");
 
     alert("Turma adicionada com sucesso!");
-    await carregarTurmas();
+    await carregarTurmas(idDisciplinaAtiva);
   } catch (error) {
     console.error("Erro:", error);
     alert("Erro ao adicionar turma: " + error.message);
@@ -359,7 +376,7 @@ async function deletarCurso(id) {
     if (!response.ok) throw new Error("Erro ao deletar curso");
 
     alert("Curso deletado com sucesso!");
-    await carregarCursos();
+    await carregarCursos(idIinstituicaoAtiva);
   } catch (error) {
     console.error("Erro:", error);
     alert("Erro ao deletar curso: " + error.message);
@@ -382,7 +399,7 @@ async function deletarDisciplina(id) {
     if (!response.ok) throw new Error("Erro ao deletar disciplina");
 
     alert("Disciplina deletada com sucesso!");
-    await carregarDisciplinas();
+    await carregarDisciplinas(idCursoAtivo);
   } catch (error) {
     console.error("Erro:", error);
     alert("Erro ao deletar disciplina: " + error.message);
@@ -404,7 +421,7 @@ async function deletarTurma(id) {
     if (!response.ok) throw new Error("Erro ao deletar turma");
 
     alert("Turma deletada com sucesso!");
-    await carregarTurmas();
+    await carregarTurmas(idDisciplinaAtiva);
   } catch (error) {
     console.error("Erro:", error);
     alert("Erro ao deletar turma: " + error.message);

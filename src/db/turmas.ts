@@ -49,7 +49,7 @@ export async function getTurmaById(id:number): Promise<Turma | null> {
     }
 }
 
-export async function addTurma(nome: string, codigo: string, turno:string, id_disciplina:number): Promise <number> {
+export async function addTurma(nome: string, codigo: string, turno:number, id_disciplina:number): Promise <number> {
     const connection = await open()
     try {
         const result = await connection.execute<{outBinds : {id:number}}>(
