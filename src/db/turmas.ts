@@ -5,7 +5,8 @@ export interface Turma{
     id_turma:number,
     nome:string,
     codigo:string,
-    turno:string,
+    turno:number,
+
 }
 
 export async function getAllTurmas(): Promise<Turma[]> {

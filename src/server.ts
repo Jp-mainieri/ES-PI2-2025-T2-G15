@@ -494,7 +494,7 @@ app.post("/disciplinas", async (req: Request, res: Response) => {
         error: "Todos os campos são obrigatórios.",
       });
     }
-    const id = await addDisciplina(nome, sigla, codigo, periodo, id_curso);
+    const id = await addDisciplina(nome, sigla, codigo, Number(periodo), Number(id_curso));
     res.status(201).json({
       message: "Disciplina adicionada com sucesso.",
       id,
@@ -516,7 +516,7 @@ app.put("/disciplinas/:id", async (req: Request, res: Response) => {
         error: "Todos os campos são obrigatórios.",
       });
     }
-    const updated = await updateDisciplina(id, nome, sigla, codigo, periodo);
+    const updated = await updateDisciplina(id, nome, sigla, codigo, Number(periodo));
     if (updated) {
       res.status(200).json({
         message: "Disciplina atualizada com sucesso.",

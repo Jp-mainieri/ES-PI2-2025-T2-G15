@@ -144,13 +144,13 @@ function renderizarDisciplinas() {
         <div class="tabela-acoes">
           <div class="tabela-botoes">
             <button class="btn-ver-turmas" data-id="${
-              disc.ID_DISCIPLINA
+              disc.id
             }">Ver turmas</button>
             <button class="btn-editar-disciplina" data-id="${
-              disc.ID_DISCIPLINA
+              disc.id
             }"><i class="fa-solid fa-pen"></i></button>
             <button class="btn-excluir-disciplina" data-id="${
-              disc.ID_DISCIPLINA
+              disc.id
             }"><i class="fa-solid fa-trash"></i></button>
           </div>
         </div>
@@ -160,9 +160,9 @@ function renderizarDisciplinas() {
   });
 }
 
-async function carregarTurmas() {
+async function carregarTurmas(id_disciplina) {
   try {
-    const response = await fetch(`${API_URL}/turmas`);
+    const response = await fetch(`${API_URL}/turmas/disciplina/${id_disciplina}`)
     if (!response.ok) throw new Error("Erro ao carregar turmas");
 
     turmasData = await response.json();
@@ -181,12 +181,14 @@ function renderizarTurmas() {
   turmasData.forEach((turma) => {
     const nova_linha = document.createElement("tr");
     nova_linha.innerHTML = `
-      <td>${turma.sigla}</td>
+      <td>${turma.NOME}</td>
+      <td>${turma.CODIGO}</td>
+      <td>${turma.TURNO}</td>
       <td>
         <div class="tabela-acoes">
           <div class="tabela-botoes">
-            <button class="btn-editar-turma" data-id="${turma.id_turma}"><i class="fa-solid fa-pen"></i></button>
-            <button class="btn-excluir-turma" data-id="${turma.id_turma}"><i class="fa-solid fa-trash"></i></button>
+            <button class="btn-editar-turma" data-id="${turma.id}"><i class="fa-solid fa-pen"></i></button>
+            <button class="btn-excluir-turma" data-id="${turma.id}"><i class="fa-solid fa-trash"></i></button>
           </div>
         </div>
       </td>
@@ -200,7 +202,7 @@ async function adicionarInstituicao(nome) {
     const response = await fetch(`${API_URL}/instituicoes`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ nome, id_professor: 0 }),
+      body: JSON.stringify({ nome, id_professor: 0 }),// preciso colocar o id_professor de acordo com o login
     });
 
     if (!response.ok) throw new Error("Erro ao adicionar instituição");
@@ -263,7 +265,7 @@ async function adicionarDisciplina(nome, sigla, codigo, periodo) {
         nome,
         sigla,
         codigo,
-        periodo: periodoNumber,
+        periodo: Number(periodoNumber),
         id_curso: idCursoAtivo,
       }),
     });
@@ -278,12 +280,34 @@ async function adicionarDisciplina(nome, sigla, codigo, periodo) {
   }
 }
 
-async function adicionarTurma(sigla, id_disciplina) {
+async function adicionarTurma(nome,codigo, turno) {
+    let turnoNumber;
+    switch (turno) {
+        case "MATUTINO":
+            turnoNumber = 1;
+            break;
+        case "VESPERTINO":
+            turnoNumber = 2;
+            break;
+        case "NOTURNO":
+            turnoNumber = 3;
+            break;
+        case "INTEGRAL":
+            turnoNumber = 4;
+            break;
+        default:
+            turnoNumber = 5;
+    }
   try {
     const response = await fetch(`${API_URL}/turmas`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ sigla, id_disciplina: parseInt(id_disciplina) }),
+      body: JSON.stringify({
+          nome,
+          codigo,
+          turno: turnoNumber,
+          id_disciplina: idDisciplinaAtiva
+          }),
     });
 
     if (!response.ok) throw new Error("Erro ao adicionar turma");
@@ -371,9 +395,8 @@ async function deletarTurma(id) {
 document.addEventListener("DOMContentLoaded", () => {
   /* ======== MODAL ======== */
 
-  // Funções do Fetch para carregar as tabelas
+  // Carrega as instituições referentes ao professor
   carregarInstituicoes();
-  carregarTurmas();
 
   const popup = document.getElementById("popup-novo-elemento");
   const titulo = document.getElementById("novo-elemento-title");
@@ -446,11 +469,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   forms.turma?.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const sigla = e.target.querySelector('input[name="sigla"]').value;
-    const id_disciplina = e.target.querySelector(
-      'select[name="disciplina"]'
-    ).value;
-    await adicionarTurma(sigla, id_disciplina);
+    const nome = e.target.querySelector('input[name="nome"]').value;
+    const codigo = e.target.querySelector('input[name="codigo"]').value;
+    const turno = e.target.querySelector('input[name="turno"]').value;
+    await adicionarTurma(nome, codigo, turno);
     fecharPopup();
     e.target.reset();
   });
@@ -522,6 +544,8 @@ document.addEventListener("DOMContentLoaded", () => {
         secTurmas.style.display = "flex";
         secTurmas.style.flexDirection = "column";
         btn.textContent = "Ocultar turmas";
+        idDisciplinaAtiva = btn.getAttribute("data-id");
+        carregarTurmas(idDisciplinaAtiva);
       } else {
         secTurmas.style.display = "none";
         btn.textContent = "Ver turmas";
