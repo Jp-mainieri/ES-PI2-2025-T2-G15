@@ -1,3 +1,28 @@
+const API_URL = 'http://localhost:3000'
+async function adicionarAluno(ra_aluno, nome, data_nascimento, id_turma){
+    try{
+        const response = await fetch (`${API_URL}/alunos`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                ra_aluno,
+                nome,
+                data_nascimento,
+                id_turma
+            }),
+        });
+
+        if (!response.ok) throw new Error("Erro ao adicionar aluno");
+
+        alert("Aluno adicionado com sucesso!");
+
+    }catch (error) {
+        console.error("Erro:", error);
+        alert("Erro ao adicionar aluno: " + error.message);
+    }
+}
+
+
 // === Abrir o modal quando clicar no botão "Cadastrar Aluno" ===
 const btnCadastrar = document.getElementById("btnCadastrar");
 btnCadastrar.addEventListener("click", function (e) {
@@ -22,11 +47,17 @@ window.addEventListener("click", function (event) {
   }
 });
 
-// === Envio do formulário (apenas demonstração) ===
+// === Envio do formulário de adicionar aluno ===
 document
   .getElementById("formCadastrarAluno")
-  .addEventListener("submit", function (e) {
+  .addEventListener("submit", async (e)=> {
     e.preventDefault();
+    const ra = e.target.querySelector('input[name="raAluno"]').value;
+    const nome = e.target.querySelector('input[name="nomeAluno"]').value;
+    const dataNascimento = e.target.querySelector('input[name="dataNascimento"]').value;
+    const turma = e.target.querySelector('input[name="turmaAluno"]').value;
+    const situacao = e.target.querySelector('input[name="situacaoAluno"]').value;
+    await adicionarAluno(ra, nome, dataNascimento, situacao, turma);
     alert("Aluno cadastrado com sucesso!");
     fecharModal("modalCadastrar");
     this.reset();

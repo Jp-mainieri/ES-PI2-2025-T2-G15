@@ -1,20 +1,16 @@
 import {open, close} from "../config/db";
-import OracleDB from "oracledb";
 
 export interface Aluno{
     ra_aluno:string,
     nome:string,
-    matricula:string,
-    curso:string,
-    data_nascimento:Date
+    id_turma:number
 }
 
 export async function getAllAlunos(): Promise<Aluno[]> {
     const connection = await open();
     try{
         const result = await connection.execute(
-            `SELECT RA_ALUNO, NOME, MATRICULA, 
-            CURSO, DATA_NASCIMENTO FROM ALUNOS`
+            `SELECT RA_ALUNO, NOME FROM ALUNOS`
         );
         return result.rows as Aluno[];
     }finally{
@@ -25,8 +21,7 @@ export async function getAllAlunosByTurma(id_turma:number): Promise<Aluno[]> {
     const connection = await open();
     try{
         const result = await connection.execute(
-            `SELECT RA_ALUNO, NOME, MATRICULA, 
-            CURSO, DATA_NASCIMENTO FROM ALUNOS WHERE ID_TURMA = :id_turma`
+            `SELECT RA_ALUNO, NOME FROM ALUNOS WHERE ID_TURMA = :id_turma`
             [id_turma]
         );
         return result.rows as Aluno[];
@@ -39,8 +34,8 @@ export async function getAlunoByRA(ra:string): Promise<Aluno | null> {
     const connection = await open();
     try{
         const result = await connection.execute(
-            `SELECT RA_ALUNO, NOME, MATRICULA, 
-            CURSO, DATA_NASCIMENTO FROM ALUNOS
+            `SELECT RA_ALUNO, NOME, 
+            ID_TURMA FROM ALUNOS
             WHERE RA_ALUNO = :ra`,
             [ra]
         );
@@ -50,15 +45,15 @@ export async function getAlunoByRA(ra:string): Promise<Aluno | null> {
     }
 }
 
-export async function addAluno(ra_aluno: string, nome: string, matricula: string, curso: string, data_nascimento: Date): Promise <string> {
+export async function addAluno(ra_aluno: string, nome: string, id_turma:number): Promise <string> {
     const connection = await open()
     try {
         await connection.execute(
             `
-            INSERT INTO ALUNOS (RA_ALUNO, NOME, MATRICULA, CURSO, DATA_NASCIMENTO)
-            VALUES (:ra_aluno, :nome, :matricula, :curso, :data_nascimento)
+            INSERT INTO ALUNOS (RA_ALUNO, NOME, ID_TURMA)
+            VALUES (:ra_aluno, :nome, :id_turma)
             `,
-            {ra_aluno, nome, matricula, curso, data_nascimento},
+            {ra_aluno, nome, id_turma},
             {autoCommit: true}
         );
 
@@ -69,14 +64,14 @@ export async function addAluno(ra_aluno: string, nome: string, matricula: string
     }
 }
 
-export async function updateAluno(ra_aluno: string, nome: string, matricula: string, curso: string, data_nascimento: Date): Promise<boolean> {
+export async function updateAluno(ra_aluno: string, nome: string, data_nascimento: Date): Promise<boolean> {
     const connection = await open();
     try {
         const result = await connection.execute(
             `UPDATE ALUNOS 
-            SET NOME = :nome, MATRICULA = :matricula, CURSO = :curso, DATA_NASCIMENTO = :data_nascimento 
+            SET NOME = :nome
             WHERE RA_ALUNO = :ra_aluno`,
-            {ra_aluno, nome, matricula, curso, data_nascimento},
+            {ra_aluno, nome, data_nascimento},
             {autoCommit: true}
         );
 

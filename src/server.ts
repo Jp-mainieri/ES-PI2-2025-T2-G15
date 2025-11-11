@@ -52,7 +52,6 @@ import {
     getAllAlunos,
     getAlunoByRA,
     addAluno,
-    updateAluno,
     deleteAluno,
     getAllAlunosByTurma,
 } from "./db/alunos";
@@ -734,18 +733,16 @@ app.get("/alunos/turma/:id_turma", async (req: Request, res: Response) => {
 
 app.post("/alunos", async (req: Request, res: Response) => {
   try {
-    const { ra_aluno, nome, matricula, curso, data_nascimento } = req.body;
-    if (!ra_aluno || !nome || !matricula || !curso || !data_nascimento) {
+    const { ra_aluno, nome, id_turma} = req.body;
+    if (!ra_aluno || !nome || !id_turma) {
       return res.status(400).json({
-        error: "Todos os campos são obrigatórios.",
+        error: "Todos os campos são obrigatórios, exceto a data de nascimento.",
       });
     }
     const ra = await addAluno(
       ra_aluno,
       nome,
-      matricula,
-      curso,
-      new Date(data_nascimento)
+        id_turma
     );
     res.status(201).json({
       message: "Aluno adicionado com sucesso.",
@@ -755,40 +752,6 @@ app.post("/alunos", async (req: Request, res: Response) => {
     console.error(err);
     res.status(500).json({
       error: "Erro ao inserir aluno.",
-    });
-  }
-});
-
-app.put("/alunos/:ra", async (req: Request, res: Response) => {
-  try {
-    const { nome, matricula, curso, data_nascimento } = req.body;
-    const ra_aluno = req.params.ra;
-    if (!nome || !matricula || !curso || !data_nascimento) {
-      return res.status(400).json({
-        error: "Todos os campos são obrigatórios.",
-      });
-    }
-    const updated = await updateAluno(
-      ra_aluno,
-      nome,
-      matricula,
-      curso,
-      new Date(data_nascimento)
-    );
-    if (updated) {
-      res.status(200).json({
-        message: "Aluno atualizado com sucesso.",
-        ra_aluno,
-      });
-    } else {
-      res.status(404).json({
-        message: "Aluno não encontrado.",
-      });
-    }
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({
-      error: "Erro ao atualizar aluno.",
     });
   }
 });

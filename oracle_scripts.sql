@@ -80,7 +80,6 @@ FOREIGN KEY (id_disciplina) REFERENCES DISCIPLINAS(id_disciplina)
 CREATE TABLE ALUNOS (
 RA_aluno VARCHAR2(20) PRIMARY KEY,
 nome VARCHAR2(100) NOT NULL,
-data_nascimento DATE,
 id_turma NUMBER NOT NULL,
 CONSTRAINT fk_aluno_turma
 FOREIGN KEY (id_turma) REFERENCES TURMAS(id_turma)
