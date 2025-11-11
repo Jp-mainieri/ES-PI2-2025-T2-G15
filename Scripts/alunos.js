@@ -45,6 +45,7 @@ async function carregarAlunos() {
         if (!response.ok) throw new Error("Erro ao carregar alunos");
 
         alunosData = await response.json();
+        await carregarTurmas();
         renderizarAlunos();
     } catch (error) {
         console.error("Erro:", error);
@@ -60,15 +61,16 @@ function renderizarAlunos() {
 
     alunosData.forEach((aluno) => {
         const nova_linha = document.createElement("tr");
+        const turma = turmasData.find(t => t.id == aluno.ID_TURMA);
         nova_linha.innerHTML = `
       <td>${aluno.NOME || "N/A"}</td>
       <td>${aluno.RA_ALUNO}</td>
-      <td>${aluno.ID_TURMA}</td>
+      <td>${turma.NOME}</td>
       <td class="acoes">
-            <button class="btn-acao" data-id="${
+            <button class="btn-acao btn-editar" data-id="${
             aluno.RA_ALUNO
         }"><i class="fa-solid fa-pen"></i></button>
-            <button class="btn-acao" data-id="${
+            <button class="btn-acao btn-excluir" data-id="${
             aluno.RA_ALUNO
         }"><i class="fa-solid fa-trash"></i></button>
       </td>
@@ -78,23 +80,26 @@ function renderizarAlunos() {
 }
 
 function renderizarOpcoesTurmas() {
-    const sessao = document.getElementById("turmaAluno");
-    if (!sessao) return;
+    const selects = document.querySelectorAll(".opcoesTurmas");
+    if (!selects) return;
 
-    const opcoesExistentes = sessao.querySelectorAll("option:not(:first-child)");
-    opcoesExistentes.forEach((linha) => linha.remove());
+    selects.forEach(sessao => {
+      const opcoesExistentes = sessao.querySelectorAll("option:not(:first-child)");
+      opcoesExistentes.forEach((opcao) => opcao.remove());
 
-    turmasData.forEach((turma) => {
-        const nova_opcao = document.createElement('option');
-        nova_opcao.value = turma.id;
-        nova_opcao.textContent = turma.NOME;
-        sessao.appendChild(nova_opcao);
+      turmasData.forEach((turma) => {
+          const nova_opcao = document.createElement('option');
+          nova_opcao.value = turma.id;
+          nova_opcao.textContent = turma.NOME;
+          sessao.appendChild(nova_opcao);
     });
+    })
+    
 }
 
 carregarAlunos();
 
-// === Abrir o modal quando clicar no botão "Cadastrar Aluno" ===
+// Abrir o modal quando clicar no botão "Cadastrar Aluno"
 const btnCadastrar = document.getElementById("btnCadastrar");
 btnCadastrar.addEventListener("click", function (e) {
   e.preventDefault();
@@ -102,7 +107,7 @@ btnCadastrar.addEventListener("click", function (e) {
   carregarTurmas();
 });
 
-// === Funções para abrir e fechar o modal ===
+// Funções para abrir e fechar o modal
 function abrirModal(id) {
   document.getElementById(id).style.display = "flex";
 }
@@ -111,7 +116,7 @@ function fecharModal(id) {
   document.getElementById(id).style.display = "none";
 }
 
-// === Fechar o modal ao clicar fora dele ===
+// Fechar o modal ao clicar fora dele
 window.addEventListener("click", function (event) {
   const modal = document.getElementById("modalCadastrar");
   if (event.target === modal) {
@@ -119,7 +124,7 @@ window.addEventListener("click", function (event) {
   }
 });
 
-// === Envio do formulário de adicionar aluno ===
+// Envio do formulário de adicionar aluno
 document
   .getElementById("formCadastrarAluno")
   .addEventListener("submit", async (e)=> {
@@ -128,20 +133,19 @@ document
     const nome = e.target.querySelector('input[name="nomeAluno"]').value;
     const turma = e.target.querySelector('select[name="turmaAluno"]')?.value;
     await adicionarAluno(ra, nome, turma);
-    alert("Aluno cadastrado com sucesso!");
     fecharModal("modalCadastrar");
     e.target.reset();
     carregarAlunos()
   });
 
-// === Abrir o modal "Importar Alunos" ===
+// Abrir o modal "Importar Alunos"
 const btnImportar = document.getElementById("btnImportar");
 btnImportar.addEventListener("click", function (e) {
   e.preventDefault();
   abrirModal("modalImportar");
 });
 
-// === Envio do formulário de importação ===
+// Envio do formulário de importação
 document
   .getElementById("formImportarAlunos")
   .addEventListener("submit", function (e) {
@@ -168,34 +172,53 @@ document
   });
 
 
-  // === Função para abrir o modal de edição ===
-document.querySelectorAll(".btn-acao .fa-pen").forEach((btn) => {
-  btn.addEventListener("click", function () {
-    const linha = this.closest("tr");
-    const nome = linha.children[0].innerText;
-    const matricula = linha.children[1].innerText;
-    const instituicao = linha.children[2].innerText;
-    const turma = linha.children[3].innerText;
-    const situacao = linha.children[4].innerText;
+// === Função para abrir o modal de edição ===
+document.getElementById("tabela-alunos").addEventListener("click", async (event) => {
+  if (event.target.closest(".btn-editar")) {
+    const btn = event.target.closest(".btn-editar");
+    const ra = btn.getAttribute("data-id");
+    
+    const aluno = alunosData.find(a => a.RA_ALUNO == ra);
+    
+    if (!aluno) return;
 
-    // Preenche os campos do modal
-    document.getElementById("editarNomeAluno").value = nome;
-    document.getElementById("editarMatriculaAluno").value = matricula;
-    document.getElementById("editarInstituicaoAluno").value = instituicao;
-    document.getElementById("editarTurmaAluno").value = turma;
-    document.getElementById("editarSituacaoAluno").value = situacao;
+    document.getElementById("editarNomeAluno").value = aluno.NOME;
+    document.getElementById("editarRaAluno").value = aluno.RA_ALUNO;
+    await carregarTurmas();
+    document.getElementById("editarTurmaAluno").value = aluno.ID_TURMA;
 
     abrirModal("modalEditar");
-  });
+  }
 });
 
 // === Enviar formulário de edição ===
-document.getElementById("formEditarAluno").addEventListener("submit", function (e) {
+document.getElementById("formEditarAluno").addEventListener("submit", async (e) => {
   e.preventDefault();
-  alert("Dados do aluno atualizados com sucesso!");
-  fecharModal("modalEditar");
-});
+  
+  const ra = document.getElementById("editarRaAluno").value;
+  const nome = document.getElementById("editarNomeAluno").value;
+  const turma = document.querySelector('select[name="editarTurmaAluno"]')?.value;
+  
+  try {
+    const response = await fetch(`${API_URL}/alunos/${ra}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        nome,
+        id_turma: turma
+      }),
+    });
 
+    if (!response.ok) throw new Error("Erro ao atualizar aluno");
+
+    alert("Dados do aluno atualizados com sucesso!");
+    fecharModal("modalEditar");
+    carregarAlunos();
+  } catch (error) {
+    console.error("Erro:", error);
+    alert("Erro ao atualizar aluno: " + error.message);
+  }
+});
 // === Função para abrir modal de exclusão ===
 let linhaParaExcluir = null;
 

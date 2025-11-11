@@ -54,6 +54,7 @@ import {
     addAluno,
     deleteAluno,
     getAllAlunosByTurma,
+    updateAluno
 } from "./db/alunos";
 
 import {
@@ -754,6 +755,33 @@ app.post("/alunos", async (req: Request, res: Response) => {
       error: "Erro ao inserir aluno.",
     });
   }
+});
+
+app.put('/alunos/:ra', async (req:Request, res:Response) => {
+    try {
+        const {nome, id_turma} = req.body;
+        const ra_aluno = req.params.ra;
+        if (!nome || id_turma === undefined || !ra_aluno) {
+            return res.status(400).json({
+                error: "Todos os campos são obrigatórios."
+            });
+        }
+        const updated = await updateAluno(ra_aluno, nome, Number(id_turma));
+        if (updated) {
+            res.status(200).json({
+                message: "Aluno atualizado com sucesso.", ra_aluno
+            });
+        } else {
+            res.status(404).json({
+                message: "Aluno não encontrado."
+            });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            error: "Erro ao atualizar aluno."
+        });
+    }
 });
 
 // Rota para excluir um aluno
