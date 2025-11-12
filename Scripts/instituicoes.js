@@ -9,7 +9,7 @@ let turmasData = [];
 //Serve para guardar o id do que está em exibição
 const usuarioLogado = JSON.parse(sessionStorage.getItem("usuarioLogado"));
 const idProfessor = usuarioLogado.id_professor;
-let idIinstituicaoAtiva;
+let idInstituicaoAtiva;
 let idCursoAtivo;
 let idDisciplinaAtiva;
 
@@ -268,7 +268,7 @@ async function adicionarCurso(nome, codigo) {
       body: JSON.stringify({
         nome,
         codigo,
-        id_instituicao: idIinstituicaoAtiva,
+        id_instituicao: idInstituicaoAtiva,
       }),
     });
 
@@ -276,7 +276,7 @@ async function adicionarCurso(nome, codigo) {
 
     alert("Curso adicionado com sucesso!");
     // recarrega cursos usando a instituição ativa
-    await carregarCursos(idIinstituicaoAtiva);
+    await carregarCursos(idInstituicaoAtiva);
   } catch (error) {
     console.error("Erro:", error);
     alert("Erro ao adicionar curso: " + error.message);
@@ -403,7 +403,7 @@ async function deletarCurso(id) {
     if (!response.ok) throw new Error("Erro ao deletar curso");
 
     alert("Curso deletado com sucesso!");
-    await carregarCursos(idIinstituicaoAtiva);
+    await carregarCursos(idInstituicaoAtiva);
   } catch (error) {
     console.error("Erro:", error);
     alert("Erro ao deletar curso: " + error.message);
@@ -573,8 +573,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const visivel = secCursos.style.display === "flex";
       if (!visivel) {
         btn.textContent = "Ocultar cursos";
-        idIinstituicaoAtiva = btn.getAttribute("data-id");
-        carregarCursos(idIinstituicaoAtiva);
+        idInstituicaoAtiva = btn.getAttribute("data-id");
+        carregarCursos(idInstituicaoAtiva);
         secCursos.style.display = "flex";
         secCursos.style.flexDirection = "column";
       } else {
