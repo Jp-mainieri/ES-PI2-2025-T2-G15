@@ -21,13 +21,30 @@ export async function getAllTurmas(): Promise<Turma[]> {
     }
 }
 
-export async function getAllTurmasByCurso(id_disciplina:number): Promise<Turma[]> {
+export async function getAllTurmasByDisciplina(id_disciplina:number): Promise<Turma[]> {
     const connection = await open();
     try{
         const result = await connection.execute(
-            `SELECT ID_TURMA as "id", NOME, CODIGO, 
+            `SELECT ID_TURMA as "id", NOME as "nome", CODIGO, 
             TURNO FROM TURMAS WHERE ID_DISCIPLINA = :id_disciplina`,
             [id_disciplina]
+        );
+        return result.rows as Turma[];
+    }finally{
+        await close(connection);
+    }
+}
+
+export async function getAllTurmasByInstituicao(id_instituicao:number): Promise<Turma[]>{
+    const connection = await open();
+    try{
+        const result = await connection.execute(
+            `SELECT t.ID_TURMA as "id", t.NOME, t.CODIGO,
+            t.TURNO FROM TURMAS t
+            JOIN DISCIPLINAS d ON t.ID_DISCIPLINA = d.ID_DISCIPLINA
+            JOIN CURSOS c ON d.ID_CURSO = c.ID_CURSO
+            WHERE c.ID_INSTITUICAO = :id_instituicao`,
+            {id_instituicao}
         );
         return result.rows as Turma[];
     }finally{

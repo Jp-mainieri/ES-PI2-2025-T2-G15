@@ -40,12 +40,13 @@ import {
 } from "./db/disciplinas";
 
 import {
-  getAllTurmas,
-  getAllTurmasByCurso,
-  getTurmaById,
-  addTurma,
-  updateTurma,
-  deleteTurma,
+    getAllTurmas,
+    getTurmaById,
+    addTurma,
+    updateTurma,
+    deleteTurma,
+    getAllTurmasByDisciplina,
+    getAllTurmasByInstituicao
 } from "./db/turmas";
 
 import {
@@ -54,7 +55,7 @@ import {
     addAluno,
     deleteAluno,
     getAllAlunosByTurma,
-    updateAluno
+    updateAluno, getAllAlunosByInstituicao
 } from "./db/alunos";
 
 import {
@@ -615,7 +616,7 @@ app.get(
   async (req: Request, res: Response) => {
     try {
       const id_disciplina = Number(req.params.id_disciplina);
-      const turmas = await getAllTurmasByCurso(id_disciplina);
+      const turmas = await getAllTurmasByDisciplina(id_disciplina);
       res.json(turmas);
     } catch (err) {
       console.error(err);
@@ -624,6 +625,23 @@ app.get(
       });
     }
   }
+);
+
+// Rota para obter turmas por Instituicão
+app.get(
+    "/turmas/instituicao/:id_instituicao",
+    async (req: Request, res: Response) => {
+        try {
+            const id_instituicao = Number(req.params.id_instituicao);
+            const turmas = await getAllTurmasByInstituicao(id_instituicao);
+            res.json(turmas);
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({
+                error: "Erro ao buscar turmas por disciplina",
+            });
+        }
+    }
 );
 
 app.post("/turmas", async (req: Request, res: Response) => {
@@ -747,6 +765,25 @@ app.get("/alunos/turma/:id_turma", async (req: Request, res: Response) => {
       error: "Erro ao buscar aluno pelo RA fornecido.",
     });
   }
+});
+
+app.get("/alunos/instituicao/:id_instituicao", async (req: Request, res: Response) => {
+    try {
+        const id_instituicao = req.params.id_instituicao;
+        const alunos = await getAllAlunosByInstituicao(Number(id_instituicao));
+        if (alunos) {
+            res.json(alunos);
+        } else {
+            res.status(404).json({
+                message: "Alunos não foram encontrados no id da instituicao fornecido.",
+            });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            error: "Erro ao buscar aluno pelo id da turma fornecido.",
+        });
+    }
 });
 
 app.post("/alunos", async (req: Request, res: Response) => {

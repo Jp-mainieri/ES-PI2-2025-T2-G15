@@ -30,6 +30,26 @@ export async function getAllAlunosByTurma(id_turma:number): Promise<Aluno[]> {
     }
 }
 
+export async function getAllAlunosByInstituicao(id_instituicao: number): Promise<Aluno[]> {
+    const connection = await open()
+    try{
+        const result = await connection.execute(
+        `SELECT a.RA_ALUNO as "RA_ALUNO", a.NOME as "NOME", a.ID_TURMA as "ID_TURMA"
+        FROM ALUNOS a
+        WHERE a.ID_TURMA IN (
+        SELECT t.ID_TURMA 
+        FROM TURMAS t
+        JOIN DISCIPLINAS d ON t.ID_DISCIPLINA = d.ID_DISCIPLINA
+        JOIN CURSOS c ON d.ID_CURSO = c.ID_CURSO
+        WHERE c.ID_INSTITUICAO = :id_instituicao)`,
+            [id_instituicao]
+        );
+        return result.rows as Aluno[];
+    }finally {
+        await close(connection);
+    }
+}
+
 export async function getAlunoByRA(ra:string): Promise<Aluno | null> {
     const connection = await open();
     try{

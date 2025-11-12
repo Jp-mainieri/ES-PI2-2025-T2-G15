@@ -36,7 +36,13 @@ function renderizarInstituicoes() {
 
   const linhasExistentes = tabela.querySelectorAll("tr:not(:first-child)");
   linhasExistentes.forEach((linha) => linha.remove());
-
+  if (instituicoesData[0] === undefined) {
+      const nova_linha = document.createElement("tr");
+      nova_linha.innerHTML = `
+      <td>Nenhuma instituicão cadastrada</td>
+      `;
+      tabela.appendChild(nova_linha);
+  }
   instituicoesData.forEach((inst) => {
     const nova_linha = document.createElement("tr");
     nova_linha.innerHTML = `
@@ -75,7 +81,13 @@ function renderizarCursos() {
 
   const linhasExistentes = tabela.querySelectorAll("tr:not(:first-child)");
   linhasExistentes.forEach((linha) => linha.remove());
-
+    if (cursosData[0] === undefined) {
+        const nova_linha = document.createElement("tr");
+        nova_linha.innerHTML = `
+      <td>Nenhum curso cadastrado para esta instituição</td>
+      `;
+        tabela.appendChild(nova_linha);
+    }
   cursosData.forEach((curso) => {
     const nova_linha = document.createElement("tr");
     nova_linha.innerHTML = `
@@ -118,7 +130,13 @@ function renderizarDisciplinas() {
 
   const linhasExistentes = tabela.querySelectorAll("tr:not(:first-child)");
   linhasExistentes.forEach((linha) => linha.remove());
-
+    if (disciplinasData[0] === undefined) {
+        const nova_linha = document.createElement("tr");
+        nova_linha.innerHTML = `
+      <td>Nenhuma disciplina cadastrada para este curso</td>
+      `;
+        tabela.appendChild(nova_linha);
+    }
   disciplinasData.forEach((disc) => {
     const nova_linha = document.createElement("tr");
     let periodoDisciplina;
@@ -180,7 +198,13 @@ function renderizarTurmas() {
 
   const linhasExistentes = tabela.querySelectorAll("tr:not(:first-child)");
   linhasExistentes.forEach((linha) => linha.remove());
-
+    if (turmasData[0] === undefined) {
+        const nova_linha = document.createElement("tr");
+        nova_linha.innerHTML = `
+      <td>Nenhuma turma cadastrada para esta disciplina</td>
+      `;
+        tabela.appendChild(nova_linha);
+    }
   turmasData.forEach((turma) => {
       let turnoTurma;
       switch (turma.TURNO) {
@@ -201,7 +225,7 @@ function renderizarTurmas() {
       }
     const nova_linha = document.createElement("tr");
     nova_linha.innerHTML = `
-      <td>${turma.NOME}</td>
+      <td>${turma.nome}</td>
       <td>${turma.CODIGO}</td>
       <td>${turnoTurma}</td>
       <td>

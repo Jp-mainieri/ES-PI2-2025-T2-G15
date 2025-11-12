@@ -1,5 +1,10 @@
 let turmasData = [];
 let alunosData = [];
+let instituicoesData = [];
+
+const usuarioLogado = JSON.parse(sessionStorage.getItem("usuarioLogado"));
+const idProfessor = usuarioLogado.id_professor;
+let idInstituicaoAtiva = -1;
 
 const API_URL = "http://localhost:3000";
 
@@ -59,9 +64,24 @@ async function deleteAluno(ra){
     }
 }
 
+async function carregarInstituicoes() {
+    try {
+        const response = await fetch(`${API_URL}/instituicoes/professor/${idProfessor}`);
+        if (!response.ok) throw new Error("Erro ao carregar instituições");
+
+        instituicoesData = await response.json();
+        renderizarOpcoesInstituicoes();
+    } catch (error) {
+        console.error("Erro:", error);
+        alert(
+            "Erro ao carregar instituições. Verifique se o servidor está rodando."
+        );
+    }
+}
+
 async function carregarTurmas() {
     try {
-        const response = await fetch(`${API_URL}/turmas`)
+        const response = await fetch(`${API_URL}/turmas/instituicao/${idInstituicaoAtiva}`)
         if (!response.ok) throw new Error("Erro ao carregar turmas");
 
         turmasData = await response.json();
@@ -72,18 +92,18 @@ async function carregarTurmas() {
 }
 
 async function carregarAlunos() {
-    try {
-        const response = await fetch(
-            `${API_URL}/alunos`
-        );
-        if (!response.ok) throw new Error("Erro ao carregar alunos");
-
-        alunosData = await response.json();
-        await carregarTurmas();
-        renderizarAlunos();
-    } catch (error) {
-        console.error("Erro:", error);
-    }
+  try {
+    const response = await fetch(
+      `${API_URL}/alunos/instituicao/${idInstituicaoAtiva}`
+    );
+    if (!response.ok) throw new Error("Erro ao carregar alunos");
+    alunosData = await response.json();
+  } catch (error) {
+    console.error("Erro:", error);
+  }
+  
+  await carregarTurmas();
+  await renderizarAlunos();
 }
 
 function renderizarAlunos() {
@@ -128,10 +148,28 @@ function renderizarOpcoesTurmas() {
           sessao.appendChild(nova_opcao);
     });
     })
-    
 }
 
-carregarAlunos();
+function renderizarOpcoesInstituicoes() {
+    const selects = document.querySelectorAll(".select-instituicao");
+    if (!selects) return;
+
+    selects.forEach(sessao => {
+        const opcoesExistentes = sessao.querySelectorAll("option:not(:first-child)");
+        opcoesExistentes.forEach((opcao) => opcao.remove());
+
+        instituicoesData.forEach((inst) => {
+            const nova_opcao = document.createElement('option');
+            nova_opcao.value = inst.id;
+            nova_opcao.textContent = inst.NOME;
+            sessao.appendChild(nova_opcao);
+        });
+    })
+
+}
+
+// Fim das definições de funções --
+carregarInstituicoes();
 
 // Abrir o modal quando clicar no botão "Cadastrar Aluno"
 const btnCadastrar = document.getElementById("btnCadastrar");
@@ -157,6 +195,13 @@ window.addEventListener("click", function (event) {
     modal.style.display = "none";
   }
 });
+
+document.getElementById("sortInstituicao").addEventListener("change", async(e) => {
+    e.preventDefault();
+    const select = document.getElementById("sortInstituicao");
+    idInstituicaoAtiva = select.value;
+    await carregarAlunos();
+})
 
 // Envio do formulário de adicionar aluno
 document
