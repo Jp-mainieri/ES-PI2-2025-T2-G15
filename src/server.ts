@@ -871,6 +871,19 @@ app.get("/notas", async (req: Request, res: Response) => {
   }
 });
 
+app.get(`/notas/turma/:id_turma`, async (req:Request, res:Response) => {
+    try {
+        const id_turma = Number(req.params.id_turma);
+        const notas = await getNotasByTurma(id_turma);
+        res.json(notas)
+    }catch (err) {
+        console.error(err);
+        res.status(500).json({
+            error: "Erro ao buscar notas por turma",
+        });
+    }
+});
+
 app.get("/notas/:id", async (req: Request, res: Response) => {
   try {
     const id = Number(req.params.id);
@@ -971,18 +984,6 @@ app.get(`/componentes-notas/:id_turma`, async (req:Request, res:Response) => {
         console.error(err);
         res.status(500).json({
             error: "Erro ao buscar componentes de notas",
-        });
-    }
-});
-app.get(`/notas/turma/:id_turma`, async (req:Request, res:Response) => {
-    try {
-        const id_turma = Number(req.params.id_turma);
-        const notas = await getNotasByTurma(id_turma);
-        res.json(notas)
-    }catch (err) {
-        console.error(err);
-        res.status(500).json({
-            error: "Erro ao buscar notas por turma",
         });
     }
 });
