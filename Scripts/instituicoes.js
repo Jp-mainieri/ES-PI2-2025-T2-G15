@@ -201,7 +201,7 @@ function renderizarTurmas() {
       }
     const nova_linha = document.createElement("tr");
     nova_linha.innerHTML = `
-      <td>${turma.NOME}</td>
+      <td>${turma.nome}</td>
       <td>${turma.CODIGO}</td>
       <td>${turnoTurma}</td>
       <td>
