@@ -180,13 +180,10 @@ btnImportar.addEventListener("click", function (e) {
 });
 
 // Envio do formulário de importação
-document
-  .getElementById("formImportarAlunos")
-  .addEventListener("submit", function (e) {
+document.getElementById("btn-confirmarImportacao").addEventListener("click", function (e) {
     e.preventDefault();
 
     const turma = document.getElementById("turmaImportar").value;
-    const formato = document.querySelector('input[name="formato"]:checked').value;
     const arquivo = document.getElementById("arquivoAlunos").files[0];
 
     if (!turma) {
@@ -199,12 +196,40 @@ document
       return;
     }
 
-    alert(`Arquivo "${arquivo.name}" (${formato.toUpperCase()}) importado com sucesso para a turma ${turma}!`);
+    // Leitura do Arquivo CSV
+      
+    const reader = new FileReader();
+    reader.onload = async (e) => {
+        const conteudo = e.target.result;
+        const linhas = conteudo.trim().split(/\r?\n/);
+        const dados = linhas.slice(1).filter(l => l.trim() !== "");
 
-    fecharModal("modalImportar");
-    e.target.reset();
+        const alunos = dados.map(linha => {
+          const partes = linha.split(',');
+          const nome = partes[0]?.trim();
+          const ra = partes[1]?.trim();
+          return { nome, ra_aluno: ra, id_turma: turma };
+        });
+    
+        // Enviar pela rota
+        try {
+          for (const aluno of alunos) {
+            await fetch(`${API_URL}/alunos`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(aluno)
+            })
+          }
+          fecharModal("modalImportar");
+          document.getElementById("formImportarAlunos").reset();
+          carregarAlunos();
+        } catch (error) {
+          console.error("Erro ao importar alunos:", error);
+          alert("Ocorreu um erro ao importar os alunos. Por favor, tente novamente.");
+        }
+    }
+    reader.readAsText(arquivo, "UTF-8");
   });
-
 
 document.getElementById("tabela-alunos").addEventListener("click", async (event) => {
     // === Função para abrir o modal de edição ===

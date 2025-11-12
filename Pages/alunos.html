@@ -113,11 +113,8 @@
       
       <div class="form-group">
         <label for="turmaImportar">Turma</label>
-        <select id="turmaImportar" name="turmaImportar" required>
+        <select id="turmaImportar" class="opcoesTurmas" name="turmaImportar" required>
           <option value="">Selecionar</option>
-          <option value="101">101</option>
-          <option value="102">102</option>
-          <option value="103">103</option>
         </select>
         <p style="font-size: 0.9em; color: #555; margin-top: 4px;">
           Alunos importados serão adicionados a esta turma.
@@ -133,12 +130,12 @@
 
       <div class="form-group">
         <label for="arquivoAlunos">Arquivo:</label>
-        <input type="file" id="arquivoAlunos" name="arquivoAlunos" accept=".csv,.json" required>
+        <input type="file" id="arquivoAlunos" name="arquivoAlunos" accept=".csv" required>
       </div>
 
       <div class="modal-buttons">
         <button type="button" class="cancelar" onclick="fecharModal('modalImportar')">Cancelar</button>
-        <button type="submit" class="confirmar">Confirmar</button>
+        <button type="submit" class="confirmar" id="btn-confirmarImportacao">Confirmar</button>
       </div>
     </form>
   </div>
@@ -169,7 +166,7 @@
 
       <div class="modal-buttons">
         <button type="button" class="cancelar" onclick="fecharModal('modalEditar')">Cancelar</button>
-        <button type="submit" class="confirmar">Salvar</button>
+        <button type="button" class="confirmar">Salvar</button>
       </div>
     </form>
   </div>
