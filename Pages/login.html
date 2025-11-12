@@ -9,7 +9,7 @@
     <!--Link para os icones-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <!--Link para o arquivo de JavaScript-->
-    <script src="../Scripts/main.js"></script>
+    <script src="../Scripts/login.js"></script>
 
 
 </head>
@@ -27,7 +27,7 @@
         <div class="form">
             <h3>Bem-vindo(a) de volta!</h3>
 
-            <form method="post" action="#">
+            <form id="formLogin">
                 <label for="email"><strong>Email:</strong></label><br>
                 <input type="email" id="email" name="email" placeholder="Digite seu email" required><br><br>
 
@@ -35,10 +35,11 @@
                 <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required><br><br>
 
                 <div class="btn-container">
-                    <a href="dash.html" class="btn-entrar"><strong>Entrar</strong></a>
+                    <button type="submit" class="btn-entrar"><strong>Entrar</strong></button>
                     <p id="esqueceu-senha">Esqueceu sua senha? <a href="rec_senha.html">Clique aqui</a></p>
                 </div>
             </form>
+
         </div>
         
 

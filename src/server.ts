@@ -418,6 +418,33 @@ app.delete('/professores/:id', async (req:Request, res:Response) => {
     }
 });
 
+/// Rota de login
+app.post("/login", async (req: Request, res: Response) => {
+  try {
+    const { email, senha } = req.body;
+
+    if (!email || !senha) {
+      return res.status(400).json({ error: "Email e senha são obrigatórios." });
+    }
+
+    // Pega todos os professores e busca pelo email e senha
+    const professores = await getAllProfessores();
+    const professor = professores.find(p => p.email === email && p.senha === senha);
+
+    if (!professor) {
+      return res.status(401).json({ error: "Email ou senha incorretos." });
+    }
+
+    // Retorna os dados do professor sem a senha
+    const { senha: _, ...professorSemSenha } = professor;
+    res.status(200).json(professorSemSenha);
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Erro no servidor ao tentar logar." });
+  }
+});
+
 // Rotas de Disciplinas:
 
 app.get('/disciplinas', async (req:Request, res:Response) => {
