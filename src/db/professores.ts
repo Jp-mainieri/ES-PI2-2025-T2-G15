@@ -6,7 +6,6 @@ export interface Professor{
     nome:string,
     telefone:string,
     senha:string,
-    diciplina:string,
     email:string
 }
 
@@ -15,7 +14,7 @@ export async function getAllProfessores(): Promise<Professor[]> {
     try{
         const result = await connection.execute(
             `SELECT ID_PROFESSOR as "id_professor", NOME as "nome", TELEFONE as "telefone", 
-            SENHA as "senha", DICIPLINA as "diciplina", "E-MAIL" as "email" FROM PROFESSORES`
+            SENHA as "senha", "EMAIL" as "email" FROM PROFESSORES`
         );
         return result.rows as Professor[];
     }finally{
@@ -28,7 +27,7 @@ export async function getProfessorById(id:number): Promise<Professor | null> {
     try{
         const result = await connection.execute(
             `SELECT ID_PROFESSOR as "id_professor", NOME as "nome", TELEFONE as "telefone", 
-            SENHA as "senha", DICIPLINA as "diciplina", "E-MAIL" as "email" FROM PROFESSORES
+            SENHA as "senha", "EMAIL" as "email" FROM PROFESSORES
             WHERE ID_PROFESSOR = :id`,
             [id]
         );
@@ -38,16 +37,16 @@ export async function getProfessorById(id:number): Promise<Professor | null> {
     }
 }
 
-export async function addProfessor(nome: string, telefone: string, senha: string, diciplina: string, email: string): Promise <number> {
+export async function addProfessor(nome: string, telefone: string, senha: string, email: string): Promise <number> {
     const connection = await open()
     try {
         const result = await connection.execute<{outBinds : {id:number}}>(
             `
-            INSERT INTO PROFESSORES (NOME, TELEFONE, SENHA, DICIPLINA, "E-MAIL")
-            VALUES (:nome, :telefone, :senha, :diciplina, :email)
+            INSERT INTO PROFESSORES (NOME, TELEFONE, SENHA, "EMAIL")
+            VALUES (:nome, :telefone, :senha, :email)
             RETURNING ID_PROFESSOR INTO :id
             `,
-            {nome, telefone, senha, diciplina, email, id: {dir:OracleDB.BIND_OUT, type: OracleDB.NUMBER}},
+            {nome, telefone, senha, email, id: {dir:OracleDB.BIND_OUT, type: OracleDB.NUMBER}},
             {autoCommit: true}
         );
 
@@ -64,14 +63,14 @@ export async function addProfessor(nome: string, telefone: string, senha: string
     }
 }
 
-export async function updateProfessor(id: number, nome: string, telefone: string, senha: string, diciplina: string, email: string): Promise<boolean> {
+export async function updateProfessor(id: number, nome: string, telefone: string, senha: string, email: string): Promise<boolean> {
     const connection = await open();
     try {
         const result = await connection.execute(
             `UPDATE PROFESSORES 
-            SET NOME = :nome, TELEFONE = :telefone, SENHA = :senha, DICIPLINA = :diciplina, "E-MAIL" = :email 
+            SET NOME = :nome, TELEFONE = :telefone, SENHA = :senha, "EMAIL" = :email 
             WHERE ID_PROFESSOR = :id`,
-            {id, nome, telefone, senha, diciplina, email},
+            {id, nome, telefone, senha, email},
             {autoCommit: true}
         );
 

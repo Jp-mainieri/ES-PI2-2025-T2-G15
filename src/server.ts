@@ -330,113 +330,130 @@ app.delete("/cursos/:id", async (req: Request, res: Response) => {
 
 // Rotas de Professores:
 
-app.get("/professores", async (req: Request, res: Response) => {
+app.get('/professores', async (req:Request, res:Response) => {
+    try {
+        const professores = await getAllProfessores();
+        res.json(professores);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            error: "Erro ao buscar professores"
+        });
+    }
+});
+
+app.get('/professores/:id', async (req:Request, res:Response) => {
+    try {
+        const id = Number(req.params.id);
+        const professor = await getProfessorById(id);
+        if (professor) {
+            res.json(professor);
+        } else {
+            res.status(404).json({
+                message: "Professor não foi encontrado com o id fornecido."
+            });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            error: "Erro ao buscar professor pelo ID fornecido."
+        });
+    }
+});
+
+app.post('/professores', async (req:Request, res:Response) => {
+    try {
+        const {nome, telefone, senha, email} = req.body;
+        if (!nome || !telefone || !senha || !email) {
+            return res.status(400).json({
+                error: "Todos os campos são obrigatórios."
+            });
+        }
+        const id = await addProfessor(nome, telefone, senha, email);
+        res.status(201).json({
+            message: "Professor adicionado com sucesso.", id
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            error: "Erro ao inserir professor."
+        });
+    }
+});
+
+app.put('/professores/:id', async (req:Request, res:Response) => {
+    try {
+        const {nome, telefone, senha, email} = req.body;
+        const id = Number(req.params.id);
+        if (!nome || !telefone || !senha || !email) {
+            return res.status(400).json({
+                error: "Todos os campos são obrigatórios."
+            });
+        }
+        const updated = await updateProfessor(id, nome, telefone, senha, email);
+        if (updated) {
+            res.status(200).json({
+                message: "Professor atualizado com sucesso.", id
+            });
+        } else {
+            res.status(404).json({
+                message: "Professor não encontrado."
+            });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            error: "Erro ao atualizar professor."
+        });
+    }
+});
+
+ // Rota para excluir um professor
+app.delete('/professores/:id', async (req:Request, res:Response) => {
+    try {
+        const id = Number(req.params.id);
+        const deleted = await deleteProfessor(id);
+        if (deleted) {
+            res.status(200).json({
+                message: "Professor excluído com sucesso.", id
+            });
+        } else {
+            res.status(404).json({
+                message: "Professor não encontrado."
+            });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            error: "Erro ao excluir professor."
+        });
+    }
+});
+
+/// Rota de login
+app.post("/login", async (req: Request, res: Response) => {
   try {
+    const { email, senha } = req.body;
+
+    if (!email || !senha) {
+      return res.status(400).json({ error: "Email e senha são obrigatórios." });
+    }
+
+    // Pega todos os professores e busca pelo email e senha
     const professores = await getAllProfessores();
-    res.json(professores);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({
-      error: "Erro ao buscar professores",
-    });
-  }
-});
+    const professor = professores.find(p => p.email === email && p.senha === senha);
 
-app.get("/professores/:id", async (req: Request, res: Response) => {
-  try {
-    const id = Number(req.params.id);
-    const professor = await getProfessorById(id);
-    if (professor) {
-      res.json(professor);
-    } else {
-      res.status(404).json({
-        message: "Professor não foi encontrado com o id fornecido.",
-      });
+    if (!professor) {
+      return res.status(401).json({ error: "Email ou senha incorretos." });
     }
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({
-      error: "Erro ao buscar professor pelo ID fornecido.",
-    });
-  }
-});
 
-app.post("/professores", async (req: Request, res: Response) => {
-  try {
-    const { nome, telefone, senha, diciplina, email } = req.body;
-    if (!nome || !telefone || !senha || !diciplina || !email) {
-      return res.status(400).json({
-        error: "Todos os campos são obrigatórios.",
-      });
-    }
-    const id = await addProfessor(nome, telefone, senha, diciplina, email);
-    res.status(201).json({
-      message: "Professor adicionado com sucesso.",
-      id,
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({
-      error: "Erro ao inserir professor.",
-    });
-  }
-});
+    // Retorna os dados do professor sem a senha
+    const { senha: _, ...professorSemSenha } = professor;
+    res.status(200).json(professorSemSenha);
 
-app.put("/professores/:id", async (req: Request, res: Response) => {
-  try {
-    const { nome, telefone, senha, diciplina, email } = req.body;
-    const id = Number(req.params.id);
-    if (!nome || !telefone || !senha || !diciplina || !email) {
-      return res.status(400).json({
-        error: "Todos os campos são obrigatórios.",
-      });
-    }
-    const updated = await updateProfessor(
-      id,
-      nome,
-      telefone,
-      senha,
-      diciplina,
-      email
-    );
-    if (updated) {
-      res.status(200).json({
-        message: "Professor atualizado com sucesso.",
-        id,
-      });
-    } else {
-      res.status(404).json({
-        message: "Professor não encontrado.",
-      });
-    }
   } catch (err) {
     console.error(err);
-    res.status(500).json({
-      error: "Erro ao atualizar professor.",
-    });
-  }
-});
-
-// Rota para excluir um professor
-app.delete("/professores/:id", async (req: Request, res: Response) => {
-  try {
-    const id = Number(req.params.id);
-    const deleted = await deleteProfessor(id);
-    if (deleted) {
-      res.status(200).json({
-        message: "Professor excluído com sucesso.",
-        id,
-      });
-    } else {
-      res.status(404).json({
-        message: "Professor não encontrado.",
-      });
-    }
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({
-      error: "Erro ao excluir professor.",
-    });
+    res.status(500).json({ error: "Erro no servidor ao tentar logar." });
   }
 });
 
