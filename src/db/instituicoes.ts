@@ -26,7 +26,7 @@ export async function getAllInstituicoesByProfessor(id_professor: number): Promi
     const connection = await open();
     try{
         const result = await connection.execute(
-            'SELECT id_instituicao as "id", nome FROM INSTITUICOES WHERE id_professor = :id_professor',
+            'SELECT id_instituicao as "id", NOME FROM INSTITUICOES WHERE id_professor = :id_professor',
             [id_professor]
         )
         return result.rows as Instituicao[];
