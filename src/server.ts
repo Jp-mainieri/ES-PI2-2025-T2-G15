@@ -351,13 +351,13 @@ app.get('/professores/:id', async (req:Request, res:Response) => {
 
 app.post('/professores', async (req:Request, res:Response) => {
     try {
-        const {nome, telefone, senha, diciplina, email} = req.body;
-        if (!nome || !telefone || !senha || !diciplina || !email) {
+        const {nome, telefone, senha, email} = req.body;
+        if (!nome || !telefone || !senha || !email) {
             return res.status(400).json({
                 error: "Todos os campos são obrigatórios."
             });
         }
-        const id = await addProfessor(nome, telefone, senha, diciplina, email);
+        const id = await addProfessor(nome, telefone, senha, email);
         res.status(201).json({
             message: "Professor adicionado com sucesso.", id
         });
@@ -371,14 +371,14 @@ app.post('/professores', async (req:Request, res:Response) => {
 
 app.put('/professores/:id', async (req:Request, res:Response) => {
     try {
-        const {nome, telefone, senha, diciplina, email} = req.body;
+        const {nome, telefone, senha, email} = req.body;
         const id = Number(req.params.id);
-        if (!nome || !telefone || !senha || !diciplina || !email) {
+        if (!nome || !telefone || !senha || !email) {
             return res.status(400).json({
                 error: "Todos os campos são obrigatórios."
             });
         }
-        const updated = await updateProfessor(id, nome, telefone, senha, diciplina, email);
+        const updated = await updateProfessor(id, nome, telefone, senha, email);
         if (updated) {
             res.status(200).json({
                 message: "Professor atualizado com sucesso.", id
