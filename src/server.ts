@@ -55,22 +55,18 @@ import {
     addAluno,
     deleteAluno,
     getAllAlunosByTurma,
-    updateAluno, getAllAlunosByInstituicao
+    updateAluno,
+    getAllAlunosByInstituicao
 } from "./db/alunos";
 
 import {
-  getAllNotas,
-  getNotaById,
-  addNota,
-  updateNota,
-  deleteNota,
+    getAllNotas,
+    getNotaById,
+    addNota,
+    updateNota,
+    deleteNota, getComponentesByTurma, getNotasByTurma,
 } from "./db/notas";
 
-import {
-  getAlunosByTurma,
-  addAlunoToTurma,
-  removeAlunoFromTurma,
-} from "./db/turmas_alunos";
 
 const app = express();
 const port = 3000;
@@ -896,13 +892,13 @@ app.get("/notas/:id", async (req: Request, res: Response) => {
 
 app.post("/notas", async (req: Request, res: Response) => {
   try {
-    const { valor } = req.body;
+    const { valor, id_componente, ra_aluno } = req.body;
     if (valor === undefined || valor === null) {
       return res.status(400).json({
         error: "Campo valor é obrigatório.",
       });
     }
-    const id = await addNota(Number(valor));
+    const id = await addNota(Number(valor), Number(id_componente), ra_aluno);
     res.status(201).json({
       message: "Nota adicionada com sucesso.",
       id,
@@ -966,69 +962,31 @@ app.delete("/notas/:id", async (req: Request, res: Response) => {
   }
 });
 
-// Rotas de Turmas_Alunos:
-
-// Rota para obter alunos de uma turma
-app.get("/turmas/:id_turma/alunos", async (req: Request, res: Response) => {
-  try {
-    const id_turma = Number(req.params.id_turma);
-    const alunos = await getAlunosByTurma(id_turma);
-    res.json(alunos);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({
-      error: "Erro ao buscar alunos da turma",
-    });
-  }
-});
-
-// Rota para adicionar aluno a uma turma
-app.post("/turmas/:id_turma/alunos", async (req: Request, res: Response) => {
-  try {
-    const id_turma = Number(req.params.id_turma);
-    const { ra_aluno } = req.body;
-    if (!ra_aluno) {
-      return res.status(400).json({
-        error: "Campo RA do aluno é obrigatório.",
-      });
-    }
-    await addAlunoToTurma(id_turma, ra_aluno);
-    res.status(201).json({
-      message: "Aluno adicionado à turma com sucesso.",
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({
-      error: "Erro ao adicionar aluno à turma.",
-    });
-  }
-});
-
-// Rota para remover aluno de uma turma
-app.delete(
-  "/turmas/:id_turma/alunos/:ra_aluno",
-  async (req: Request, res: Response) => {
+app.get(`/componentes-notas/:id_turma`, async (req:Request, res:Response) => {
     try {
-      const id_turma = Number(req.params.id_turma);
-      const ra_aluno = req.params.ra_aluno;
-      const deleted = await removeAlunoFromTurma(id_turma, ra_aluno);
-      if (deleted) {
-        res.status(200).json({
-          message: "Aluno removido da turma com sucesso.",
+        const id_turma = Number(req.params.id_turma);
+        const componentes = await getComponentesByTurma(id_turma);
+        res.json(componentes)
+    }catch (err) {
+        console.error(err);
+        res.status(500).json({
+            error: "Erro ao buscar componentes de notas",
         });
-      } else {
-        res.status(404).json({
-          message: "Aluno não encontrado na turma.",
-        });
-      }
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({
-        error: "Erro ao remover aluno da turma.",
-      });
     }
-  }
-);
+});
+app.get(`/notas/turma/:id_turma`, async (req:Request, res:Response) => {
+    try {
+        const id_turma = Number(req.params.id_turma);
+        const notas = await getNotasByTurma(id_turma);
+        res.json(notas)
+    }catch (err) {
+        console.error(err);
+        res.status(500).json({
+            error: "Erro ao buscar notas por turma",
+        });
+    }
+});
+
 
 app.listen(port, () => {
   console.log(`Servidor rodando: http://localhost:${port}`);
