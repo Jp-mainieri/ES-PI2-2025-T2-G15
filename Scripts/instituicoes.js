@@ -5,7 +5,10 @@ let cursosData = [];
 let disciplinasData = [];
 let turmasData = [];
 
+
 //Serve para guardar o id do que está em exibição
+const usuarioLogado = JSON.parse(sessionStorage.getItem("usuarioLogado"));
+const idProfessor = usuarioLogado.id_professor;
 let idIinstituicaoAtiva;
 let idCursoAtivo;
 let idDisciplinaAtiva;
@@ -14,7 +17,7 @@ let idDisciplinaAtiva;
 
 async function carregarInstituicoes() {
   try {
-    const response = await fetch(`${API_URL}/instituicoes`);
+    const response = await fetch(`${API_URL}/instituicoes/professor/${idProfessor}`);
     if (!response.ok) throw new Error("Erro ao carregar instituições");
 
     instituicoesData = await response.json();
@@ -37,7 +40,7 @@ function renderizarInstituicoes() {
   instituicoesData.forEach((inst) => {
     const nova_linha = document.createElement("tr");
     nova_linha.innerHTML = `
-      <td>${inst.nome}</td>
+      <td>${inst.NOME}</td>
       <td>
         <div class="tabela-acoes">
           <div class="tabela-botoes">
@@ -219,7 +222,7 @@ async function adicionarInstituicao(nome) {
     const response = await fetch(`${API_URL}/instituicoes`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ nome, id_professor: 0 }),// preciso colocar o id_professor de acordo com o login
+      body: JSON.stringify({ nome, id_professor: idProfessor }),// preciso colocar o id_professor de acordo com o login
     });
 
     if (!response.ok) throw new Error("Erro ao adicionar instituição");
