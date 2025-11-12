@@ -15,7 +15,8 @@ export interface NotasAlunos {
     ra_aluno:string,
     nome:string,
     id_componente:number,
-    valor:number
+    valor:number,
+    id_nota:number
 }
 
 export async function getAllNotas(): Promise<Nota[]> {
@@ -70,7 +71,7 @@ export async function getNotasByTurma(id_turma: number): Promise<NotasAlunos[] |
     try {
         const result = await connection.execute(
             `
-            SELECT a.RA_ALUNO as ra_aluno, a.NOME as nome, cn.id_componente, n.VALOR as valor
+            SELECT a.RA_ALUNO as ra_aluno, a.NOME as nome, cn.id_componente, n.VALOR as valor, n.ID_NOTA
             FROM ALUNOS a
             JOIN TURMAS t ON t.ID_TURMA = a.ID_TURMA
             JOIN DISCIPLINAS d ON d.ID_DISCIPLINA = t.ID_DISCIPLINA
