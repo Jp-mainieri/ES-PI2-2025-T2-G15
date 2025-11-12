@@ -80,9 +80,9 @@ FOREIGN KEY (id_disciplina) REFERENCES DISCIPLINAS(id_disciplina)
 CREATE TABLE ALUNOS (
 RA_aluno VARCHAR2(20) PRIMARY KEY,
 nome VARCHAR2(100) NOT NULL,
-matricula VARCHAR2(20) UNIQUE NOT NULL,
-curso VARCHAR2(100),
-data_nascimento DATE
+id_turma NUMBER NOT NULL,
+CONSTRAINT fk_aluno_turma
+FOREIGN KEY (id_turma) REFERENCES TURMAS(id_turma)
 );
 
 CREATE TABLE COMPONENTE_NOTA (
@@ -119,15 +119,6 @@ RA_aluno VARCHAR2(20) NOT NULL,
 PRIMARY KEY (id_turma, RA_aluno),
 CONSTRAINT fk_ta_turma FOREIGN KEY (id_turma) REFERENCES TURMAS(id_turma),
 CONSTRAINT fk_ta_aluno FOREIGN KEY (RA_aluno) REFERENCES ALUNOS(RA_aluno)
-);
-
-CREATE TABLE PROFESSORES_TURMAS (
-id_professor NUMBER NOT NULL,
-id_turma NUMBER NOT NULL,
-PRIMARY KEY (id_professor, id_turma),
-CONSTRAINT fk_pt_professor FOREIGN KEY (id_professor) REFERENCES
-PROFESSORES(id_professor),
-CONSTRAINT fk_pt_turma FOREIGN KEY (id_turma) REFERENCES TURMAS(id_turma)
 );
 
 CREATE OR REPLACE TRIGGER trg_professores_pk

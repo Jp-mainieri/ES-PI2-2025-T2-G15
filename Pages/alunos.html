@@ -25,7 +25,7 @@
 
     <div class="outros">
       <p class="section-title">OUTROS</p>
-      <a href="../index.html" class="menu-item"><i class="fa-solid fa-right-from-bracket"></i> Sair</a>
+      <a href="./index.html" class="menu-item"><i class="fa-solid fa-right-from-bracket"></i> Sair</a>
     </div>
   </div>
 
@@ -53,55 +53,18 @@
       </div>
 
       <div class="tabela-container">
-        <table class="tabelas">
+        <table class="tabelas" id="tabela-alunos">
 
           <thead>
             <tr>
               <th>Nome</th>
-              <th>Matrícula</th>
-              <th>Instituição</th>
+              <th>RA</th>
               <th>Turma</th>
-              <th>Situação</th>
               <th>Ações</th>
             </tr>
           </thead>
 
           <tbody>
-            <tr>
-              <td>Maria Clara</td>
-              <td>123456</td>
-              <td>PUC Campinas</td>
-              <td>102</td>
-              <td>Ativo</td>
-              <td class="acoes">
-                <button class="btn-acao"><i class="fa-solid fa-pen"></i></button>
-                <button class="btn-acao"><i class="fa-solid fa-trash"></i></button>
-              </td>
-            </tr>
-
-            <tr>
-              <td>Maria Clara</td>
-              <td>123456</td>
-              <td>PUC Campinas</td>
-              <td>102</td>
-              <td>Ativo</td>
-              <td class="acoes">
-                <button class="btn-acao"><i class="fa-solid fa-pen"></i></button>
-                <button class="btn-acao"><i class="fa-solid fa-trash"></i></button>
-              </td>
-            </tr>
-
-            <tr>
-              <td>Maria Clara</td>
-              <td>123456</td>
-              <td>PUC Campinas</td>
-              <td>102</td>
-              <td>Ativo</td>
-              <td class="acoes">
-                <button class="btn-acao"><i class="fa-solid fa-pen"></i></button>
-                <button class="btn-acao"><i class="fa-solid fa-trash"></i></button>
-              </td>
-            </tr>
 
           </tbody>
         </table>
@@ -121,33 +84,17 @@
         <input type="text" id="nomeAluno" name="nomeAluno" required>
       </div>
 
-      <div class="form-group">
-        <label for="matriculaAluno">Matrícula</label>
-        <input type="text" id="matriculaAluno" name="matriculaAluno" required>
-      </div>
-
-      <div class="form-group">
-        <label for="instituicaoAluno">Instituição</label>
-        <select id="instituicaoAluno" name="instituicaoAluno" required>
-          <option value="">Selecione</option>
-          <option value="ifce">PUC - Campinas</option>
-          <option value="ufc">Unicamp</option>
-          <option value="outra">Outra</option>
-        </select>
+        <div class="form-group">
+        <label for="raAluno">RA</label>
+        <input type="text" id="raAluno" name="raAluno" required>
       </div>
 
       <div class="form-group">
         <label for="turmaAluno">Turma</label>
-        <input type="text" id="turmaAluno" name="turmaAluno" required>
-      </div>
+          <select id="turmaAluno" class="opcoesTurmas" name="turmaAluno" required>
+              <option value="">Selecione</option>
 
-      <div class="form-group">
-        <label for="situacaoAluno">Situação</label>
-        <select id="situacaoAluno" name="situacaoAluno" required>
-          <option value="">Selecione</option>
-          <option value="ativo">Ativo</option>
-          <option value="inativo">Inativo</option>
-        </select>
+          </select>
       </div>
 
       <div class="modal-buttons">
@@ -166,11 +113,8 @@
       
       <div class="form-group">
         <label for="turmaImportar">Turma</label>
-        <select id="turmaImportar" name="turmaImportar" required>
+        <select id="turmaImportar" class="opcoesTurmas" name="turmaImportar" required>
           <option value="">Selecionar</option>
-          <option value="101">101</option>
-          <option value="102">102</option>
-          <option value="103">103</option>
         </select>
         <p style="font-size: 0.9em; color: #555; margin-top: 4px;">
           Alunos importados serão adicionados a esta turma.
@@ -186,12 +130,12 @@
 
       <div class="form-group">
         <label for="arquivoAlunos">Arquivo:</label>
-        <input type="file" id="arquivoAlunos" name="arquivoAlunos" accept=".csv,.json" required>
+        <input type="file" id="arquivoAlunos" name="arquivoAlunos" accept=".csv" required>
       </div>
 
       <div class="modal-buttons">
         <button type="button" class="cancelar" onclick="fecharModal('modalImportar')">Cancelar</button>
-        <button type="submit" class="confirmar">Confirmar</button>
+        <button type="submit" class="confirmar" id="btn-confirmarImportacao">Confirmar</button>
       </div>
     </form>
   </div>
@@ -209,36 +153,20 @@
       </div>
 
       <div class="form-group">
-        <label for="editarMatriculaAluno">Matrícula</label>
-        <input type="text" id="editarMatriculaAluno" name="editarMatriculaAluno" required>
-      </div>
-
-      <div class="form-group">
-        <label for="editarInstituicaoAluno">Instituição</label>
-        <select id="editarInstituicaoAluno" name="editarInstituicaoAluno" required>
-          <option value="">Selecione</option>
-          <option value="PUC Campinas">PUC - Campinas</option>
-          <option value="Unicamp">Unicamp</option>
-        </select>
+        <label for="editarRaAluno">RA</label>
+        <input type="text" id="editarRaAluno" name="editarMatriculaAluno" required>
       </div>
 
       <div class="form-group">
         <label for="editarTurmaAluno">Turma</label>
-        <input type="text" id="editarTurmaAluno" name="editarTurmaAluno" required>
-      </div>
-
-      <div class="form-group">
-        <label for="editarSituacaoAluno">Situação</label>
-        <select id="editarSituacaoAluno" name="editarSituacaoAluno" required>
-          <option value="">Selecione</option>
-          <option value="Ativo">Ativo</option>
-          <option value="Inativo">Inativo</option>
+        <select id="editarTurmaAluno" class="opcoesTurmas" name="editarTurmaAluno" required>
+            <option value="">Selecione</option>
         </select>
       </div>
 
       <div class="modal-buttons">
         <button type="button" class="cancelar" onclick="fecharModal('modalEditar')">Cancelar</button>
-        <button type="submit" class="confirmar">Salvar</button>
+        <button type="button" class="confirmar">Salvar</button>
       </div>
     </form>
   </div>
