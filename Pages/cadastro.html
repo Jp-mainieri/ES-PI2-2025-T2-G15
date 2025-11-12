@@ -9,7 +9,7 @@
     <!--Link para os icones-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <!--Link para o arquivo de JavaScript-->
-    <script src="../Scripts/main.js"></script>
+    <script src="../Scripts/cadastro.js"></script>
 
 
 </head>
@@ -33,23 +33,24 @@
         <div class="form">
             <h3>Seja bem-vindo(a)!</h3>
 
-            <form method="post" action="#">
+            <form id="formCadastro">
                 <label for="nome"><strong>Nome:</strong></label><br>
-                <input type="text" id="nome" name="nome" placeholder="Digite seu nome"><br><br>
+                <input type="text" id="nome" name="nome" placeholder="Digite seu nome" required><br><br>
 
                 <label for="email"><strong>Email:</strong></label><br>
                 <input type="email" id="email" name="email" placeholder="Digite seu email" required><br><br>
 
                 <label for="telefone"><strong>Telefone:</strong></label><br>
-                <input type="tel" id="telefone" name="telefone" placeholder="Digite seu telefone"><br><br>
+                <input type="tel" id="telefone" name="telefone" placeholder="Digite seu telefone" required><br><br>
 
                 <label for="senha"><strong>Senha:</strong></label><br>
                 <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required><br><br>
 
                 <div class="btn-container">
-                    <a href="#" class="btn-entrar"><strong>Entrar</strong></a>
+                    <button type="submit" class="btn-entrar"><strong>Cadastrar</strong></button>
                 </div>
             </form>
+
         </div>
 
     </div>
