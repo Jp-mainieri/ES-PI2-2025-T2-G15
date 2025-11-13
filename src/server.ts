@@ -1042,9 +1042,6 @@ app.delete(
 
 // --- Recuperação de Senha ---
 
-
-
-// ROTA /recuperar-senha
 app.post("/recuperar-senha", async (req: Request, res: Response) => {
   try {
     const { email } = req.body;
@@ -1058,19 +1055,11 @@ app.post("/recuperar-senha", async (req: Request, res: Response) => {
       return res.status(404).json({ error: "Email não encontrado." });
     }
 
-    // ======= OPÇÃO 1: Usar conta real (Gmail) =======
-    // const transporter = nodemailer.createTransport({
-    //   service: "gmail",
-    //   auth: { user: "seuemail@gmail.com", pass: "SUA_SENHA_DE_APP" }
-    // });
-
-    // ======= OPÇÃO 2 (RECOMENDADA PARA TESTES): criar conta de teste Ethereal =======
-    // ======= OPÇÃO 1: Usar conta real (Gmail) =======
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: "giovana.uchelli@gmail.com", // seu Gmail real
-      pass: "asss xwwp vrfe vfzt"   // senha de app gerada no Gmail
+      user: "notadezpi2@gmail.com", // seu Gmail real
+      pass: "f q e d u z w s x t v z g i o m"   // senha de app gerada no Gmail
       }
     });
 

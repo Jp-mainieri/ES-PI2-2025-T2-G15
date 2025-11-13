@@ -112,7 +112,7 @@ input{
 }
 
 .btn-entrar {
-    padding: 13px 145px;
+    padding: 13px 160px;
     border: none;
     border-radius: 25px;
     background-color: #17356D;
@@ -121,9 +121,15 @@ input{
     text-decoration: none;
 }
 
-
-
-
+.btn-entrar-alt {
+    padding: 13px 147px;
+    border: none;
+    border-radius: 25px;
+    background-color: #17356D;
+    color: #fff;
+    cursor: pointer;
+    text-decoration: none;
+}
 
 
 

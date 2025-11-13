@@ -38,7 +38,7 @@
                 
 
                 <div class="btn-container">
-                    <button type="button" class="btn-entrar" onclick="alterarSenha()">Alterar senha</button>
+                    <button type="button" class="btn-entrar-alt" onclick="alterarSenha()"><strong>Alterar senha</strong></button>
                 </div>
             </form>
         </div>
@@ -54,38 +54,7 @@
 
     </div>
 
-    <script>
-        async function alterarSenha() {
-        const params = new URLSearchParams(window.location.search);
-        const token = params.get("token");
-        const novaSenha = document.getElementById("senha").value;
-
-        if (!novaSenha) {
-            alert("Digite a nova senha!");
-            return;
-        }
-
-        const res = await fetch("http://localhost:3000/redefinir-senha", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ token, novaSenha }),
-        });
-
-        const data = await res.json();
-        alert(data.message || data.error);
-
-        if (res.ok) {
-            window.location.href = "login.html"; // volta pra tela de login
-        }
-        }
-</script>
-
-<form onsubmit="event.preventDefault(); alterarSenha();">
-  <label for="senha"><strong>Nova senha:</strong></label><br>
-  <input type="password" id="senha" name="senha" placeholder="Digite sua nova senha" required><br><br>
-  <button type="submit">Confirmar</button>
-</form>
-
+    <script src="../Scripts/alterar_senha.js"></script>
 
 
 </body>
