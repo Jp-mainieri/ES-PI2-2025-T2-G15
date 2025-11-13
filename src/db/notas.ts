@@ -22,7 +22,6 @@ export interface NotasAlunos {
 export interface Formula {
     id_formula:number,
     formula:string,
-    id_componente:number,
     id_disciplina:number,
 }
 
@@ -159,9 +158,9 @@ export async function getFormulaByDisciplina(id_disciplina: number): Promise<For
     try {
         const result = await connection.execute(
             `
-            SELECT fd.ID_FORMULA, fd.FORMULA, fd.ID_COMPONENTE, fd.ID_DISCIPLINA
-            FROM FORMULA_DISCIPLINA fd
-            WHERE fd.ID_DISCIPLINA= :id_disciplina
+            SELECT ID_FORMULA, FORMULA, ID_DISCIPLINA
+            FROM FORMULA_DISCIPLINA 
+            WHERE ID_DISCIPLINA= :id_disciplina
             `,
             [id_disciplina]
         );
@@ -172,17 +171,18 @@ export async function getFormulaByDisciplina(id_disciplina: number): Promise<For
     }
 }
 
-export async function addFormula(formula:string,id_componente:number,id_disciplina: number): Promise<Number> {
+export async function addFormula(formula:string,id_disciplina: number): Promise<Number> {
     const connection = await open();
     try {
         const result = await connection.execute(
             `
             INSERT INTO FORMULA_DISCIPLINA 
-            (FORMULA, ID_COMPONENTE, ID_DISCIPLINA) 
-            VALUES (:formula, :id_componente, :id_disciplina)
+            (FORMULA, ID_DISCIPLINA) 
+            VALUES (:formula, :id_disciplina)
             RETURNING ID_FORMULA INTO :id
             `,
-            {formula,id_componente, id_disciplina, id: {dir:OracleDB.BIND_OUT, type: OracleDB.NUMBER}}
+            {formula, id_disciplina, id: {dir:OracleDB.BIND_OUT, type: OracleDB.NUMBER}},
+            {autoCommit: true}
         );
 
         const outBinds = result.outBinds as {id?: number[]} | undefined;

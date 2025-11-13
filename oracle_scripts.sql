@@ -89,8 +89,6 @@ FOREIGN KEY (id_turma) REFERENCES TURMAS(id_turma)
 CREATE TABLE COMPONENTE_NOTA (
 id_componente NUMBER PRIMARY KEY,
 nome VARCHAR2(50) NOT NULL,
-sigla VARCHAR2(10),
-descricao VARCHAR2(200),
 id_disciplina NUMBER NOT NULL,
 CONSTRAINT fk_comp_disciplina
 FOREIGN KEY (id_disciplina) REFERENCES DISCIPLINAS(id_disciplina)
@@ -110,10 +108,7 @@ FOREIGN KEY (RA_aluno) REFERENCES ALUNOS(RA_aluno)
 CREATE TABLE FORMULA_DISCIPLINA (
 id_formula NUMBER PRIMARY KEY,
 formula VARCHAR2(20),
-id_componente NUMBER NOT NULL,
 id_disciplina NUMBER NOT NULL,
-CONSTRAINT fk_formula_componente
-  FOREIGN KEY (id_componente) REFERENCES COMPONENTE_NOTA(id_componente),
 CONSTRAINT fk_formula_disciplina
   FOREIGN KEY (id_disciplina) REFERENCES DISCIPLINAS(id_disciplina)
 );
@@ -202,7 +197,7 @@ BEFORE INSERT ON FORMULA_DISCIPLINA
 FOR EACH ROW
 WHEN (NEW.id_formula IS NULL)
 BEGIN
-  SELECT seq_formula_disciplina.NEXTVAL INTO :NEW.ID_FORMULA FROM DUAL;
+  SELECT seq_formula_disciplina.NEXTVAL INTO :NEW.id_formula FROM DUAL;
 END;
 /
 

@@ -10,6 +10,7 @@ let idDisciplinaAtiva;
 let instituicoesData = [];
 let cursosData = [];
 let disciplinasData = [];
+let formulaData;
 
 async function carregarInstituicoes() {
     try {
@@ -101,7 +102,63 @@ function renderizarOpcoesDisciplinas() {
             sessao.appendChild(nova_opcao);
         });
     })
+};
 
+async function carregarFormula() {
+    try {
+        const response = await fetch(`${API_URL}/formula/${idDisciplinaAtiva}`)
+        if (!response.ok) throw new Error("Erro ao carregar formulas");
+        try {
+            formulaData = await response.json();
+        }catch {
+            formulaData = null;
+        }
+        renderizarFormula();
+    } catch (error) {
+        console.error("Erro:", error);
+    }
+}
+
+function renderizarFormula() {
+    const inputFormula = document.querySelector("#formula");
+    if (!inputFormula) return;
+    inputFormula.value = formulaData?.FORMULA || "";
+}
+
+async function adicionarFormula(formula){
+    try {
+        alert("ADCND")
+        const response = await fetch(`${API_URL}/formula`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                id_disciplina: Number(idDisciplinaAtiva),
+                formula,
+            }),
+        });
+
+        if (!response.ok) throw new Error("Erro ao adicionar formula");
+    } catch (error) {
+        console.error("Erro:", error);
+        alert("Erro ao adicionar formula: " + error.message);
+    }
+}
+
+async function editarFormula(id, formula) {
+    try {
+        const response = await fetch(`${API_URL}/formula/${id}`, {
+            method: "PUT",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                formula
+            }),
+        });
+
+        if (!response.ok) throw new Error("Erro ao atualizar formula");
+    } catch (error) {
+        console.error("Erro:", error);
+        alert("Erro ao atualizar formula: " + error.message);
+    }
 }
 
 carregarInstituicoes();
@@ -127,6 +184,30 @@ for (const select of selectsDisciplina) {
     select.addEventListener("change", async (e) => {
         e.preventDefault();
         idDisciplinaAtiva = e.target.value;
-        await carregarTurmas();
+        //await carregarComponentes();
+        await carregarFormula();
     });
 }
+document.getElementById("btn-validar-formula").addEventListener("click", async (e)=>{
+    e.preventDefault();
+    const inputFormula = document.querySelector("#formula").value;
+    console.log(inputFormula);
+    if (!inputFormula || inputFormula.length === 0) {
+        alert("Nada para validar");
+        return;
+    }
+    console.log(formulaData)
+    if (!formulaData || !formulaData.ID_FORMULA) {
+        await adicionarFormula(inputFormula);
+        alert("Fórmula adicionada com sucesso!");
+    } else if (inputFormula !== formulaData.FORMULA) {
+        await editarFormula(formulaData.ID_FORMULA, inputFormula);
+        alert("Fórmula atualizada com sucesso!");
+    } else {
+        alert("A fórmula já está atualizada.");
+    }
+
+    console.log(idDisciplinaAtiva)
+    await carregarFormula()
+    console.log(formulaData)
+});

@@ -36,33 +36,25 @@
           
           <div class="form-group">
             <select class="select-field sortInstituicao">
-              <option>Instituição</option>
+              <option value="-1">Instituição</option>
             </select>
             <i class="fa-solid fa-chevron-down select-icon"></i>
           </div>
   
           <div class="form-group">
             <select class="select-field sortCurso">
-              <option>Curso</option>
+              <option value="-1">Curso</option>
             </select>
             <i class="fa-solid fa-chevron-down select-icon"></i>
           </div>
   
           <div class="form-group">
             <select class="select-field sortDisciplina">
-              <option>Disciplinas</option>
+              <option value="-1">Disciplinas</option>
             </select>
             <i class="fa-solid fa-chevron-down select-icon"></i>
           </div>
-          
-          <div class="formula-section">
-            <label for="formula">Definir Fórmula</label>
-            <div class="formula-input-group">
-              <input type="text" id="formula" class="text-field" value="(P1 + P2 + P3) / 3">
-              <button class="btn btn-validate">Validar fórmula</button>
-            </div>
-          </div>
-  
+
           <div class="components-section">
             <label>Componentes</label>
             <textarea class="textarea-field" readonly>P1
@@ -71,7 +63,16 @@
                 Trabalho
             </textarea>
           </div>
-  
+
+          <div class="formula-section">
+            <label for="formula">Definir Fórmula</label>
+            <div class="formula-input-group">
+              <input type="text" id="formula" class="text-field" value="">
+              <button type="button" class="btn btn-validate" id="btn-validar-formula">Validar fórmula</button>
+            </div>
+          </div>
+
+
           
   
           <div class="actions">

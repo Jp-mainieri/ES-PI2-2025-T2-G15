@@ -1003,13 +1003,13 @@ app.get(`/formula/:id_disciplina`, async (req:Request, res:Response) => {
 
 app.post(`/formula`, async (req:Request, res:Response) => {
     try {
-        const { id_disciplina ,formula, id_componente} = req.body;
+        const { id_disciplina ,formula} = req.body;
         if (formula === undefined || formula === null) {
             return res.status(400).json({
                 error: "Campo formula é obrigatório.",
             });
         }
-        const id = await addFormula(formula, Number(id_componente), Number(id_disciplina));
+        const id = await addFormula(formula, Number(id_disciplina));
         res.status(201).json({
             message: "Formula adicionada com sucesso.",
             id
