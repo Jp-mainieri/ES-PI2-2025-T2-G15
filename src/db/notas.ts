@@ -19,6 +19,13 @@ export interface NotasAlunos {
     id_nota:number
 }
 
+export interface Formula {
+    id_formula:number,
+    formula:string,
+    id_componente:number,
+    id_disciplina:number,
+}
+
 export async function getAllNotas(): Promise<Nota[]> {
     const connection = await open();
     try{
@@ -83,7 +90,7 @@ export async function getNotasByTurma(id_turma: number): Promise<NotasAlunos[] |
             [id_turma],
         );
 
-        return result.rows as NotasAlunos[] || null;
+        return result.rows as NotasAlunos[] | null;
     } finally {
         await close(connection);
     }
@@ -138,6 +145,66 @@ export async function deleteNota(id: number): Promise<boolean> {
         const result = await connection.execute(
             `DELETE FROM NOTA WHERE ID_NOTA = :id`,
             [id],
+            {autoCommit: true}
+        );
+
+        return (result.rowsAffected ?? 0) > 0;
+    } finally {
+        await close(connection);
+    }
+}
+
+export async function getFormulaByDisciplina(id_disciplina: number): Promise<Formula | null> {
+    const connection = await open();
+    try {
+        const result = await connection.execute(
+            `
+            SELECT fd.ID_FORMULA, fd.FORMULA, fd.ID_COMPONENTE, fd.ID_DISCIPLINA
+            FROM FORMULA_DISCIPLINA fd
+            WHERE fd.ID_DISCIPLINA= :id_disciplina
+            `,
+            [id_disciplina]
+        );
+
+        return (result.rows && result.rows[0]) as Formula | null;
+    } finally {
+        await close(connection);
+    }
+}
+
+export async function addFormula(formula:string,id_componente:number,id_disciplina: number): Promise<Number> {
+    const connection = await open();
+    try {
+        const result = await connection.execute(
+            `
+            INSERT INTO FORMULA_DISCIPLINA 
+            (FORMULA, ID_COMPONENTE, ID_DISCIPLINA) 
+            VALUES (:formula, :id_componente, :id_disciplina)
+            RETURNING ID_FORMULA INTO :id
+            `,
+            {formula,id_componente, id_disciplina, id: {dir:OracleDB.BIND_OUT, type: OracleDB.NUMBER}}
+        );
+
+        const outBinds = result.outBinds as {id?: number[]} | undefined;
+
+        if(!outBinds || !outBinds.id || outBinds.id.length === 0){
+            throw new Error("Erro ao obter um ID retornado na insercao de Nota.");
+        }
+
+        return outBinds.id[0];
+    } finally {
+        await close(connection);
+    }
+}
+
+export async function updateFormula(id_disciplina: number, formula: string): Promise<boolean> {
+    const connection = await open();
+    try {
+        const result = await connection.execute(
+            `UPDATE FORMULA_DISCIPLINA
+            SET FORMULA = :formula 
+            WHERE ID_DISCIPLINA = :id`,
+            {id_disciplina, formula},
             {autoCommit: true}
         );
 

@@ -64,7 +64,7 @@ import {
     getNotaById,
     addNota,
     updateNota,
-    deleteNota, getComponentesByTurma, getNotasByTurma,
+    deleteNota, getComponentesByTurma, getNotasByTurma, getFormulaByDisciplina, addFormula, updateFormula,
 } from "./db/notas";
 
 
@@ -984,6 +984,68 @@ app.get(`/componentes-notas/:id_turma`, async (req:Request, res:Response) => {
         console.error(err);
         res.status(500).json({
             error: "Erro ao buscar componentes de notas",
+        });
+    }
+});
+
+app.get(`/formula/:id_disciplina`, async (req:Request, res:Response) => {
+    try {
+        const id_disciplina = Number(req.params.id_disciplina);
+        const formula = await getFormulaByDisciplina(id_disciplina);
+        res.json(formula)
+    }catch (err) {
+        console.error(err);
+        res.status(500).json({
+            error: "Erro ao buscar formula de disciplina",
+        });
+    }
+});
+
+app.post(`/formula`, async (req:Request, res:Response) => {
+    try {
+        const { id_disciplina ,formula, id_componente} = req.body;
+        if (formula === undefined || formula === null) {
+            return res.status(400).json({
+                error: "Campo formula é obrigatório.",
+            });
+        }
+        const id = await addFormula(formula, Number(id_componente), Number(id_disciplina));
+        res.status(201).json({
+            message: "Formula adicionada com sucesso.",
+            id
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            error: "Erro ao inserir formula.",
+        });
+    }
+});
+
+app.put("/formula/:id_disciplina", async (req: Request, res: Response) => {
+    try {
+        const { formula } = req.body;
+        const id_disciplina = Number(req.params.id_disciplina);
+        if (formula === null) {
+            return res.status(400).json({
+                error: "Campo formula é obrigatório.",
+            });
+        }
+        const updated = await updateFormula(id_disciplina, formula);
+        if (updated) {
+            res.status(200).json({
+                message: "Formula atualizada com sucesso.",
+                id_disciplina,
+            });
+        } else {
+            res.status(404).json({
+                message: "Formula não encontrada.",
+            });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            error: "Erro ao atualizar formula.",
         });
     }
 });
