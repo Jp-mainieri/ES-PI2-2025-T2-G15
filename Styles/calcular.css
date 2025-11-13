@@ -220,7 +220,7 @@
       margin-bottom: 24px;
   }
   
-  /* --- Área Componentes: */
+  /* --- Área Componentes:
   .textarea-field {
     width: 100%;
     min-height: 120px;
@@ -236,8 +236,56 @@
     text-align: left;
     white-space: pre-line;
   }
-  
-  
+   */
+
+.tabelas {
+    width: 100%;
+    text-align: left;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: white;
+}
+
+.tabelas th,
+.tabelas td {
+    padding: 15px 20px;
+    border-bottom: 1px solid #ddd; /* linha contínua */
+}
+
+.tabelas input {
+    width: auto;
+    text-align: center;
+    padding: 6px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background-color: #fafafa;
+}
+
+.tabelas input:focus {
+    outline: none;
+    border-color: #0a1e50;
+    background-color: #fff;
+}
+
+.acoes {
+    display: flex;
+    gap: 10px;
+    height: 56px;
+}
+
+.btn-acao {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--cinzaEscuro);
+    font-size: 1.2em;
+}
+
+.btn-acao:hover i {
+    color: var(--azulMarinho);
+}
   
   /* --- Botões de Ação --- */
   .btn {

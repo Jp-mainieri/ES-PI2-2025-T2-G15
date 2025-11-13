@@ -140,7 +140,7 @@ function renderizarOpcoesTurmas() {
 async function carregarTabelaAlunosNotas() {
     try {
         const notas = await fetch(`${API_URL}/notas/turma/${idTurmaAtiva}`)
-        const componentes = await fetch(`${API_URL}/componentes-notas/${idTurmaAtiva}`)
+        const componentes = await fetch(`${API_URL}/componente-nota/turma/${idTurmaAtiva}`)
 
         if (!notas.ok || !componentes.ok) throw new Error("Erro ao carregar turmas");
         notasAlunosData = await notas.json();
@@ -171,6 +171,7 @@ function renderizarNotasAlunos() {
             <th>RA</th>
             <th>NOME</th>
             ${componentesNotasData.map(c => `<th>${c.NOME}</th>`).join('')}
+            <th>MEDIA FINAL</th>
         </tr>
     `;
 
@@ -189,6 +190,7 @@ function renderizarNotasAlunos() {
             <td>${ra}</td>
             <td>${dados.nome}</td>
             ${componentesNotasData.map(c => `<td><input type="number" class="input-nota" id="${ra},${c.ID_COMPONENTE}" value="${dados.notas[c.ID_COMPONENTE] ?? 0}" /></td>`).join('')}
+            <td></td>
         `;
         tbody.appendChild(linha);
     }

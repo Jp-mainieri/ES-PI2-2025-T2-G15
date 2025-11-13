@@ -65,6 +65,7 @@ import {
     addNota,
     updateNota,
     deleteNota, getComponentesByTurma, getNotasByTurma, getFormulaByDisciplina, addFormula, updateFormula,
+    getComponentesByDisciplina, addComponente, updateComponente,deleteComponente
 } from "./db/notas";
 
 
@@ -975,7 +976,7 @@ app.delete("/notas/:id", async (req: Request, res: Response) => {
   }
 });
 
-app.get(`/componentes-notas/:id_turma`, async (req:Request, res:Response) => {
+app.get(`/componente-nota/turma/:id_turma`, async (req:Request, res:Response) => {
     try {
         const id_turma = Number(req.params.id_turma);
         const componentes = await getComponentesByTurma(id_turma);
@@ -984,6 +985,90 @@ app.get(`/componentes-notas/:id_turma`, async (req:Request, res:Response) => {
         console.error(err);
         res.status(500).json({
             error: "Erro ao buscar componentes de notas",
+        });
+    }
+});
+
+app.get(`/componente-nota/disciplina/:id_disciplina`, async (req:Request, res:Response) => {
+    try {
+        const id_disciplina = Number(req.params.id_disciplina);
+        const componentes = await getComponentesByDisciplina(id_disciplina);
+        res.json(componentes)
+    }catch (err) {
+        console.error(err);
+        res.status(500).json({
+            error: "Erro ao buscar componentes de notas",
+        });
+    }
+});
+
+app.post(`/componente-nota`, async (req:Request, res:Response) => {
+    try {
+        const {nome, sigla, descricao ,id_disciplina} = req.body;
+        if (nome === null || sigla === null) {
+            return res.status(400).json({
+                error: "Campos Nome e Sigla são obrigatórios.",
+            });
+        }
+        const id = await addComponente(nome, sigla, descricao ,Number(id_disciplina));
+        res.status(201).json({
+            message: "componente adicionada com sucesso.",
+            id
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            error: "Erro ao inserir componente.",
+        });
+    }
+});
+
+app.put("/componente-nota/:id", async (req: Request, res: Response) => {
+    try {
+        const { nome, sigla, descricao} = req.body;
+        const id = Number(req.params.id);
+        if (nome === null || sigla === null) {
+            return res.status(400).json({
+                error: "Campos Nome e Sigla são obrigatórios.",
+            });
+        }
+        const updated = await updateComponente(nome, sigla,descricao, id);
+        if (updated) {
+            res.status(200).json({
+                message: "Componente atualizada com sucesso.",
+                id,
+            });
+        } else {
+            res.status(404).json({
+                message: "Componente não encontrado.",
+            });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            error: "Erro ao atualizar Componente.",
+        });
+    }
+});
+
+app.delete("/componente-nota/:id", async (req: Request, res: Response) => {
+    try {
+        const id = Number(req.params.id);
+        const deleted = await deleteComponente(id);
+        if (deleted) {
+            res.status(200).json({
+                message: "Componente excluída com sucesso.",
+                id,
+            });
+        } else {
+            res.status(404).json({
+                message: "Componente não encontrada.",
+            });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            error: "Erro ao Componente nota.",
         });
     }
 });
