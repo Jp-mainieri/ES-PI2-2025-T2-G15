@@ -70,12 +70,6 @@ import {
     getComponentesByDisciplina, addComponente, updateComponente,deleteComponente
 } from "./db/notas";
 
-import {
-  getAlunosByTurma,
-  addAlunoToTurma,
-  removeAlunoFromTurma,
-} from "./db/turmas_alunos";
-
 const app = express();
 const port = 3000;
 
@@ -906,13 +900,13 @@ app.get("/notas/:id", async (req: Request, res: Response) => {
 
 app.post("/notas", async (req: Request, res: Response) => {
   try {
-    const { valor } = req.body;
+    const { valor , id_componente, ra_aluno} = req.body;
     if (valor === undefined || valor === null) {
       return res.status(400).json({
         error: "Campo valor é obrigatório.",
       });
     }
-    const id = await addNota(Number(valor));
+    const id = await addNota(Number(valor), Number(id_componente), ra_aluno);
     res.status(201).json({
       message: "Nota adicionada com sucesso.",
       id,
@@ -975,30 +969,6 @@ app.delete("/notas/:id", async (req: Request, res: Response) => {
     });
   }
 });
-
-app.get(`/componente-nota/turma/:id_turma`, async (req:Request, res:Response) => {
-    try {
-      const id_turma = Number(req.params.id_turma);
-      const ra_aluno = req.params.ra_aluno;
-      const deleted = await removeAlunoFromTurma(id_turma, ra_aluno);
-      if (deleted) {
-        res.status(200).json({
-          message: "Aluno removido da turma com sucesso.",
-        });
-      } else {
-        res.status(404).json({
-          message: "Aluno não encontrado na turma.",
-        });
-      }
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({
-        error: "Erro ao remover aluno da turma.",
-      });
-    }
-  }
-);
-
 
 // --- Recuperação de Senha ---
 
