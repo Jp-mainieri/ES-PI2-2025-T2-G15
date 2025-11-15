@@ -66,7 +66,7 @@ import {
     getNotaById,
     addNota,
     updateNota,
-    deleteNota, getComponentesByTurma, getNotasByTurma, getFormulaByDisciplina, addFormula, updateFormula,
+    deleteNota, getNotasByTurma, getFormulaByDisciplina, addFormula, updateFormula,
     getComponentesByDisciplina, addComponente, updateComponente,deleteComponente
 } from "./db/notas";
 
@@ -883,6 +883,25 @@ app.get("/notas/:id", async (req: Request, res: Response) => {
   try {
     const id = Number(req.params.id);
     const nota = await getNotaById(id);
+    if (nota) {
+      res.json(nota);
+    } else {
+      res.status(404).json({
+        message: "Nota não foi encontrada com o id fornecido.",
+      });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      error: "Erro ao buscar nota pelo ID fornecido.",
+    });
+  }
+});
+
+app.get("/notas/turma/:id_turma", async (req: Request, res: Response) => {
+  try {
+    const id_turma = Number(req.params.id_turma);
+    const nota = await getNotasByTurma(id_turma);
     if (nota) {
       res.json(nota);
     } else {

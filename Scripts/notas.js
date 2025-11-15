@@ -13,6 +13,7 @@ let disciplinasData = [];
 let turmasData = [];
 let notasAlunosData = [];
 let componentesNotasData = [];
+let formulaData;
 
 async function carregarInstituicoes() {
     try {
@@ -142,7 +143,7 @@ async function carregarTabelaAlunosNotas() {
         const notas = await fetch(`${API_URL}/notas/turma/${idTurmaAtiva}`)
         const componentes = await fetch(`${API_URL}/componente-nota/disciplina/${idDisciplinaAtiva}`)
 
-        if (!notas.ok || !componentes.ok) throw new Error("Erro ao carregar turmas");
+        if (!notas.ok || !componentes.ok) throw new Error("Erro ao carregar notas ou componentes");
         notasAlunosData = await notas.json();
         componentesNotasData = await componentes.json();
         console.log(notasAlunosData)
@@ -190,7 +191,7 @@ function renderizarNotasAlunos() {
             <td>${ra}</td>
             <td>${dados.nome}</td>
             ${componentesNotasData.map(c => `<td><input type="number" class="input-nota" id="${ra},${c.ID_COMPONENTE}" value="${dados.notas[c.ID_COMPONENTE] ?? 0}" /></td>`).join('')}
-            <td></td>
+            <td>${calcularMedia(dados)}</td>
         `;
         tbody.appendChild(linha);
     }
@@ -242,6 +243,44 @@ async function editarNota(id, valor) {
     }
 }
 
+async function carregarFormula() {
+    try {
+        const response = await fetch(`${API_URL}/formula/${idDisciplinaAtiva}`)
+        if (!response.ok) throw new Error("Erro ao carregar formulas");
+        try {
+            formulaData = await response.json();
+        }catch {
+            formulaData = null;
+        }
+    } catch (error) {
+        console.error("Erro:", error);
+    }
+}
+
+function calcularMedia(dados){
+    if (!formulaData) return "";
+
+    let expressao = formulaData.FORMULA;
+
+    // Substitui todas as variáveis pela nota
+    componentesNotasData.forEach(comp => {
+        const nomeVariavel = `$${comp.SIGLA}`;
+        expressao = expressao.replaceAll(nomeVariavel, dados.notas[comp.ID_COMPONENTE]);
+    });
+    
+    try {
+        // Cria função que retorna o valor da expressão
+        const fn = new Function(`return (${expressao});`);
+        const media = fn();
+        return media;
+
+    } catch (error) {
+        console.error(error);
+        alert("A fórmula é matematicamente inválida (parênteses ou operadores incorretos).");
+        return "";
+    }
+}
+
 carregarInstituicoes();
 limparTabelaNotasAlunos()
 
@@ -269,6 +308,7 @@ for (const select of selectsDisciplina) {
         e.preventDefault();
         idDisciplinaAtiva = e.target.value;
         await carregarTurmas();
+        await carregarFormula();
         await limparTabelaNotasAlunos()
     });
 }
@@ -282,30 +322,39 @@ for (const select of selectsTurma) {
     });
 }
 
-document.getElementById("btn-salvar").addEventListener("click", async() => {
+document.getElementById("btn-salvar").addEventListener("click", async(e) => {
+    e.preventDefault();
     const notasInputs = document.querySelectorAll(".input-nota")
     if (!notasInputs || notasInputs.length === 0) {
         alert("Nada para salvar")
     }
     for (const input of notasInputs) {
         const [ra, id_componente] = input.id.split(",");
-        const valorInput = Number(input.value);
+        const valorBruto = input.value;
+        const valorInput = Number(valorBruto);
 
         const notaExistente = notasAlunosData.find(n =>
             n.RA_ALUNO == ra && n.ID_COMPONENTE == id_componente
         );
-        console.log(notaExistente);
-        console.log(valorInput);
 
-        if (notaExistente && notaExistente.VALOR != null) {
-            if (notaExistente.VALOR !== valorInput){
-                await editarNota(notaExistente.ID_NOTA, valorInput);
-            }
-        }else {
+         const valorAntigo = notaExistente && notaExistente.VALOR != null ? Number(notaExistente.VALOR) : 0;
+
+        // Se não mudou nada, pula
+        if (valorInput === valorAntigo) {
+            continue;
+        }
+
+        if (valorBruto === "" || Number.isNaN(valorInput)) {
+            continue;
+        }
+
+        if (notaExistente && notaExistente.ID_NOTA) {
+            await editarNota(notaExistente.ID_NOTA, valorInput);
+        } else {
             await adicionarNota(valorInput, id_componente, ra);
         }
     }
-    await limparTabelaNotasAlunos();
+    limparTabelaNotasAlunos();
     await carregarTabelaAlunosNotas();
 })
 
