@@ -190,7 +190,7 @@ function renderizarNotasAlunos() {
         linha.innerHTML = `
             <td>${ra}</td>
             <td>${dados.nome}</td>
-            ${componentesNotasData.map(c => `<td><input type="number" class="input-nota" id="${ra},${c.ID_COMPONENTE}" value="${dados.notas[c.ID_COMPONENTE]}" /></td>`).join('')}
+            ${componentesNotasData.map(c => `<td><input type="number" class="input-nota" id="${ra},${c.ID_COMPONENTE}" value="${dados.notas[c.ID_COMPONENTE] ?? 0}" /></td>`).join('')}
             <td>${calcularMedia(dados)}</td>
         `;
         tbody.appendChild(linha);
