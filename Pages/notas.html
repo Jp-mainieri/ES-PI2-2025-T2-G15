@@ -36,31 +36,31 @@
       </div>
 
       <div class="filtros-container">
-        <select class="filtro-select">
-          <option value="">Instituição</option>
+        <select class="filtro-select sortInstituicao">
+        <option value="-1">Instituição</option>
         </select>
-      
-        <select class="filtro-select">
-          <option value="">Curso</option>
+
+        <select class="filtro-select sortCurso">
+        <option value="-1">Curso</option>
         </select>
-      
-        <select class="filtro-select">
-          <option value="">Turma</option>
-        </select>
-      
-        
-        
+
+        <select class="filtro-select sortDisciplina">
+        <option value="-1">Disciplina</option>
+        </select>  
+        <select class="filtro-select sortTurma">
+        <option value="-1">Turma</option>
+        </select>  
       </div>
 
       <div class="botoes-container">
         
         <button class="btn-exportar">Exportar</button>
-        <button class="btn-salvar">Salvar alterações</button>
+        <button class="btn-salvar" id="btn-salvar">Salvar alterações</button>
       </div>
       
 
 
-        <table class="tabela-notas">
+        <table class="tabela-notas" id="tabela-notas">
           <thead>
             <tr>
               <th>Matrícula</th>
