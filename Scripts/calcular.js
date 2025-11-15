@@ -11,6 +11,7 @@ let instituicoesData = [];
 let cursosData = [];
 let disciplinasData = [];
 let formulaData;
+let variaveisFormulaData = [];
 let componentesNotasData = [];
 
 async function carregarInstituicoes() {
@@ -297,7 +298,6 @@ function adicionarEventosExcluir() {
 
 async function verificarFormula(formula) {
     // Verificar se na formula tem todos os componentes da disciplina
-    if (!formula) return false;
     
     try {
         // Carrega os componentes se ainda não estiverem carregados
@@ -306,16 +306,21 @@ async function verificarFormula(formula) {
         }
 
         if (componentesNotasData.length === 0) {
+            variaveisFormulaData = [];
             return true;
         }
 
+        let variaveisFormula = [];
         // Verifica se cada componente está presente na fórmula
         for (const componente of componentesNotasData) {
             if (!formula.includes(`$${componente.SIGLA}`)) {
                 alert(`Um ou mais componentes faltando na formula.`);
                 return false;
+            }else {
+                variaveisFormula.push(componente.SIGLA)
             }
         }
+        variaveisFormulaData = variaveisFormula; 
         return true;
     } catch (error) {
         console.error("Erro ao verificar fórmula:", error);
@@ -328,11 +333,11 @@ async function validarFormula(){
     console.log(inputFormula);
 
     if (!inputFormula || inputFormula.length === 0) {
-        alert("Nada para validar");
+        alert("Formula: Nada para validar");
         return;
     }
 
-    if (await verificarFormula(inputFormula)){
+    if (await verificarFormula(inputFormula) && validarExpressao(inputFormula)){
         if (!formulaData || !formulaData.ID_FORMULA) {
             await adicionarFormula(inputFormula);
             alert("Fórmula adicionada com sucesso!");
@@ -344,6 +349,36 @@ async function validarFormula(){
 
     await carregarFormula()
 }
+
+function validarExpressao(formula) {
+    if (!formula) return false;
+
+    let expressao = formula;
+
+    // Substitui todas as variáveis por 1
+    variaveisFormulaData.forEach(sigla => {
+        const nomeVariavel = `$${sigla}`;
+        expressao = expressao.replaceAll(nomeVariavel, "1");
+    });
+    
+    try {
+        // Cria função que retorna o valor da expressão
+        const fn = new Function(`return (${expressao});`);
+        const testarFormula = fn();
+
+        if (typeof testarFormula !== "number" || isNaN(testarFormula)) {
+            alert("A fórmula não resulta em um valor numérico válido.");
+            return false;
+        }
+    } catch (error) {
+        console.error(error);
+        alert("A fórmula é matematicamente inválida (parênteses ou operadores incorretos).");
+        return false;
+    }
+
+    return true;
+}
+
 
 carregarInstituicoes();
 
