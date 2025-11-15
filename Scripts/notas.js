@@ -140,7 +140,7 @@ function renderizarOpcoesTurmas() {
 async function carregarTabelaAlunosNotas() {
     try {
         const notas = await fetch(`${API_URL}/notas/turma/${idTurmaAtiva}`)
-        const componentes = await fetch(`${API_URL}/componente-nota/turma/${idTurmaAtiva}`)
+        const componentes = await fetch(`${API_URL}/componente-nota/disciplina/${idDisciplinaAtiva}`)
 
         if (!notas.ok || !componentes.ok) throw new Error("Erro ao carregar turmas");
         notasAlunosData = await notas.json();
