@@ -139,28 +139,31 @@
     <form id="formExportarNotas">
       <div class="form-group">
         <label for="instituicaoExportar">Instituição</label>
-        <select id="instituicaoExportar" name="instituicaoExportar" required>
-          <option value="">Selecionar</option>
-          <option value="1">Escola Modelo</option>
-          <option value="2">Colégio Central</option>
+        <select id="instituicaoExportar" class="sortInstituicao" name="instituicaoExportar" required>
+          <option value="-1">Selecionar</option>
+
         </select>
       </div>
 
       <div class="form-group">
         <label for="cursoExportar">Curso</label>
-        <select id="cursoExportar" name="cursoExportar" required>
-          <option value="">Selecionar</option>
-          <option value="1">Informática</option>
-          <option value="2">Administração</option>
+        <select id="cursoExportar" class="sortCurso" name="cursoExportar" required>
+          <option value="-1">Selecionar</option>
+
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="disciplinaExportar">Disciplina</label>
+        <select id="disciplinaExportar" class="sortDisciplina" name="disciplinaExportar" required>
+          <option value="-1">Selecionar</option>
+
         </select>
       </div>
 
       <div class="form-group">
         <label for="turmaExportar">Turma</label>
-        <select id="turmaExportar" name="turmaExportar" required>
-          <option value="">Selecionar</option>
-          <option value="A">1ºA</option>
-          <option value="B">1ºB</option>
+        <select id="turmaExportar" class="sortTurma" name="turmaExportar" required>
+          <option value="-1">Selecionar</option>
         </select>
         <p style="font-size: 0.9em; color: #555; margin-top: 4px;">
           As notas exportadas corresponderão à turma selecionada.
