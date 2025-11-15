@@ -32,58 +32,66 @@
 
     <div class="content">
         
-          <h2>Notas</h2>
+          <h2>Componentes de nota e Fórmula</h2>
           
           <div class="form-group">
-            <select class="select-field">
-              <option>PUC - Campinas</option>
+              <label for="select-instituicao">Instituição</label>
+            <select class="select-field sortInstituicao" id="select-instituicao">
+              <option value="-1">Instituição</option>
             </select>
             <i class="fa-solid fa-chevron-down select-icon"></i>
           </div>
   
           <div class="form-group">
-            <select class="select-field">
-              <option>Engenharia de Software</option>
+              <label for="select-curso">Curso</label>
+            <select class="select-field sortCurso" id="select-curso">
+              <option value="-1">Curso</option>
             </select>
             <i class="fa-solid fa-chevron-down select-icon"></i>
           </div>
   
           <div class="form-group">
-            <select class="select-field">
-              <option>2025, 1° - Engenharia de Software 1A</option>
+              <label for="select-disciplina">Disciplina</label>
+            <select class="select-field sortDisciplina" id="select-disciplina">
+              <option value="-1">Disciplinas</option>
             </select>
             <i class="fa-solid fa-chevron-down select-icon"></i>
           </div>
-          
-          <div class="formula-section">
-            <label for="formula">Definir Fórmula</label>
-            <div class="formula-input-group">
-              <input type="text" id="formula" class="text-field" value="(P1 + P2 + P3) / 3">
-              <button class="btn btn-validate">Validar fórmula</button>
-            </div>
-          </div>
-  
+<hr style="margin: 30px">
           <div class="components-section">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px">
             <label>Componentes</label>
-            <textarea class="textarea-field" readonly>P1
-                P2
-                P3
-                Trabalho
-            </textarea>
+                  <div>
+                      <button class="btn btn-validate" id="btn-adc-componente">Adicionar Componente</button>
+                      <button class="btn btn-validate" id="btn-salvar-alteracoes">Salvar Alterações</button>
+                  </div>
+              </div>
+            <table class="tabelas" id="tabela-componentes">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Sigla</th>
+                        <th>Descrição</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
           </div>
-  
-          
-  
-          <div class="actions">
-            <button class="btn btn-save">Salvar</button>
-            <button class="btn btn-cancel">Cancelar</button>
+
+          <div class="formula-section">
+            <label for="formula">Definir Fórmula <span style="color: rgb(23, 53, 109); margin-left: 60px">Dica: (Use "$" antes de cada sigla de componente de nota)</span></label>
+            <div class="formula-input-group">
+              <input type="text" id="formula" class="text-field" value="">
+              <button type="button" class="btn btn-validate" id="btn-validar-formula">Validar fórmula</button>
+            </div>
           </div>
   
         </div>
       
     </div>
-
-    </div>
-  </div>
+  <script src="../Scripts/calcular.js"></script>
 </body>
 </html>
