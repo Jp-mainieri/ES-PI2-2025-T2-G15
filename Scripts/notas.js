@@ -14,6 +14,7 @@ let turmasData = [];
 let notasAlunosData = [];
 let componentesNotasData = [];
 let formulaData;
+let modoEdicaoNotas = false;
 
 async function carregarInstituicoes() {
     try {
@@ -156,14 +157,17 @@ async function carregarTabelaAlunosNotas() {
 
 function renderizarNotasAlunos() {
     const tabela = document.getElementById("tabela-notas");
-    if (!tabela) return; // evita erro se o elemento não existir
-    const thead = tabela.querySelector("#tabela-notas thead");
-    const tbody = tabela.querySelector("#tabela-notas tbody");
+    const thead = tabela.querySelector("thead");
+    const tbody = tabela.querySelector("tbody");
+
+    limparTabelaNotasAlunos();
 
     if (!notasAlunosData || notasAlunosData.length === 0) {
         tbody.innerHTML = `
       <td>Nenhum aluno para a turma ou componente de nota para a disciplina encontrado</td>
       `;
+        document.querySelector(".btn-exportar").style.display="none";
+        document.getElementById("btn-editar-notas").style.display="none";
         return;
     }
 
@@ -184,23 +188,48 @@ function renderizarNotasAlunos() {
         alunosMap[n.RA_ALUNO].notas[n.ID_COMPONENTE] = n.VALOR;
     }
 
-    // Montar o corpo da tabla
+    // Para montar o corpo da tabla
     for (const [ra, dados] of Object.entries(alunosMap)) {
         const linha = document.createElement("tr");
-        linha.innerHTML = `
+
+        let html = `
             <td>${ra}</td>
             <td>${dados.nome}</td>
-            ${componentesNotasData.map(c => `<td><input type="number" class="input-nota" id="${ra},${c.ID_COMPONENTE}" value="${dados.notas[c.ID_COMPONENTE] ?? 0}" /></td>`).join('')}
-            <td>${calcularMedia(dados)}</td>
         `;
+
+        html += componentesNotasData.map(c => {
+            const valor = dados.notas[c.ID_COMPONENTE] ?? 0;
+
+            // Verifica se está no modo edição de notas
+            if (!modoEdicaoNotas) {
+                return `<td>${valor}</td>`;
+            }
+
+            return `
+                <td>
+                    <input 
+                        type="number" 
+                        class="input-nota" 
+                        id="${ra},${c.ID_COMPONENTE}" 
+                        value="${valor}" />
+                </td>
+            `;
+        }).join("");
+
+        // Média final (só visualização mesmo)
+        html += `<td>${calcularMedia(dados)}</td>`;
+
+        linha.innerHTML = html;
         tbody.appendChild(linha);
     }
+    document.querySelector(".btn-exportar").style.display="flex";
+    document.getElementById("btn-editar-notas").style.display="flex";
 }
 
 function limparTabelaNotasAlunos() {
     const tabela = document.getElementById("tabela-notas");
-    const thead = tabela.querySelector("#tabela-notas thead");
-    const tbody = tabela.querySelector("#tabela-notas tbody");
+    const thead = tabela.querySelector("thead");
+    const tbody = tabela.querySelector("tbody");
 
     thead.innerHTML = ``;
     tbody.innerHTML = ``;
@@ -276,13 +305,11 @@ function calcularMedia(dados){
 
     } catch (error) {
         console.error(error);
-        alert("A fórmula é matematicamente inválida (parênteses ou operadores incorretos).");
-        return "";
+        return "Fórmula invalida";
     }
 }
 
 carregarInstituicoes();
-limparTabelaNotasAlunos()
 
 const selectsInstituicao = document.getElementsByClassName("sortInstituicao");
 for (const select of selectsInstituicao) {
@@ -290,7 +317,9 @@ for (const select of selectsInstituicao) {
         e.preventDefault();
         idInstituicaoAtiva = e.target.value;
         await carregarCursos();
-        await limparTabelaNotasAlunos()
+         limparTabelaNotasAlunos()
+         document.querySelector(".btn-exportar").style.display="none";
+        document.getElementById("btn-editar-notas").style.display="none";
     });
 }
 const selectsCurso = document.getElementsByClassName("sortCurso");
@@ -299,7 +328,9 @@ for (const select of selectsCurso) {
         e.preventDefault();
         idCursoAtivo = e.target.value;
         await carregarDisciplinas();
-        await limparTabelaNotasAlunos()
+         limparTabelaNotasAlunos()
+         document.querySelector(".btn-exportar").style.display="none";
+        document.getElementById("btn-editar-notas").style.display="none";
     });
 }
 const selectsDisciplina = document.getElementsByClassName("sortDisciplina");
@@ -309,7 +340,9 @@ for (const select of selectsDisciplina) {
         idDisciplinaAtiva = e.target.value;
         await carregarTurmas();
         await carregarFormula();
-        await limparTabelaNotasAlunos()
+         limparTabelaNotasAlunos()
+         document.querySelector(".btn-exportar").style.display="none";
+        document.getElementById("btn-editar-notas").style.display="none";
     });
 }
 const selectsTurma = document.getElementsByClassName("sortTurma");
@@ -317,10 +350,16 @@ for (const select of selectsTurma) {
     select.addEventListener("change", async (e) => {
         e.preventDefault();
         idTurmaAtiva = e.target.value;
-        await limparTabelaNotasAlunos()
         await carregarTabelaAlunosNotas()
     });
 }
+
+document.getElementById("btn-editar-notas").addEventListener("click", ()=> {
+    modoEdicaoNotas = true;
+    document.getElementById("btn-editar-notas").style.display="none";
+    renderizarNotasAlunos();
+    document.getElementById("btn-salvar").style.display="flex";
+})
 
 document.getElementById("btn-salvar").addEventListener("click", async(e) => {
     e.preventDefault();
@@ -354,8 +393,10 @@ document.getElementById("btn-salvar").addEventListener("click", async(e) => {
             await adicionarNota(valorInput, id_componente, ra);
         }
     }
-    limparTabelaNotasAlunos();
+    modoEdicaoNotas = false;
     await carregarTabelaAlunosNotas();
+    document.getElementById("btn-salvar").style.display="none";
+    document.getElementById("btn-editar-notas").style.display="flex";
 })
 
 // === Abrir modal ===
@@ -372,20 +413,15 @@ function fecharModal(id) {
 }
 
 // === Envio do formulário ===
-document.getElementById('formExportarNotas').addEventListener('submit', function(e) {
+document.getElementById('btn-confirmar').addEventListener('click', function(e) {
   e.preventDefault();
 
-  const instituicao = document.getElementById('instituicaoExportar').value;
-  const curso = document.getElementById('cursoExportar').value;
-  const turma = document.getElementById('turmaExportar').value;
-  const formato = document.querySelector('input[name="formato"]:checked').value;
-
-  if (!instituicao || !curso || !turma) {
+  if (!idTurmaAtiva) {
     alert('Por favor, preencha todos os campos antes de exportar.');
     return;
   }
 
-  alert(`Exportando notas da turma ${turma} (${formato.toUpperCase()})...`);
+  alert(`Exportando notas da turma em CSV...`);
   fecharModal('modalExportar');
   this.reset();
 });
