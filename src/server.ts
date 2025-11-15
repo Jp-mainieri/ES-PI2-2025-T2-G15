@@ -62,11 +62,12 @@ import {
 } from "./db/alunos";
 
 import {
-  getAllNotas,
-  getNotaById,
-  addNota,
-  updateNota,
-  deleteNota,
+    getAllNotas,
+    getNotaById,
+    addNota,
+    updateNota,
+    deleteNota, getComponentesByTurma, getNotasByTurma, getFormulaByDisciplina, addFormula, updateFormula,
+    getComponentesByDisciplina, addComponente, updateComponente,deleteComponente
 } from "./db/notas";
 
 import {
@@ -975,48 +976,7 @@ app.delete("/notas/:id", async (req: Request, res: Response) => {
   }
 });
 
-// Rotas de Turmas_Alunos:
-
-// Rota para obter alunos de uma turma
-app.get("/turmas/:id_turma/alunos", async (req: Request, res: Response) => {
-  try {
-    const id_turma = Number(req.params.id_turma);
-    const alunos = await getAlunosByTurma(id_turma);
-    res.json(alunos);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({
-      error: "Erro ao buscar alunos da turma",
-    });
-  }
-});
-
-// Rota para adicionar aluno a uma turma
-app.post("/turmas/:id_turma/alunos", async (req: Request, res: Response) => {
-  try {
-    const id_turma = Number(req.params.id_turma);
-    const { ra_aluno } = req.body;
-    if (!ra_aluno) {
-      return res.status(400).json({
-        error: "Campo RA do aluno é obrigatório.",
-      });
-    }
-    await addAlunoToTurma(id_turma, ra_aluno);
-    res.status(201).json({
-      message: "Aluno adicionado à turma com sucesso.",
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({
-      error: "Erro ao adicionar aluno à turma.",
-    });
-  }
-});
-
-// Rota para remover aluno de uma turma
-app.delete(
-  "/turmas/:id_turma/alunos/:ra_aluno",
-  async (req: Request, res: Response) => {
+app.get(`/componente-nota/turma/:id_turma`, async (req:Request, res:Response) => {
     try {
       const id_turma = Number(req.params.id_turma);
       const ra_aluno = req.params.ra_aluno;
@@ -1121,6 +1081,152 @@ app.post("/redefinir-senha", async (req: Request, res: Response) => {
     console.error("[REDEFINIR-SENHA] Erro:", err);
     res.status(500).json({ error: "Erro interno ao redefinir senha." });
   }
+});
+
+app.get(`/componente-nota/disciplina/:id_disciplina`, async (req:Request, res:Response) => {
+    try {
+        const id_disciplina = Number(req.params.id_disciplina);
+        const componentes = await getComponentesByDisciplina(id_disciplina);
+        res.json(componentes)
+    }catch (err) {
+        console.error(err);
+        res.status(500).json({
+            error: "Erro ao buscar componentes de notas",
+        });
+    }
+});
+
+app.post(`/componente-nota`, async (req:Request, res:Response) => {
+    try {
+        const {nome, sigla, descricao ,id_disciplina} = req.body;
+        if (nome === null || sigla === null) {
+            return res.status(400).json({
+                error: "Campos Nome e Sigla são obrigatórios.",
+            });
+        }
+        const id = await addComponente(nome, sigla, descricao ,Number(id_disciplina));
+        res.status(201).json({
+            message: "componente adicionada com sucesso.",
+            id
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            error: "Erro ao inserir componente.",
+        });
+    }
+});
+
+app.put("/componente-nota/:id", async (req: Request, res: Response) => {
+    try {
+        const { nome, sigla, descricao} = req.body;
+        const id = Number(req.params.id);
+        if (nome === null || sigla === null) {
+            return res.status(400).json({
+                error: "Campos Nome e Sigla são obrigatórios.",
+            });
+        }
+        const updated = await updateComponente(nome, sigla,descricao, id);
+        if (updated) {
+            res.status(200).json({
+                message: "Componente atualizada com sucesso.",
+                id,
+            });
+        } else {
+            res.status(404).json({
+                message: "Componente não encontrado.",
+            });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            error: "Erro ao atualizar Componente.",
+        });
+    }
+});
+
+app.delete("/componente-nota/:id", async (req: Request, res: Response) => {
+    try {
+        const id = Number(req.params.id);
+        const deleted = await deleteComponente(id);
+        if (deleted) {
+            res.status(200).json({
+                message: "Componente excluída com sucesso.",
+                id,
+            });
+        } else {
+            res.status(404).json({
+                message: "Componente não encontrada.",
+            });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            error: "Erro ao Componente nota.",
+        });
+    }
+});
+
+app.get(`/formula/:id_disciplina`, async (req:Request, res:Response) => {
+    try {
+        const id_disciplina = Number(req.params.id_disciplina);
+        const formula = await getFormulaByDisciplina(id_disciplina);
+        res.json(formula)
+    }catch (err) {
+        console.error(err);
+        res.status(500).json({
+            error: "Erro ao buscar formula de disciplina",
+        });
+    }
+});
+
+app.post(`/formula`, async (req:Request, res:Response) => {
+    try {
+        const { id_disciplina ,formula} = req.body;
+        if (formula === undefined || formula === null) {
+            return res.status(400).json({
+                error: "Campo formula é obrigatório.",
+            });
+        }
+        const id = await addFormula(formula, Number(id_disciplina));
+        res.status(201).json({
+            message: "Formula adicionada com sucesso.",
+            id
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            error: "Erro ao inserir formula.",
+        });
+    }
+});
+
+app.put("/formula/:id_disciplina", async (req: Request, res: Response) => {
+    try {
+        const { formula } = req.body;
+        const id_disciplina = Number(req.params.id_disciplina);
+        if (formula === null) {
+            return res.status(400).json({
+                error: "Campo formula é obrigatório.",
+            });
+        }
+        const updated = await updateFormula(id_disciplina, formula);
+        if (updated) {
+            res.status(200).json({
+                message: "Formula atualizada com sucesso.",
+                id_disciplina,
+            });
+        } else {
+            res.status(404).json({
+                message: "Formula não encontrada.",
+            });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            error: "Erro ao atualizar formula.",
+        });
+    }
 });
 
 
