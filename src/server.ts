@@ -1,6 +1,9 @@
 import express, { Request, Response } from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
+import nodemailer from "nodemailer";
+import { gerarTokenRecuperacao } from "./db/recuperacaoSenha";
+
 
 // Imports de funções do CRUD
 
@@ -55,8 +58,7 @@ import {
     addAluno,
     deleteAluno,
     getAllAlunosByTurma,
-    updateAluno,
-    getAllAlunosByInstituicao
+    updateAluno, getAllAlunosByInstituicao
 } from "./db/alunos";
 
 import {
@@ -68,12 +70,23 @@ import {
     getComponentesByDisciplina, addComponente, updateComponente,deleteComponente
 } from "./db/notas";
 
+import {
+  getAlunosByTurma,
+  addAlunoToTurma,
+  removeAlunoFromTurma,
+} from "./db/turmas_alunos";
 
 const app = express();
 const port = 3000;
 
 app.use(cors());
 app.use(bodyParser.json());
+
+import path from "path";
+
+// Servir os arquivos HTML, CSS e JS da pasta "src" ou "public"
+app.use(express.static(path.join(__dirname, "../")));
+
 
 // ROTAS:
 
@@ -872,19 +885,6 @@ app.get("/notas", async (req: Request, res: Response) => {
   }
 });
 
-app.get(`/notas/turma/:id_turma`, async (req:Request, res:Response) => {
-    try {
-        const id_turma = Number(req.params.id_turma);
-        const notas = await getNotasByTurma(id_turma);
-        res.json(notas)
-    }catch (err) {
-        console.error(err);
-        res.status(500).json({
-            error: "Erro ao buscar notas por turma",
-        });
-    }
-});
-
 app.get("/notas/:id", async (req: Request, res: Response) => {
   try {
     const id = Number(req.params.id);
@@ -906,13 +906,13 @@ app.get("/notas/:id", async (req: Request, res: Response) => {
 
 app.post("/notas", async (req: Request, res: Response) => {
   try {
-    const { valor, id_componente, ra_aluno } = req.body;
+    const { valor } = req.body;
     if (valor === undefined || valor === null) {
       return res.status(400).json({
         error: "Campo valor é obrigatório.",
       });
     }
-    const id = await addNota(Number(valor), Number(id_componente), ra_aluno);
+    const id = await addNota(Number(valor));
     res.status(201).json({
       message: "Nota adicionada com sucesso.",
       id,
@@ -978,15 +978,109 @@ app.delete("/notas/:id", async (req: Request, res: Response) => {
 
 app.get(`/componente-nota/turma/:id_turma`, async (req:Request, res:Response) => {
     try {
-        const id_turma = Number(req.params.id_turma);
-        const componentes = await getComponentesByTurma(id_turma);
-        res.json(componentes)
-    }catch (err) {
-        console.error(err);
-        res.status(500).json({
-            error: "Erro ao buscar componentes de notas",
+      const id_turma = Number(req.params.id_turma);
+      const ra_aluno = req.params.ra_aluno;
+      const deleted = await removeAlunoFromTurma(id_turma, ra_aluno);
+      if (deleted) {
+        res.status(200).json({
+          message: "Aluno removido da turma com sucesso.",
         });
+      } else {
+        res.status(404).json({
+          message: "Aluno não encontrado na turma.",
+        });
+      }
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({
+        error: "Erro ao remover aluno da turma.",
+      });
     }
+  }
+);
+
+
+// --- Recuperação de Senha ---
+
+app.post("/recuperar-senha", async (req: Request, res: Response) => {
+  try {
+    const { email } = req.body;
+    console.log('[RECUPERAR-SENHA] Requisição recebida para:', email);
+
+    if (!email) return res.status(400).json({ error: "Email é obrigatório." });
+
+    const token = await gerarTokenRecuperacao(email);
+    if (!token) {
+      console.log('[RECUPERAR-SENHA] Email não encontrado:', email);
+      return res.status(404).json({ error: "Email não encontrado." });
+    }
+
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: "notadezpi2@gmail.com", // seu Gmail real
+      pass: "f q e d u z w s x t v z g i o m"   // senha de app gerada no Gmail
+      }
+    });
+
+
+    // link (ajuste para seu front)
+  const link = `http://localhost:3000/pages/alterar_senha.html?token=${token}`;
+
+    const mailOptions = {
+      from: "NotaDez <no-reply@notadez.local>",
+      to: email,
+      subject: "Recuperação de senha - NotaDez",
+      html: `<p>Para redefinir sua senha clique: <a href="${link}">${link}</a></p>`
+    };
+
+    // verificar conexão SMTP (apenas para debug)
+    await transporter.verify();
+    console.log('[RECUPERAR-SENHA] Transporter verificado.');
+
+    const info = await transporter.sendMail(mailOptions);
+    console.log('[RECUPERAR-SENHA] E-mail enviado. info=', info);
+
+    // Se estivermos usando Ethereal, vamos logar a URL de visualização
+    if (nodemailer.getTestMessageUrl(info)) {
+      console.log('[RECUPERAR-SENHA] Preview URL:', nodemailer.getTestMessageUrl(info));
+    }
+
+    res.json({ message: "E-mail de recuperação enviado com sucesso!", previewUrl: nodemailer.getTestMessageUrl(info) || null });
+  } catch (err) {
+    console.error('[RECUPERAR-SENHA] Erro:', err);
+    res.status(500).json({ error: "Erro ao enviar e-mail de recuperação. Confira logs do servidor." });
+  }
+});
+
+import { validarToken, redefinirSenha, invalidarToken } from "./db/recuperacaoSenha";
+
+// ROTA PARA REDEFINIR SENHA
+app.post("/redefinir-senha", async (req: Request, res: Response) => {
+  try {
+    const { token, novaSenha } = req.body;
+    console.log("[REDEFINIR-SENHA] Token recebido:", token);
+
+    if (!token || !novaSenha) {
+      return res.status(400).json({ error: "Token e nova senha são obrigatórios." });
+    }
+
+    const email = await validarToken(token);
+    if (!email) {
+      return res.status(400).json({ error: "Token inválido ou expirado." });
+    }
+
+    const ok = await redefinirSenha(email, novaSenha);
+    if (!ok) {
+      return res.status(500).json({ error: "Erro ao atualizar senha." });
+    }
+
+    invalidarToken(token); // apaga o token depois de usar
+    res.json({ message: "Senha alterada com sucesso!" });
+  } catch (err) {
+    console.error("[REDEFINIR-SENHA] Erro:", err);
+    res.status(500).json({ error: "Erro interno ao redefinir senha." });
+  }
 });
 
 app.get(`/componente-nota/disciplina/:id_disciplina`, async (req:Request, res:Response) => {
@@ -1134,6 +1228,9 @@ app.put("/formula/:id_disciplina", async (req: Request, res: Response) => {
         });
     }
 });
+
+
+
 
 
 app.listen(port, () => {

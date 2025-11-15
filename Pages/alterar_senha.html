@@ -26,14 +26,19 @@
     <div class="login-container">
         <div class="form">
             <h3>Recupere a sua senha!</h3>
-            <h4> Digite o e-mail utilizado no cadastro para redefinir sua senha.</h4>
+            <h4>Digite a sua nova senha</h4>
 
             <form method="post" action="#">
-                <label for="email"><strong>Email:</strong></label><br>
-                <input type="email" id="email" name="email" placeholder="Digite seu email" required><br><br>
+                <label for="senha"><strong>Digite sua nova senha:</strong></label><br>
+                <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required><br><br>
+
+                <label for="confirmar_senha"><strong>Confirme sua senha:</strong></label><br>
+                <input type="password" id="confirmar_senha" name="confirmar_senha" placeholder="Confirme sua senha" required><br><br>
+
+                
 
                 <div class="btn-container">
-                    <button type="button" class="btn-entrar" onclick="enviarRecuperacao()"><strong>Confirmar</strong></button>
+                    <button type="button" class="btn-entrar-alt" onclick="alterarSenha()"><strong>Alterar senha</strong></button>
                 </div>
             </form>
         </div>
@@ -49,8 +54,7 @@
 
     </div>
 
-    <script src="../Scripts/rec_senha.js"></script>
-
+    <script src="../Scripts/alterar_senha.js"></script>
 
 
 </body>

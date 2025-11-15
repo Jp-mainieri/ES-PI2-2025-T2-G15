@@ -25,7 +25,7 @@
 
     <div class="outros">
       <p class="section-title">OUTROS</p>
-      <a href="index.html" class="menu-item"><i class="fa-solid fa-right-from-bracket"></i> Sair</a>
+      <a href="../index.html" class="menu-item"><i class="fa-solid fa-right-from-bracket"></i> Sair</a>
     </div>
   </div>
 
@@ -36,20 +36,16 @@
       </div>
 
       <div class="filtros-container">
-        <select class="filtro-select sortInstituicao">
-          <option value="-1">Instituição</option>
+        <select class="filtro-select">
+          <option value="">Instituição</option>
         </select>
       
-        <select class="filtro-select sortCurso">
-          <option value="-1">Curso</option>
+        <select class="filtro-select">
+          <option value="">Curso</option>
         </select>
-
-        <select class="filtro-select sortDisciplina">
-          <option value="-1">Disciplina</option>
-        </select>
-
-      <select class="filtro-select sortTurma">
-          <option value="-1">Turma</option>
+      
+        <select class="filtro-select">
+          <option value="">Turma</option>
         </select>
       
         
@@ -59,15 +55,15 @@
       <div class="botoes-container">
         
         <button class="btn-exportar">Exportar</button>
-        <button class="btn-salvar" id="btn-salvar">Salvar alterações</button>
+        <button class="btn-salvar">Salvar alterações</button>
       </div>
       
 
 
-        <table class="tabela-notas" id="tabela-notas">
+        <table class="tabela-notas">
           <thead>
             <tr>
-              <th>RA</th>
+              <th>Matrícula</th>
               <th>Nome</th>
               <th>P1</th>
               <th>P2</th>
@@ -143,7 +139,7 @@
     <form id="formExportarNotas">
       <div class="form-group">
         <label for="instituicaoExportar">Instituição</label>
-        <select id="instituicaoExportar" class="sortInstituicao" name="instituicaoExportar" required>
+        <select id="instituicaoExportar" name="instituicaoExportar" required>
           <option value="">Selecionar</option>
           <option value="1">Escola Modelo</option>
           <option value="2">Colégio Central</option>
@@ -152,15 +148,7 @@
 
       <div class="form-group">
         <label for="cursoExportar">Curso</label>
-        <select id="cursoExportar" class="sortCurso" name="cursoExportar" required>
-          <option value="">Selecionar</option>
-          <option value="1">Informática</option>
-          <option value="2">Administração</option>
-        </select>
-      </div>
-        <div class="form-group">
-        <label for="disciplinaExportar">Disciplina</label>
-        <select id="disciplinaExportar" class="sortDisciplina" name="disciplinaExportar" required>
+        <select id="cursoExportar" name="cursoExportar" required>
           <option value="">Selecionar</option>
           <option value="1">Informática</option>
           <option value="2">Administração</option>
@@ -169,7 +157,7 @@
 
       <div class="form-group">
         <label for="turmaExportar">Turma</label>
-        <select id="turmaExportar" class="sortTurma" name="turmaExportar" required>
+        <select id="turmaExportar" name="turmaExportar" required>
           <option value="">Selecionar</option>
           <option value="A">1ºA</option>
           <option value="B">1ºB</option>

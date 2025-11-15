@@ -31,7 +31,7 @@ export async function getAllNotas(): Promise<Nota[]> {
     const connection = await open();
     try{
         const result = await connection.execute(
-            `SELECT ID_NOTA as "id_nota", VALOR as "valor" FROM NOTA`
+            `SELECT ID_NOTA as "id_nota", VALOR as "valor" FROM NOTAS`
         );
         return result.rows as Nota[];
     }finally{
@@ -43,7 +43,7 @@ export async function getNotaById(id:number): Promise<Nota | null> {
     const connection = await open();
     try{
         const result = await connection.execute(
-            `SELECT ID_NOTA as "id_nota", VALOR as "valor" FROM NOTA
+            `SELECT ID_NOTA as "id_nota", VALOR as "valor" FROM NOTAS
             WHERE ID_NOTA = :id`,
             [id]
         );
@@ -102,11 +102,11 @@ export async function addNota(valor: number, id_componente:number, ra_aluno:stri
     try {
         const result = await connection.execute<{outBinds : {id:number}}>(
             `
-            INSERT INTO NOTA (VALOR, ID_COMPONENTE, RA_ALUNO)
-            VALUES (:valor, :id_componente, :ra_aluno)
+            INSERT INTO NOTAS (VALOR)
+            VALUES (:valor)
             RETURNING ID_NOTA INTO :id
             `,
-            {valor,id_componente,ra_aluno, id: {dir:OracleDB.BIND_OUT, type: OracleDB.NUMBER}},
+            {valor, id: {dir:OracleDB.BIND_OUT, type: OracleDB.NUMBER}},
             {autoCommit: true}
         );
 
@@ -127,7 +127,7 @@ export async function updateNota(id: number, valor: number): Promise<boolean> {
     const connection = await open();
     try {
         const result = await connection.execute(
-            `UPDATE NOTA
+            `UPDATE NOTAS 
             SET VALOR = :valor 
             WHERE ID_NOTA = :id`,
             {id, valor},
@@ -144,7 +144,7 @@ export async function deleteNota(id: number): Promise<boolean> {
     const connection = await open();
     try {
         const result = await connection.execute(
-            `DELETE FROM NOTA WHERE ID_NOTA = :id`,
+            `DELETE FROM NOTAS WHERE ID_NOTA = :id`,
             [id],
             {autoCommit: true}
         );
