@@ -27,7 +27,7 @@ Calcular automaticamente a média final de cada aluno na disciplina
 - Laura Carvalho	25014543 
 - Lucas Hosikawa	25014845  
 
-                                    ----------    Guia de instalação e execução em ambientes de testes    ----------            
+## Guia de instalação e execução em ambientes de testes       
 
 
 Abaixo seguem todas as instruções necessárias para baixar, configurar e executar o projeto localmente.
