@@ -31,9 +31,9 @@ Nome Completo	RA
 Abaixo seguem todas as instruções necessárias para baixar, configurar e executar o projeto localmente.
 
 
-INICIAR clonando o repositório do GitHub utilizando o comando git clone git clone <!--https://github.com/PI_II_ES_TIME_15.git  ARRUMAR--> no GitHub
+INICIAR clonando o repositório do GitHub utilizando o comando git clone git clone https://github.com/Jp-mainieri/PI_II_ES_TIME_15.git no GitHub 
 
-ENTRAR na pasta do projeto e inserir o comando cd `repositorio ----`   
+ENTRAR na pasta do projeto e inserir o comando cd (nome repositorio)   
 
 INSTALAR as dependendencias do projeto, com o Node.js instalado execute o comando `npm install`, o comando instala todas as dependencias listadas no package.json
 
