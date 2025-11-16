@@ -1,21 +1,30 @@
-# ES-PI2-2025-T2-G15
-Projeto Integrador 2 do curso de engenharia de software da PUC-Campinas - 
+Projeto Integrador 2 — Engenharia de Software — PUC-Campinas
 
-Projeto NotaDez é um sistema web focado em docentes do ensino superior.
-O projeto visa substituir o uso de planilhas genéricas por uma ferramenta particular e única para o gerenciamento de notas.
-A aplicação permite ao professor cadastrar suas instituições, cursos, disciplinas, turmas, alunos, lançar notas por componentes (provas, trabalhos, etc.) e calcular automaticamente a média final do aluno na disciplina.
+📚 Projeto NotaDez
 
-## 👥 Integrantes da Equipe
+O Projeto NotaDez é um sistema web voltado para docentes do ensino superior.
 
-| Nome Completo | RA/Matrícula   |
-| -----------------------------  |
-| **[Beatriz Leme    ]**    | 25015554 | 
-| **[Giovanna Uchelli]**    | 25008818 | 
-| **[João Pedro Panza]**    | 25006642 | 
-| **[Laura Carvalho  ]**    | 25014543 | 
-| **[Lucas Hosikawa  ]**    | 25014845 |
+O objetivo é substituir o uso de planilhas genéricas por uma ferramenta própria, completa e integrada para gerenciamento de notas acadêmicas.
 
-                             ----------    Guia de instalação e execução em ambientes de testes    ----------            
+A aplicação permite ao professor:
+
+Cadastrar instituições, cursos, disciplinas e turmas
+
+Cadastrar alunos
+
+Lançar notas por componentes (provas, trabalhos, atividades etc.)
+
+Calcular automaticamente a média final de cada aluno na disciplina
+
+👥 Integrantes da Equipe
+Nome Completo	RA/Matrícula
+Beatriz Leme	25015554
+Giovanna Uchelli	25008818
+João Pedro Panza	25006642
+Laura Carvalho	25014543
+Lucas Hosikawa	25014845
+
+                                    ----------    Guia de instalação e execução em ambientes de testes    ----------            
 
 
 INICIAR clonando o repositório do GitHub utilizando o comando git clone git clone <!--https://github.com/PI_II_ES_TIME_15.git  ARRUMAR--> no GitHub
@@ -57,6 +66,23 @@ Adicione esse caminho à variável de ambiente ORACLE_CLIENT_LIB, dentro do .env
 É necessário adicionar o caminho do Instant Client ao PATH:
 `Painel de Controle → Sistema → Configurações Avançadas → Variáveis de Ambiente → Path → Novo → C:\oracle\instantclient_21_12`
 
+# Configurar a Oracle OCI Wallet (para banco na nuvem)
+*Extraia os arquivos da Wallet para um diretório dedicado, por exemplo:*
+C:\oracle\wallet
+No arquivo .env, defina: TNS_ADMIN=C:\oracle\wallet
 
+*Confirme que o diretório contém arquivos como*
 
+- tnsnames.ora
+- sqlnet.ora
+- cwallet.sso
+
+# Verificar a String de Conexão
+*No arquivo tnsnames.ora da wallet, copie o nome da conexão (exemplo: DB2025_HIGH) e use no .env:*
+DB_CONNECTION_STRING=DB2025_HIGH
+
+# Executar o Projeto em Ambiente de Testes
+*Rodar o servidor Node.js*
+Backend em Node utilizar:
+*npm start*
 
