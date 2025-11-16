@@ -15,7 +15,7 @@ A aplicação permite ao professor cadastrar suas instituições, cursos, discip
 | **[Laura Carvalho  ]**    | 25014543 | 
 | **[Lucas Hosikawa  ]**    | 25014845 |
 
-----------    Guia de instalação e execução em ambientes de testes    ----------
+                             ----------    Guia de instalação e execução em ambientes de testes    ----------            
 
 
 INICIAR clonando o repositório do GitHub utilizando o comando git clone git clone <!--https://github.com/PI_II_ES_TIME_15.git  ARRUMAR--> no GitHub
@@ -54,4 +54,9 @@ https://www.oracle.com/database/technologies/instant-client.html
 
 Adicione esse caminho à variável de ambiente ORACLE_CLIENT_LIB, dentro do .env.
 
-No Windows, é necessário adicionar o caminho do Instant Client ao PATH:
+É necessário adicionar o caminho do Instant Client ao PATH:
+`Painel de Controle → Sistema → Configurações Avançadas → Variáveis de Ambiente → Path → Novo → C:\oracle\instantclient_21_12`
+
+
+
+
