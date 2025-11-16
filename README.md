@@ -64,6 +64,9 @@ https://www.oracle.com/database/technologies/instant-client.html
 ### No sqlnet.ora:
 
 *Confirme que na sessão DIRECTORY="" tenha o caminho para a sua wallet*
+*EX:* 
+`WALLET_LOCATION = (SOURCE = (METHOD = file) (METHOD_DATA = (DIRECTORY="C:/oracle/Wallet_JPDB01")))
+SSL_SERVER_DN_MATCH=yes`
 
 ## .ENV
 

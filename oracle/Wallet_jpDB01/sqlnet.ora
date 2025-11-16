@@ -1,2 +1,2 @@
-WALLET_LOCATION = (SOURCE = (METHOD = file) (METHOD_DATA = (DIRECTORY="C:\Users\claud\OneDrive\Documentos\GitHub\oracle\Wallet_jpDB01")))
+WALLET_LOCATION = (SOURCE = (METHOD = file) (METHOD_DATA = (DIRECTORY="")))
 SSL_SERVER_DN_MATCH=yes

@@ -2,3 +2,4 @@
 node_modules
 dist
 oracle/instantclient-basic-windows.x64-23.9.0.25.07
+.env
