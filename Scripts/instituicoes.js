@@ -139,28 +139,11 @@ function renderizarDisciplinas() {
     }
   disciplinasData.forEach((disc) => {
     const nova_linha = document.createElement("tr");
-    let periodoDisciplina;
-    switch (disc.PERIODO) {
-      case 1:
-        periodoDisciplina = "MATUTINO";
-        break;
-      case 2:
-        periodoDisciplina = "VESPERTINO";
-        break;
-      case 3:
-        periodoDisciplina = "NOTURNO";
-        break;
-      case 4:
-        periodoDisciplina = "INTEGRAL";
-        break;
-      default:
-        periodoDisciplina = "INVÁLIDO";
-    }
     nova_linha.innerHTML = `
       <td>${disc.NOME || "N/A"}</td>
       <td>${disc.SIGLA}</td>
       <td>${disc.CODIGO}</td>
-      <td>${periodoDisciplina}</td>
+      <td>${disc.PERIODO}</td>
       <td>
         <div class="tabela-acoes">
           <div class="tabela-botoes">
@@ -285,23 +268,6 @@ async function adicionarCurso(nome, codigo) {
 
 async function adicionarDisciplina(nome, sigla, codigo, periodo) {
   try {
-    let periodoNumber;
-    switch (periodo) {
-      case "MATUTINO":
-        periodoNumber = 1;
-        break;
-      case "VESPERTINO":
-        periodoNumber = 2;
-        break;
-      case "NOTURNO":
-        periodoNumber = 3;
-        break;
-      case "INTEGRAL":
-        periodoNumber = 4;
-        break;
-      default:
-        periodoNumber = 5;
-    }
     const response = await fetch(`${API_URL}/disciplinas`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -309,7 +275,7 @@ async function adicionarDisciplina(nome, sigla, codigo, periodo) {
         nome,
         sigla,
         codigo,
-        periodo: Number(periodoNumber),
+        periodo,
         id_curso: idCursoAtivo,
       }),
     });
@@ -325,23 +291,6 @@ async function adicionarDisciplina(nome, sigla, codigo, periodo) {
 }
 
 async function adicionarTurma(nome, codigo, turno) {
-    let turnoNumber;
-    switch (turno) {
-        case "MATUTINO":
-            turnoNumber = 1;
-            break;
-        case "VESPERTINO":
-            turnoNumber = 2;
-            break;
-        case "NOTURNO":
-            turnoNumber = 3;
-            break;
-        case "INTEGRAL":
-            turnoNumber = 4;
-            break;
-        default:
-            turnoNumber = 5;
-    }
   try {
     const response = await fetch(`${API_URL}/turmas`, {
       method: "POST",
@@ -349,7 +298,7 @@ async function adicionarTurma(nome, codigo, turno) {
       body: JSON.stringify({
           nome,
           codigo,
-          turno: turnoNumber,
+          turno,
           id_disciplina: idDisciplinaAtiva
           }),
     });
@@ -534,7 +483,7 @@ document.addEventListener("DOMContentLoaded", () => {
     e.preventDefault();
     const nome = e.target.querySelector('input[name="nome"]').value;
     const codigo = e.target.querySelector('input[name="codigo"]').value;
-    const turno = e.target.querySelector('input[name="turno"]').value;
+    const turno = e.target.querySelector('select[name="turno"').value;
     await adicionarTurma(nome, codigo, turno);
     fecharPopup();
     e.target.reset();

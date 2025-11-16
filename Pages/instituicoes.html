@@ -134,6 +134,7 @@
                 <th>Nome</th>
                 <th>Código</th>
                 <th>Turno</th>
+                <th></th>
               </tr>
               <tr>
               </tr>
@@ -209,11 +210,11 @@
               />
               <label for="input-periodo-disciplina">Período:</label>
               <input
-                type="text"
+                type="number"
                 id="input-periodo-disciplina"
                 name="periodo"
                 required
-              />
+              >
 
               <div class="modal-buttons">
                 <button type="button" class="btn-cancelar cancelar">
@@ -236,7 +237,12 @@
                 required
               />
               <label for="input-turno-turma">Turno:</label>
-              <input type="text" id="input-turno-turma" name="turno" required />
+              <select id="input-turno-turma" name="turno" required>
+                <option value="1">Matutino</option>
+                <option value="2">Vespertino</option>
+                <option value="3">Noturno</option>
+                <option value="4">Integral</option>
+              </select>
 
               <div class="modal-buttons">
                 <button type="button" class="btn-cancelar cancelar">
