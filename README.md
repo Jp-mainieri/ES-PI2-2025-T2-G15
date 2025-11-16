@@ -39,49 +39,51 @@ ENTRAR na pasta do projeto e inserir o comando cd (nome repositorio)
 
 INSTALAR as dependendencias do projeto, com o Node.js instalado execute o comando `npm install`, o comando instala todas as dependencias listadas no package.json
 
-Configuracao do ambiente (.env) - Criar um arquivo chamado .env na raiz do projeto com as variáveis necessárias para
-- Conexao com o banco de dados Oracle via OCI Wallet 
-- Caminhos para os arquivos da Wallet
-- Outras variaveis internas do sistema 
-
-Exemplo do .env
-# Caminho para os arquivos Oracle Instant Client 
-ORACLE_CLIENT_LIB=caminho/do/instantclient
-
-# Caminhos da Wallet OCI 
-TNS_ADMIN=caminho/da/wallet
-
-# Credenciais do Banco
-DB_USER=usuario
-DB_PASSWORD=senha
-DB_CONECTION_STRING=nome_da_string_no_tnsnames 
-
-# Outras variaveis do projeto 
-PORT=3000
-
-Instalar o Oracle Instant Client
-
-Baixe o Oracle Instant Client (módulos Basic ou Basic Lite):
-https://www.oracle.com/database/technologies/instant-client.html
-
-# Extraia o conteúdo para um diretório utilizando
- C:\oracle\instantclient_21_12
-
-Adicione esse caminho à variável de ambiente ORACLE_CLIENT_LIB, dentro do .env.
-
-É necessário adicionar o caminho do Instant Client ao PATH:
-`Painel de Controle → Sistema → Configurações Avançadas → Variáveis de Ambiente → Path → Novo → C:\oracle\instantclient_21_12`
-
-# Configurar a Oracle OCI Wallet (para banco na nuvem)
-*Extraia os arquivos da Wallet para um diretório dedicado, por exemplo:*
-C:\oracle\wallet
-No arquivo .env, defina: TNS_ADMIN=C:\oracle\wallet
+## Configurar a Oracle OCI Wallet
+`oracle/Wallet_jpDB01`
 
 *Confirme que o diretório contém arquivos como*
 
 - tnsnames.ora
 - sqlnet.ora
 - cwallet.sso
+
+
+## ORACLE INSTANT CLIENT
+Instalar o Oracle Instant Client
+
+Baixe o Oracle Instant Client (módulos Basic ou Basic Lite):
+https://www.oracle.com/database/technologies/instant-client.html
+
+-- Extraia o conteúdo para um diretório
+*EX:* C:\oracle\instantclient_23_9
+
+É necessário adicionar o caminho do Instant Client ao PATH:
+`Painel de Controle → Sistema → Configurações Avançadas → Variáveis de Ambiente → Path → Novo → C:\oracle\instantclient_23_9`
+
+### No sqlnet.ora:
+
+*Confirme que na sessão DIRECTORY="" tenha o caminho para a sua wallet*
+
+## .ENV
+
+Configuração do ambiente (.env) - Criar um arquivo chamado .env na raiz do projeto com as variáveis necessárias para
+- Conexão com o banco de dados Oracle via OCI Wallet 
+- Caminhos para os arquivos da Wallet
+- Outras variáveis internas do sistema 
+
+## Exemplo do .env
+-- Caminho para os arquivos Oracle Instant Client
+ORACLE_LIB_DIR=caminho/do/instantclient
+
+-- Caminhos da Wallet OCI
+ORACLE_WALLET_DIR=caminho/da/wallet
+
+-- Credenciais do Banco
+DB_USER=WEBAPP
+DB_PASSWORD=PI2Grupo15$$
+DB_CONECTION_STRING=joaopedromainieridatabase01_high
+
 
 # Verificar a String de Conexão
 *No arquivo tnsnames.ora da wallet, copie o nome da conexão (exemplo: DB2025_HIGH) e use no .env:*
