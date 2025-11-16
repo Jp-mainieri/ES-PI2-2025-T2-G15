@@ -17,14 +17,18 @@ Lançar notas por componentes (provas, trabalhos, atividades etc.)
 Calcular automaticamente a média final de cada aluno na disciplina
 
 👥 Integrantes da Equipe
-Nome Completo	RA/Matrícula
-Beatriz Leme	25015554
-Giovanna Uchelli	25008818
-João Pedro Panza	25006642
-Laura Carvalho	25014543
-Lucas Hosikawa	25014845
+Nome Completo	RA
+
+|Beatriz Leme	   | 25015554 |
+|Giovanna Uchelli  | 25008818 |
+|João Pedro Panza  | 25006642 |
+|Laura Carvalho	   | 25014543 |
+|Lucas Hosikawa	   | 25014845 | 
 
                                     ----------    Guia de instalação e execução em ambientes de testes    ----------            
+
+
+Abaixo seguem todas as instruções necessárias para baixar, configurar e executar o projeto localmente.
 
 
 INICIAR clonando o repositório do GitHub utilizando o comando git clone git clone <!--https://github.com/PI_II_ES_TIME_15.git  ARRUMAR--> no GitHub
