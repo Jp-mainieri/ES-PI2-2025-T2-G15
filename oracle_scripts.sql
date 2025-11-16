@@ -92,7 +92,7 @@ nome VARCHAR2(50) NOT NULL,
 SIGLA VARCHAR2(5),
 id_disciplina NUMBER NOT NULL,
 CONSTRAINT fk_comp_disciplina
-FOREIGN KEY (id_disciplina) REFERENCES DISCIPLINAS(id_disciplina)
+FOREIGN KEY (id_disciplina) REFERENCES DISCIPLINAS(id_disciplina) ON DELETE CASCADE
 );
 
 CREATE TABLE NOTA (
@@ -101,26 +101,24 @@ valor NUMBER(4, 2),
 id_componente NUMBER NOT NULL,
 RA_aluno VARCHAR2(20) NOT NULL,
 CONSTRAINT fk_nota_componente
-FOREIGN KEY (id_componente) REFERENCES COMPONENTE_NOTA(id_componente),
+FOREIGN KEY (id_componente) REFERENCES COMPONENTE_NOTA(id_componente) ON DELETE CASCADE,
 CONSTRAINT fk_nota_aluno
 FOREIGN KEY (RA_aluno) REFERENCES ALUNOS(RA_aluno)
+ON DELETE CASCADE
 );
 
 CREATE TABLE FORMULA_DISCIPLINA (
 id_formula NUMBER PRIMARY KEY,
-formula VARCHAR2(20),
+formula VARCHAR2(50),
 id_disciplina NUMBER NOT NULL,
 CONSTRAINT fk_formula_disciplina
-  FOREIGN KEY (id_disciplina) REFERENCES DISCIPLINAS(id_disciplina)
+  FOREIGN KEY (id_disciplina) REFERENCES DISCIPLINAS(id_disciplina) ON DELETE CASCADE
 );
 
 CREATE TABLE AUDITORIA (
 id_auditoria NUMBER PRIMARY KEY,
 data_hora TIMESTAMP DEFAULT SYSTIMESTAMP,
-descricao VARCHAR2(500),
-id_nota NUMBER,
-CONSTRAINT fk_auditoria_nota
-FOREIGN KEY (id_nota) REFERENCES NOTA(id_nota));
+descricao VARCHAR2(500));
 
 CREATE OR REPLACE TRIGGER trg_professores_pk
 BEFORE INSERT ON PROFESSORES

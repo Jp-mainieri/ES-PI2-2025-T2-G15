@@ -314,7 +314,7 @@ async function verificarFormula(formula) {
         // Verifica se cada componente está presente na fórmula
         for (const componente of componentesNotasData) {
             if (!formula.includes(`$${componente.SIGLA}`)) {
-                alert(`Um ou mais componentes faltando na formula.`);
+                alert(`Fórmula Inválida`);
                 return false;
             }else {
                 variaveisFormula.push(componente.SIGLA)

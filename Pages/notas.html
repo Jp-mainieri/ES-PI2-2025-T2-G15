@@ -51,81 +51,23 @@
         <option value="-1">Turma</option>
         </select>  
       </div>
-
+            
       <div class="botoes-container">
-        
-        <button class="btn-exportar">Exportar</button>
-        <button class="btn-salvar" id="btn-salvar">Salvar alterações</button>
+        <button class="btn-salvar" id="btn-editar-notas" style="display: none;">Editar notas</button>
+        <button class="btn-salvar" id="btn-salvar" style="display: none;">Salvar alterações</button>
       </div>
       
 
 
         <table class="tabela-notas" id="tabela-notas">
           <thead>
-            <tr>
-              <th>Matrícula</th>
-              <th>Nome</th>
-              <th>P1</th>
-              <th>P2</th>
-              <th>Trabalho</th>
-              <th>Nota Final</th>
-            </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1234567</td>
-              <td>João Silva</td>
-              <td><input type="text" value="8.50"></td>
-              <td><input type="text" value="5.50"></td>
-              <td><input type="text" value="9.50"></td>
-              <td><input type="text" value="7.83"></td>
-            </tr>
-            <tr>
-              <td>1234567</td>
-              <td>Maria Souza</td>
-              <td><input type="text" value="6.00"></td>
-              <td><input type="text" value="5.50"></td>
-              <td><input type="text" value="7.50"></td>
-              <td><input type="text" value="6.30"></td>
-            </tr>
-            <tr>
-              <td>1234567</td>
-              <td>Pedro Costa</td>
-              <td><input type="text" value="6.00"></td>
-              <td><input type="text" value="5.50"></td>
-              <td><input type="text" value="7.50"></td>
-              <td><input type="text" value="6.30"></td>
-            </tr>
-            <tr>
-              <td>1234567</td>
-              <td>Ana Pereira</td>
-              <td><input type="text" value="6.00"></td>
-              <td><input type="text" value="5.50"></td>
-              <td><input type="text" value="7.50"></td>
-              <td><input type="text" value="6.30"></td>
-            </tr>
-            <tr>
-              <td>1234567</td>
-              <td>Alice Maria</td>
-              <td><input type="text" value="6.00"></td>
-              <td><input type="text" value="5.50"></td>
-              <td><input type="text" value="7.50"></td>
-              <td><input type="text" value="6.30"></td>
-            </tr>
-            <tr>
-              <td>1234567</td>
-              <td>José Carlos</td>
-              <td><input type="text" value="6.00"></td>
-              <td><input type="text" value="5.50"></td>
-              <td><input type="text" value="7.50"></td>
-              <td><input type="text" value="6.30"></td>
-            </tr>
-
           </tbody>
         </table>
       
     
-            
+            <div class="botoes-container"><button class="btn-exportar" id="btn-exportar" style="display: none; margin-top: 50px;">Exportar</button></div>
     </section>
 
   </div>
@@ -135,40 +77,9 @@
 <div id="modalExportar" class="modal">
   <div class="modal-content">
     <h2>Exportar Notas</h2>
-
-    <form id="formExportarNotas">
-      <div class="form-group">
-        <label for="instituicaoExportar">Instituição</label>
-        <select id="instituicaoExportar" class="sortInstituicao" name="instituicaoExportar" required>
-          <option value="-1">Selecionar</option>
-
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label for="cursoExportar">Curso</label>
-        <select id="cursoExportar" class="sortCurso" name="cursoExportar" required>
-          <option value="-1">Selecionar</option>
-
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="disciplinaExportar">Disciplina</label>
-        <select id="disciplinaExportar" class="sortDisciplina" name="disciplinaExportar" required>
-          <option value="-1">Selecionar</option>
-
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label for="turmaExportar">Turma</label>
-        <select id="turmaExportar" class="sortTurma" name="turmaExportar" required>
-          <option value="-1">Selecionar</option>
-        </select>
         <p style="font-size: 0.9em; color: #555; margin-top: 4px;">
           As notas exportadas corresponderão à turma selecionada.
         </p>
-      </div>
 
       <div class="form-group">
         <label>Formato do arquivo:</label>
@@ -179,9 +90,8 @@
 
       <div class="modal-buttons">
         <button type="button" class="cancelar" onclick="fecharModal('modalExportar')">Cancelar</button>
-        <button type="submit" class="confirmar">Confirmar</button>
+        <button type="click" id="btn-confirmar" class="confirmar">Confirmar</button>
       </div>
-    </form>
   </div>
 </div>
 
