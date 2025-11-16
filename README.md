@@ -13,6 +13,12 @@ A aplicação permite ao professor cadastrar suas instituições, cursos, discip
 | **[Giovanna Uchelli]**    | 25008818 | 
 | **[João Pedro Panza]**    | 25006642 | 
 | **[Laura Carvalho  ]**    | 25014543 | 
-| **[Lucas Kendi    ]**     | 25014845 | 
+| **[Lucas Hosikawa  ]**    | 25014845 |
 
+----------    Guia de instalação e execução em ambientes de testes    ----------
+
+
+INICIAR clonando o repositório do GitHub utilizando o comando git clone git clone <!--https://github.com/PI_II_ES_TIME_15.git  ARRUMAR--> no GitHub
+ENTRAR na pasta do projeto e inserir o comando cd `repositorio ----`
+INSTALAR as dependendencias do projeto, com o Node.js instalado execute o comando `npm install`, o comando instala todas as dependencias listadas no package.json 
 
