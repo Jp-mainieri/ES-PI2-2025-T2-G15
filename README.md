@@ -76,6 +76,7 @@ Configuração do ambiente (.env) - Criar um arquivo chamado .env na raiz do pro
 - Outras variáveis internas do sistema 
 
 ## Exemplo do .env
+
 -- Caminho para os arquivos Oracle Instant Client
 ORACLE_LIB_DIR=caminho/do/instantclient
 
@@ -87,9 +88,9 @@ DB_USER=WEBAPP
 DB_PASSWORD=PI2Grupo15$$
 DB_CONECTION_STRING=joaopedromainieridatabase01_high
 
-
 ## Executar o Projeto em Ambiente de Testes
+
 *Rodar o servidor Node.js*
 Backend em Node utilizar:
-*npm start*
-
+*npm run start*
+Abrir o arquivo index.html
