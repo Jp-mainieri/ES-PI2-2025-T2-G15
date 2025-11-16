@@ -118,7 +118,13 @@ CONSTRAINT fk_formula_disciplina
 CREATE TABLE AUDITORIA (
 id_auditoria NUMBER PRIMARY KEY,
 data_hora TIMESTAMP DEFAULT SYSTIMESTAMP,
-descricao VARCHAR2(500));
+descricao VARCHAR2(500),
+ID_PROFESSOR NUMBER NOT NULL,
+ID_NOTA NUMBER,
+CONSTRAINT fk_auditoria_professor
+FOREIGN KEY (ID_PROFESSOR) REFERENCES PROFESSORES(ID_PROFESSOR),
+CONSTRAINT fk_auditoria_nota
+FOREIGN KEY (ID_NOTA) REFERENCES NOTA(ID_NOTA) ON DELETE SET NULL);
 
 CREATE OR REPLACE TRIGGER trg_professores_pk
 BEFORE INSERT ON PROFESSORES
@@ -199,6 +205,62 @@ BEGIN
   SELECT seq_formula_disciplina.NEXTVAL INTO :NEW.id_formula FROM DUAL;
 END;
 /
+
+CREATE OR REPLACE TRIGGER trg_auditoria_nota_insert
+AFTER INSERT ON NOTA
+FOR EACH ROW
+DECLARE
+    v_prof  NUMBER;
+    v_desc  VARCHAR2(500);
+BEGIN
+    SELECT i.id_professor
+      INTO v_prof
+      FROM ALUNOS a
+      JOIN TURMAS t ON t.id_turma = a.id_turma
+      JOIN DISCIPLINAS d ON d.id_disciplina = t.id_disciplina
+      JOIN CURSOS c ON c.id_curso = d.id_curso
+      JOIN INSTITUICOES i ON i.id_instituicao = c.id_instituicao
+     WHERE a.RA_aluno = :NEW.RA_aluno;
+
+    v_desc :=
+        'Nota inserida: RA: ' || :NEW.RA_aluno ||
+        ', componente:  ' || :NEW.id_componente ||
+        ', valor: ' || :NEW.valor;
+
+    INSERT INTO AUDITORIA (descricao, id_professor, id_nota)
+    VALUES (v_desc, v_prof, :NEW.id_nota);
+END;
+/
+
+CREATE OR REPLACE TRIGGER trg_auditoria_nota_upd
+AFTER UPDATE ON NOTA
+FOR EACH ROW
+DECLARE
+    v_prof  NUMBER;
+    v_desc  VARCHAR2(500);
+BEGIN
+    SELECT i.id_professor
+      INTO v_prof
+      FROM ALUNOS a
+      JOIN TURMAS t ON t.id_turma = a.id_turma
+      JOIN DISCIPLINAS d ON d.id_disciplina = t.id_disciplina
+      JOIN CURSOS c ON c.id_curso = d.id_curso
+      JOIN INSTITUICOES i ON i.id_instituicao = c.id_instituicao
+     WHERE a.RA_aluno = :OLD.RA_aluno;
+
+    v_desc :=
+        'Nota atualizada: RA: ' || :OLD.RA_aluno ||
+        ', componente: ' || :OLD.id_componente ||
+        ', de: ' || :OLD.valor ||
+        ' para: ' || :NEW.valor;
+
+    INSERT INTO AUDITORIA (descricao, id_professor, id_nota)
+    VALUES (v_desc, v_prof, :OLD.id_nota);
+END;
+/
+
+
+
 
 COMMIT;
 
