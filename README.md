@@ -1,6 +1,6 @@
-Projeto Integrador 2 — Engenharia de Software — PUC-Campinas
+# Projeto Integrador 2 — Engenharia de Software — PUC-Campinas
 
-📚 Projeto NotaDez
+## 📚 Projeto NotaDez
 
 ![alt text](image.png)
 
@@ -19,13 +19,13 @@ Lançar notas por componentes (provas, trabalhos, atividades etc.)
 Calcular automaticamente a média final de cada aluno na disciplina
 
 👥 Integrantes da Equipe
-Nome Completo	RA
+- Nome Completo	    RA
 
-|Beatriz Leme	   | 25015554 |
-|Giovanna Uchelli  | 25008818 |
-|João Pedro Panza  | 25006642 |
-|Laura Carvalho	   | 25014543 |
-|Lucas Hosikawa	   | 25014845 | 
+- Beatriz Leme	    25015554 
+- Giovanna Uchelli  25008818 
+- João Pedro Panza  25006642 
+- Laura Carvalho	25014543 
+- Lucas Hosikawa	25014845  
 
                                     ----------    Guia de instalação e execução em ambientes de testes    ----------            
 
