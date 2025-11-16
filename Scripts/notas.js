@@ -198,11 +198,14 @@ function renderizarNotasAlunos() {
         `;
 
         html += componentesNotasData.map(c => {
-            const valor = dados.notas[c.ID_COMPONENTE] ?? 0;
+            const valorBruto = dados.notas[c.ID_COMPONENTE];
+            const valorVisual = valorBruto ?? 0;
+            const valorInput  = valorBruto ?? "";
+
 
             // Verifica se está no modo edição de notas
             if (!modoEdicaoNotas) {
-                return `<td>${valor}</td>`;
+                return `<td>${valorVisual}</td>`;
             }
 
             return `
@@ -211,7 +214,7 @@ function renderizarNotasAlunos() {
                         type="number" 
                         class="input-nota" 
                         id="${ra},${c.ID_COMPONENTE}" 
-                        value="${valor}" />
+                        value="${valorInput}" />
                 </td>
             `;
         }).join("");
@@ -301,13 +304,66 @@ function calcularMedia(dados){
         // Cria função que retorna o valor da expressão
         const fn = new Function(`return (${expressao});`);
         const media = fn();
-        return media;
+        return media.toFixed(2);
 
     } catch (error) {
         console.error(error);
         return "Fórmula invalida";
     }
 }
+
+function exportarTabelaVisivelCSV() {
+    const tabela = document.getElementById("tabela-notas");
+    if (!tabela) {
+        alert("Tabela de notas não encontrada.");
+        return;
+    }
+
+    const thead = tabela.querySelector("thead");
+    const tbody = tabela.querySelector("tbody");
+
+    const linhasCSV = [];
+
+    const ths = Array.from(thead.querySelectorAll("th"));
+    const header = ths.map(th => th.textContent.trim());
+    linhasCSV.push(header.join(";"));
+
+    const trs = Array.from(tbody.querySelectorAll("tr"));
+
+    trs.forEach(tr => {
+        const tds = Array.from(tr.querySelectorAll("td"));
+        if (tds.length === 0) return;
+
+        const linha = tds.map(td => {
+            let valor = td.textContent.trim();
+            if (valor.length === 0) {
+                alert("Tabela incompleta, por favor insira todas as notas")
+            }
+            return valor;
+        });
+
+        linhasCSV.push(linha.join(";"));
+    });
+
+    if (linhasCSV.length <= 1) {
+        alert("Não há dados para exportar.");
+        return;
+    }
+
+    const csvContent = linhasCSV.join("\n");
+
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `notas_turma_${idTurmaAtiva}.csv`;
+    document.body.append(a)
+    a.click();
+    a.remove()
+    URL.revokeObjectURL(url);
+}
+
 
 carregarInstituicoes();
 
@@ -356,8 +412,9 @@ for (const select of selectsTurma) {
 
 document.getElementById("btn-editar-notas").addEventListener("click", ()=> {
     modoEdicaoNotas = true;
-    document.getElementById("btn-editar-notas").style.display="none";
     renderizarNotasAlunos();
+    document.getElementById("btn-editar-notas").style.display="none";
+    document.getElementById("btn-exportar").style.display="none";
     document.getElementById("btn-salvar").style.display="flex";
 })
 
@@ -376,7 +433,7 @@ document.getElementById("btn-salvar").addEventListener("click", async(e) => {
             n.RA_ALUNO == ra && n.ID_COMPONENTE == id_componente
         );
 
-         const valorAntigo = notaExistente && notaExistente.VALOR != null ? Number(notaExistente.VALOR) : 0;
+        const valorAntigo = notaExistente && notaExistente.VALOR != null ? Number(notaExistente.VALOR) : "";
 
         // Se não mudou nada, pula
         if (valorInput === valorAntigo) {
@@ -384,6 +441,11 @@ document.getElementById("btn-salvar").addEventListener("click", async(e) => {
         }
 
         if (valorBruto === "" || Number.isNaN(valorInput)) {
+            continue;
+        }
+
+        if (valorInput > 10 || valorInput < 0) {
+            alert(`${valorInput}: É um valor inválido para uma nota`);
             continue;
         }
 
@@ -397,6 +459,7 @@ document.getElementById("btn-salvar").addEventListener("click", async(e) => {
     await carregarTabelaAlunosNotas();
     document.getElementById("btn-salvar").style.display="none";
     document.getElementById("btn-editar-notas").style.display="flex";
+    document.getElementById("btn-exportar").style.display="flex";
 })
 
 // === Abrir modal ===
@@ -417,11 +480,10 @@ document.getElementById('btn-confirmar').addEventListener('click', function(e) {
   e.preventDefault();
 
   if (!idTurmaAtiva) {
-    alert('Por favor, preencha todos os campos antes de exportar.');
+    alert('Por favor, selecione uma turma antes de exportar.');
     return;
   }
-
+  exportarTabelaVisivelCSV();
   alert(`Exportando notas da turma em CSV...`);
   fecharModal('modalExportar');
-  this.reset();
 });
