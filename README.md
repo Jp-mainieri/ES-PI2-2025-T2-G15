@@ -2,6 +2,8 @@ Projeto Integrador 2 — Engenharia de Software — PUC-Campinas
 
 📚 Projeto NotaDez
 
+![alt text](image.png)
+
 O Projeto NotaDez é um sistema web voltado para docentes do ensino superior.
 
 O objetivo é substituir o uso de planilhas genéricas por uma ferramenta própria, completa e integrada para gerenciamento de notas acadêmicas.
