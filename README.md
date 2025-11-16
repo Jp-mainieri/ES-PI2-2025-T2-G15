@@ -2,9 +2,9 @@
 
 ## 📚 Projeto NotaDez
 
-![alt text](image.png)
-
 O Projeto NotaDez é um sistema web voltado para docentes do ensino superior.
+
+![alt text](img/image.png)
 
 O objetivo é substituir o uso de planilhas genéricas por uma ferramenta própria, completa e integrada para gerenciamento de notas acadêmicas.
 
@@ -88,11 +88,7 @@ DB_PASSWORD=PI2Grupo15$$
 DB_CONECTION_STRING=joaopedromainieridatabase01_high
 
 
-# Verificar a String de Conexão
-*No arquivo tnsnames.ora da wallet, copie o nome da conexão (exemplo: DB2025_HIGH) e use no .env:*
-DB_CONNECTION_STRING=DB2025_HIGH
-
-# Executar o Projeto em Ambiente de Testes
+## Executar o Projeto em Ambiente de Testes
 *Rodar o servidor Node.js*
 Backend em Node utilizar:
 *npm start*
