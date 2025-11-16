@@ -9,8 +9,8 @@ const walletPath = process.env.ORACLE_WALLET_DIR as string;
 
 // inicializar o cliente oracle, usando a wallet.
 OracleDB.initOracleClient({
-    libDir: process.env.ORACLE_LIB_DIR,  // /.../instantclient_23_3
-    configDir: walletPath               // /.../walletPI2JP
+    //libDir: process.env.ORACLE_LIB_DIR,
+    configDir: walletPath
 });
 
 // formato de saída dos dados: objetos JS
