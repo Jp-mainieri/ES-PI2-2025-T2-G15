@@ -1,3 +1,4 @@
+//Feito por Giovana Uchelli - 25008818
 import OracleDB from "oracledb";
 import { open, close } from "../config/db";
 import crypto from "crypto";

@@ -1,3 +1,4 @@
+//Feito por Giovana Uchelli - 25008818
 async function enviarRecuperacao() {
         const btn = document.querySelector('.btn-entrar');
         try {

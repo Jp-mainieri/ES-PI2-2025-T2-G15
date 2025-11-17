@@ -1,3 +1,5 @@
+//Feito por Giovana Uchelli - 25008818
+
 async function alterarSenha() {
         const params = new URLSearchParams(window.location.search);
         const token = params.get("token");
