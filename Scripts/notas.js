@@ -15,7 +15,10 @@ let turmasData = [];
 let notasAlunosData = [];
 let componentesNotasData = [];
 let formulaData;
-let modoEdicaoNotas = false;
+let modoEdicaoCompleta = false;
+let modoEdicaoPorComponente = false;
+let componenteEmEdicao = null;
+
 
 async function carregarInstituicoes() {
     try {
@@ -148,8 +151,6 @@ async function carregarTabelaAlunosNotas() {
         if (!notas.ok || !componentes.ok) throw new Error("Erro ao carregar notas ou componentes");
         notasAlunosData = await notas.json();
         componentesNotasData = await componentes.json();
-        console.log(notasAlunosData)
-        console.log(componentesNotasData)
         renderizarNotasAlunos();
     }catch (error) {
         console.error("Erro:", error);
@@ -167,8 +168,9 @@ function renderizarNotasAlunos() {
         tbody.innerHTML = `
       <td>Nenhum aluno para a turma ou componente de nota para a disciplina encontrado</td>
       `;
-        document.querySelector(".btn-exportar").style.display="none";
+        document.getElementById("btn-exportar").style.display="none";
         document.getElementById("btn-editar-notas").style.display="none";
+        document.getElementById("btn-editar-por-componente").style.display = "none";
         return;
     }
 
@@ -205,19 +207,40 @@ function renderizarNotasAlunos() {
 
 
             // Verifica se está no modo edição de notas
-            if (!modoEdicaoNotas) {
+            // MODO DE VISUALIZAÇÃO (nenhum modo de edição ativo)
+            if (!modoEdicaoCompleta && !modoEdicaoPorComponente) {
                 return `<td>${valorVisual}</td>`;
             }
 
-            return `
-                <td>
-                    <input 
-                        type="number" 
-                        class="input-nota" 
-                        id="${ra},${c.ID_COMPONENTE}" 
-                        value="${valorInput}" />
-                </td>
+            // MODO EDIÇÃO COMPLETA
+            if (modoEdicaoCompleta) {
+                return `
+            <td>
+            <input 
+                type="number" 
+                class="input-nota" 
+                id="${ra},${c.ID_COMPONENTE}" 
+                value="${valorInput}" />
+            </td>
             `;
+            }
+
+            // MODO EDIÇÃO POR COMPONENTE
+            if (modoEdicaoPorComponente) {
+                if (c.ID_COMPONENTE == componenteEmEdicao) {
+                    return `
+                <td>
+                <input 
+                    type="number" 
+                    class="input-nota" 
+                    id="${ra},${c.ID_COMPONENTE}"
+                    value="${valorInput}">
+                </td>
+                `;
+                } else {
+                    return `<td>${valorVisual}</td>`;
+                }
+            }
         }).join("");
 
         // Média final (só visualização mesmo)
@@ -226,8 +249,12 @@ function renderizarNotasAlunos() {
         linha.innerHTML = html;
         tbody.appendChild(linha);
     }
-    document.querySelector(".btn-exportar").style.display="flex";
-    document.getElementById("btn-editar-notas").style.display="flex";
+    document.getElementById("btn-exportar").style.display="flex";
+    document.getElementById("btn-editar-notas").style.display = "flex";
+    document.getElementById("btn-editar-por-componente").style.display = "flex";
+    preencherSelectComponentes();
+    modoEdicaoCompleta = false;
+    modoEdicaoPorComponente = false;
 }
 
 function limparTabelaNotasAlunos() {
@@ -365,6 +392,18 @@ function exportarTabelaVisivelCSV() {
     URL.revokeObjectURL(url);
 }
 
+function preencherSelectComponentes() {
+    const select = document.getElementById("select-componente");
+    select.innerHTML = `<option value="">Selecione um componente</option>`;
+
+    componentesNotasData.forEach(c => {
+        const op = document.createElement("option");
+        op.value = c.ID_COMPONENTE;
+        op.textContent = c.NOME;
+        select.appendChild(op);
+    });
+}
+
 
 carregarInstituicoes();
 
@@ -375,8 +414,9 @@ for (const select of selectsInstituicao) {
         idInstituicaoAtiva = e.target.value;
         await carregarCursos();
          limparTabelaNotasAlunos()
-         document.querySelector(".btn-exportar").style.display="none";
+         document.getElementById("btn-exportar").style.display="none";
         document.getElementById("btn-editar-notas").style.display="none";
+        document.getElementById("btn-editar-por-componente").style.display = "none";
     });
 }
 const selectsCurso = document.getElementsByClassName("sortCurso");
@@ -386,8 +426,9 @@ for (const select of selectsCurso) {
         idCursoAtivo = e.target.value;
         await carregarDisciplinas();
          limparTabelaNotasAlunos()
-         document.querySelector(".btn-exportar").style.display="none";
+         document.getElementById("btn-exportar").style.display="none";
         document.getElementById("btn-editar-notas").style.display="none";
+        document.getElementById("btn-editar-por-componente").style.display = "none";
     });
 }
 const selectsDisciplina = document.getElementsByClassName("sortDisciplina");
@@ -398,8 +439,9 @@ for (const select of selectsDisciplina) {
         await carregarTurmas();
         await carregarFormula();
          limparTabelaNotasAlunos()
-         document.querySelector(".btn-exportar").style.display="none";
+         document.getElementById("btn-exportar").style.display="none";
         document.getElementById("btn-editar-notas").style.display="none";
+        document.getElementById("btn-editar-por-componente").style.display = "none";
     });
 }
 const selectsTurma = document.getElementsByClassName("sortTurma");
@@ -412,9 +454,11 @@ for (const select of selectsTurma) {
 }
 
 document.getElementById("btn-editar-notas").addEventListener("click", ()=> {
-    modoEdicaoNotas = true;
+    modoEdicaoCompleta = true;
+    modoEdicaoPorComponente = false;
     renderizarNotasAlunos();
     document.getElementById("btn-editar-notas").style.display="none";
+    document.getElementById("btn-editar-por-componente").style.display = "none";
     document.getElementById("btn-exportar").style.display="none";
     document.getElementById("btn-salvar").style.display="flex";
 })
@@ -459,9 +503,35 @@ document.getElementById("btn-salvar").addEventListener("click", async(e) => {
     modoEdicaoNotas = false;
     await carregarTabelaAlunosNotas();
     document.getElementById("btn-salvar").style.display="none";
+    document.getElementById("select-componente").style.display = "none";
     document.getElementById("btn-editar-notas").style.display="flex";
+    document.getElementById("btn-editar-por-componente").style.display = "flex";
     document.getElementById("btn-exportar").style.display="flex";
 })
+
+document.getElementById("btn-editar-por-componente").addEventListener("click", () => {
+    modoEdicaoCompleta = false;
+    modoEdicaoPorComponente = true;
+    document.getElementById("btn-editar-notas").style.display="none";
+    document.getElementById("btn-editar-por-componente").style.display = "none";
+    document.getElementById("btn-exportar").style.display="none";
+    document.getElementById("select-componente").style.display = "flex";
+    document.getElementById("btn-salvar").style.display = "flex";
+});
+
+document.getElementById("select-componente").addEventListener("change", () => {
+    componenteEmEdicao = Number(document.getElementById("select-componente").value);
+
+    if (componenteEmEdicao) {
+        renderizarNotasAlunos();
+        document.getElementById("btn-editar-notas").style.display="none";
+        document.getElementById("btn-editar-por-componente").style.display = "none";
+        document.getElementById("btn-exportar").style.display="none";
+        document.getElementById("select-componente").style.display = "none";
+        document.getElementById("btn-salvar").style.display = "flex";
+    }
+});
+
 
 // === Abrir modal ===
 document.querySelector('.btn-exportar').addEventListener('click', function() {
