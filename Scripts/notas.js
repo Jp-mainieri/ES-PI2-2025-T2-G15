@@ -171,6 +171,8 @@ function renderizarNotasAlunos() {
         document.getElementById("btn-exportar").style.display="none";
         document.getElementById("btn-editar-notas").style.display="none";
         document.getElementById("btn-editar-por-componente").style.display = "none";
+        document.getElementById("select-componente").style.display = "none";
+        document.getElementById("btn-salvar").style.display = "none";
         return;
     }
 
