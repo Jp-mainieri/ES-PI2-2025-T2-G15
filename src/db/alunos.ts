@@ -47,7 +47,7 @@ export async function getAllAlunosByInstituicao(id_instituicao: number): Promise
         FROM TURMAS t
         JOIN DISCIPLINAS d ON t.ID_DISCIPLINA = d.ID_DISCIPLINA
         JOIN CURSOS c ON d.ID_CURSO = c.ID_CURSO
-        WHERE c.ID_INSTITUICAO = :id_instituicao)`,
+        WHERE c.ID_INSTITUICAO = :id_instituicao ORDER BY t.NOME)`,
             [id_instituicao]
         );
         return result.rows as Aluno[];
