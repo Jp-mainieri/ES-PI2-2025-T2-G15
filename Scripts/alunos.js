@@ -307,7 +307,6 @@ document.getElementById("tabela-alunos").addEventListener("click", async (event)
     document.getElementById("editarNomeAluno").value = aluno.NOME;
     document.getElementById("editarRaAluno").textContent = aluno.RA_ALUNO;
     await carregarTurmas();
-    document.getElementById("editarTurmaAluno").textContent = turma.NOME;
 
     abrirModal("modalEditar");
   }
