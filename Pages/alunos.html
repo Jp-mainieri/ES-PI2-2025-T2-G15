@@ -5,55 +5,73 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Alunos</title>
+
+  <!-- Importa o CSS da página de alunos -->
   <link rel="stylesheet" href="../Styles/alunos.css">
+
+  <!-- Importa os ícones do FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 <div class="container">
-    <!--MENU-->
+    
+  <!-- MENU LATERAL -->
   <div class="sidebar">
     <div>
       <h2>NotaDez</h2>
-
       <p class="section-title">MENU</p>
+
+      <!-- Links do menu -->
       <div class="menu">
         <a href="dash.html" class="menu-item"><i class="fa-solid fa-gauge"></i> Dashboard</a>
         <a href="instituicoes.html" class="menu-item"><i class="fa-solid fa-school"></i> Instituições</a>
+
+        <!-- Página atual (ativa) -->
         <a href="#" class="menu-item active"><i class="fa-solid fa-user-graduate"></i> Alunos</a>
-        <a href="notas.html " class="menu-item"><i class="fa-solid fa-file-lines"></i> Notas</a>
+        <a href="notas.html" class="menu-item"><i class="fa-solid fa-file-lines"></i> Notas</a>
         <a href="calcular.html" class="menu-item"><i class="fa-solid fa-calculator"></i> Cálculo da Nota</a>
       </div>
     </div>
 
     <div class="outros">
       <p class="section-title">OUTROS</p>
+
+      <!-- Botão para voltar ao login -->
       <a href="index.html" class="menu-item"><i class="fa-solid fa-right-from-bracket"></i> Sair</a>
     </div>
   </div>
-    <!--Conteúdo-->
+
+    <!-- CONTEÚDO PRINCIPAL -->
   <div class="content">
     <section class="alunos-container">
       <div class="alunos-container-header">
         <h1>Alunos</h1>
       </div>
 
+      <!-- Filtros de turma + botões -->
       <div class="filtros-container">
+
+        <!-- Select para filtrar alunos por instituição -->
         <select class="select-instituicao" id="sortInstituicao">
           <option selected value="-1">Selecionar Instituição</option>
         </select>
 
+        <!-- Botão para abrir modal de cadastro -->
         <a href="#" id="btnCadastrar" class="btn-cadastrar"><i class="fa-solid fa-plus"></i>Cadastrar Aluno</a>
+         <!-- Botão para abrir modal de importação -->
         <a href="#" id="btnImportar" class="btn-importar"><i class="fa-solid fa-file-import"></i>Importar Alunos</a>
-
       </div>
+
 <!--
   <div class="busca-container">
     <input type="text" placeholder="Pesquisar aluno por nome ou matrícula">
     <button class="btn-filtrar"><i class="fa-solid fa-filter"></i> Filtrar</button>
   </div>
   -->
+  
   <hr style="margin: 30px 0px 0px 0px">
 
+      <!-- Tabela onde os alunos serão listados -->
       <div class="tabela-container">
         <table class="tabelas" id="tabela-alunos">
 
@@ -62,13 +80,14 @@
               <th>Nome</th>
               <th>RA</th>
               <th>Turma</th>
-              <th>Ações</th>
+              <th>Ações</th> 
             </tr>
           </thead>
 
           <tbody>
-
+            <!-- Linhas dos alunos serão inseridas via JavaScript -->
           </tbody>
+
         </table>
       </div>
     </section>
@@ -80,17 +99,23 @@
 <div id="modalCadastrar" class="modal">
   <div class="modal-content">
     <h2>Cadastrar Aluno</h2>
+
+    <!-- Formulário de cadastro -->
     <form id="formCadastrarAluno">
+
+      <!-- Campo nome -->
       <div class="form-group">
         <label for="nomeAluno">Nome</label>
         <input type="text" id="nomeAluno" name="nomeAluno" required>
       </div>
 
-        <div class="form-group">
+      <!-- Campo RA -->
+      <div class="form-group">
         <label for="raAluno">RA</label>
         <input type="text" id="raAluno" name="raAluno" required>
       </div>
 
+      <!-- Select para escolher turma -->
       <div class="form-group">
         <label for="turmaAluno">Turma</label>
           <select id="turmaAluno" class="opcoesTurmas" name="turmaAluno" required>
@@ -99,6 +124,7 @@
           </select>
       </div>
 
+      <!-- Botões do modal -->
       <div class="modal-buttons">
         <button type="button" class="cancelar" onclick="fecharModal('modalCadastrar')">Cancelar</button>
         <button type="submit" class="confirmar">Salvar</button>
@@ -111,8 +137,11 @@
 <div id="modalImportar" class="modal">
   <div class="modal-content">
     <h2>Importar Alunos</h2>
+
+    <!-- Formulário de importação -->
     <form id="formImportarAlunos">
       
+      <!-- Selecionar turma de destino -->
       <div class="form-group">
         <label for="turmaImportar">Turma</label>
         <select id="turmaImportar" class="opcoesTurmas" name="turmaImportar" required>
@@ -123,6 +152,7 @@
         </p>
       </div>
 
+      <!-- Apenas CSV permitido -->
       <div class="form-group">
         <label>Formato do arquivo:</label>
         <div class="radio-group">
@@ -130,11 +160,13 @@
         </div>
       </div>
 
+      <!-- Campo para selecionar arquivo CSV -->
       <div class="form-group">
         <label for="arquivoAlunos">Arquivo:</label>
         <input type="file" id="arquivoAlunos" name="arquivoAlunos" accept=".csv" required>
       </div>
 
+      <!-- Botões do modal -->
       <div class="modal-buttons">
         <button type="button" class="cancelar" onclick="fecharModal('modalImportar')">Cancelar</button>
         <button type="submit" class="confirmar" id="btn-confirmarImportacao">Confirmar</button>
@@ -148,17 +180,23 @@
 <div id="modalEditar" class="modal">
   <div class="modal-content">
     <h2>Editar Aluno</h2>
+
+    <!-- Formulário de edição -->
     <form id="formEditarAluno">
+
+      <!-- Editar nome -->
       <div class="form-group">
         <label for="editarNomeAluno">Nome</label>
         <input type="text" id="editarNomeAluno" name="editarNomeAluno" required>
       </div>
 
+      <!-- Editar RA -->
       <div class="form-group">
         <label for="editarRaAluno">RA</label>
         <input type="text" id="editarRaAluno" name="editarMatriculaAluno" required>
       </div>
 
+      <!-- Editar turma -->
       <div class="form-group">
         <label for="editarTurmaAluno">Turma</label>
         <select id="editarTurmaAluno" class="opcoesTurmas" name="editarTurmaAluno" required>
@@ -166,6 +204,7 @@
         </select>
       </div>
 
+      <!-- Botões -->
       <div class="modal-buttons">
         <button type="button" class="cancelar" onclick="fecharModal('modalEditar')">Cancelar</button>
         <button type="submit" class="confirmar">Salvar</button>
@@ -178,6 +217,8 @@
 <div id="modalExcluir" class="modal">
   <div class="modal-content">
     <h2>Confirmar Exclusão</h2>
+
+    <!-- Mensagem que será atualizada via JS -->
     <p id="textExcluir">
       Deseja mesmo excluir este aluno?
     </p>
@@ -190,7 +231,7 @@
 
 
 
-
+<!-- Importa o JavaScript com as funções da página -->
 <script src="../Scripts/alunos.js"></script>
 
 </body>

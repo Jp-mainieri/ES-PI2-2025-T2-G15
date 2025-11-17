@@ -1,12 +1,16 @@
 /*Feito por laura Carvalho - 25014543*/
+
+/* Importa o CSS do dashboard, herdando estilos base */
 @import url(dash.css);
 
+/* Área principal com rolagem e espaçamento */
 .content {
   overflow: scroll;
   scrollbar-width: none;
   padding: 25px 50px 0 50px;
 }
 
+/* Container geral da seção de alunos */
 .alunos-container {
   display: flex;
   flex-direction: column;
@@ -14,6 +18,7 @@
   color: var(--azulMarinho);
 }
 
+/* Cabeçalho da página: título e botões */
 .alunos-container-header {
   display: flex;
   justify-content: space-between;
@@ -21,11 +26,13 @@
   margin-bottom: 25px;
 }
 
+/* Título da seção */
 .alunos-container-header h1 {
   font-size: 1.5em;
   margin: 0;
 }
 
+/* Container dos filtros acima da tabela */
 .filtros-container {
   display: flex;
   align-items: center;
@@ -33,6 +40,7 @@
   margin-bottom: 15px;
 }
 
+/* Select da instituição no filtro */
 .select-instituicao {
   flex: 1;
   padding: 10px;
@@ -42,6 +50,7 @@
   padding: 13px;
 }
 
+/* Botões de cadastrar e importar */
 .btn-cadastrar,
 .btn-importar {
   background-color: var(--azulMarinhoClaro);
@@ -54,11 +63,13 @@
   text-decoration: none;
 }
 
+/* Hover dos botões principais */
 .btn-cadastrar:hover,
 .btn-importar:hover {
   background-color: var(--azulMarinho);
 }
 
+/* Campo de busca acima da tabela */
 .busca-container {
   display: flex;
   align-items: center;
@@ -66,6 +77,7 @@
   margin-bottom: 25px;
 }
 
+/* Input da busca */
 .busca-container input {
   flex: 1;
   padding: 10px;
@@ -75,6 +87,7 @@
   padding: 13px;
 }
 
+/* Botão de filtro */
 .btn-filtrar {
   background-color: #fff;
   border: 1px solid #ccc;
@@ -87,10 +100,12 @@
   gap: 8px;
 }
 
+/* Hover do botão filtrar */
 .btn-filtrar:hover {
   background-color: #f0f0f0;
 }
 
+/* Container da tabela para respeitar o border-radius */
 .tabela-container {
   width: 100%;
   padding-top: 40px;
@@ -98,6 +113,7 @@
 
 }
 
+/* Configurações gerais das tabelas */
 .tabelas {
   width: 100%;
   text-align: left;
@@ -108,17 +124,20 @@
   background-color: white;
 }
 
+/* Células e cabeçalhos da tabela */
 .tabelas th,
 .tabelas td {
   padding: 15px 20px;
   border-bottom: 1px solid #ddd; /* linha contínua */
 }
 
+/* Container dos ícones de ação */
 .acoes {
   display: flex;
   gap: 10px;
 }
 
+/* Botão que contém os ícones */
 .btn-acao {
   background-color: transparent;
   border: none;
@@ -127,12 +146,15 @@
   font-size: 1.2em;
 }
 
+/* Hover nos ícones da tabela */
 .btn-acao:hover i {
   color: var(--azulMarinho);
 }
 
+
 /* ===== Modal de Cadastrar Aluno ===== */
 
+/* Modal geral oculto por padrão */
 .modal {
   display: none; /* fica invisível até ser aberto pelo JS */
   position: fixed;
@@ -146,6 +168,7 @@
   z-index: 1000;
 }
 
+/* Conteúdo interno do modal */
 .modal-content {
   background: #fff;
   padding: 25px 30px;
@@ -155,39 +178,44 @@
   animation: aparecer 0.2s ease-in-out;
 }
 
+/* Animação de abertura do modal */
 @keyframes aparecer {
   from { transform: scale(0.9); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
 }
 
+/* Título do modal */
 .modal-content h2 {
   margin-bottom: 20px;
   color: #17356D; /* azul do projeto */
   text-align: center;
 }
 
-
-
+/* Container dos botões do modal */
 .modal-buttons {
   justify-content: center; /* Centraliza os botões */
 }
 
+/* Texto centralizado no modal de exclusão */
 #textExcluir{
   text-align: center;
 }
 
+/* Grupo de inputs do modal */
 .form-group {
   display: flex;
   flex-direction: column;
   margin-bottom: 15px;
 }
 
+/* Label dos inputs */
 .form-group label {
   margin-bottom: 5px;
   font-weight: 600;
   color: #333;
 }
 
+/* Inputs e selects do modal */
 .form-group input,
 .form-group select {
   padding: 8px 10px;
@@ -196,11 +224,13 @@
   outline: none;
 }
 
+/* Efeito quando o input está focado */
 .form-group input:focus,
 .form-group select:focus {
   border-color: #17356D;
 }
 
+/* Botões dentro do modal */
 .modal-buttons {
   display: flex;
   justify-content: flex-end;
@@ -208,6 +238,7 @@
   margin-top: 15px;
 }
 
+/* Botões gerais do modal */
 .modal-buttons button {
   border: none;
   border-radius: 8px;
@@ -217,20 +248,24 @@
   transition: 0.2s;
 }
 
+/* Botão de confirmar */
 button.confirmar {
   background-color: #17356D; /* azul */
   color: white;
 }
 
+/* Hover do botão confirmar */
 button.confirmar:hover {
   background-color: #17356D;
 }
 
+/* Botão cancelar */
 button.cancelar {
   background: none;
   color: #17356D;
 }
 
+/* Hover do cancelar */
 button.cancelar:hover {
   text-decoration: underline;
 }

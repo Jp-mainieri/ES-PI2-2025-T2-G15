@@ -4,48 +4,58 @@
 <head>
     <meta charset="UTF-8">
     <title>NOTADEZ</title>
-<!--Link para o arquivo base de CSS-->
+
+    <!--Link para o arquivo CSS-->
     <link rel="stylesheet" href="../Styles/base.css">
     <link rel="stylesheet" href="../Styles/login.css">
-    <!--Link para os icones-->
+
+    <!-- Biblioteca de ícones (Font Awesome) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<!--Link para o arquivo de JavaScript-->
+
+    <!-- Arquivo JavaScript com a lógica do login -->
     <script src="../Scripts/login.js"></script>
-
-
 </head>
 <body>
 
+    <!-- Cabeçalho da página -->
     <header>
         <div class="logo">NotaDez</div>
         <nav>
+            <!-- Menu de navegação com botões de Login e Cadastro -->
             <a href="login.html" class="btn-login"><strong>LOGIN</strong></a>
             <a href="cadastro.html"><strong>CADASTRO</strong></a>
         </nav>
     </header>
+
+    <!-- Container principal da página de login -->
     <div class="login-container">
-    <!--Forms de Log-in-->
+
+        <!--Forms de Log-in-->
         <div class="form">
             <h3>Bem-vindo(a) de volta!</h3>
 
             <form id="formLogin">
+
+                <!-- Campo para email do usuário -->
                 <label for="email"><strong>Email:</strong></label><br>
                 <input type="email" id="email" name="email" placeholder="Digite seu email" required><br><br>
 
+                <!-- Campo para senha -->
                 <label for="senha"><strong>Senha:</strong></label><br>
                 <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required><br><br>
 
                 <div class="btn-container">
                     <button type="submit" class="btn-entrar"><strong>Entrar</strong></button>
+
+                    <!-- Link para recuperação de senha -->
                     <p id="esqueceu-senha">Esqueceu sua senha? <a href="rec_senha.html">Clique aqui</a></p>
                 </div>
             </form>
-
         </div>
         
 
         <div class="capelo">
-        <img src="../img/capelo.png" alt="Capelo">
+            <img src="../img/capelo.png" alt="Capelo">
         </div>
 
         <div class="image-side">

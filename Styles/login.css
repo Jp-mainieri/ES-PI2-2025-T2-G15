@@ -1,4 +1,6 @@
 /*Feito por laura Carvalho - 25014543*/
+
+/* Header fixo no topo com layout horizontal */
 header {
     position: absolute;  
     top: 0;
@@ -13,6 +15,7 @@ header {
     padding: 30px 90px;
 }
 
+/* Botão de login básico com estilo arredondado */
 .btn-login {
     background-color: #17356D;
     color: #fff;
@@ -25,7 +28,7 @@ header {
     font-size: 12px;
 }
 
-
+/* Container geral que divide tela em duas partes */
 .login-container {
     position: absolute;
     display: flex;
@@ -33,7 +36,7 @@ header {
     height: 100vh;              
 }
 
-/*lado esquerdo*/
+/* Lado esquerdo contendo o formulário */
 .form {
     flex: 1;
     background-color: #fff;     
@@ -44,6 +47,7 @@ header {
     padding: 30px 90px;
 }
 
+/* Estilo do título dentro do formulário */
 .form h3 {
     text-align: center;
     width: 100%;
@@ -51,7 +55,7 @@ header {
 }
 
 
-/*lado direito*/
+/* Lado direito destinado à imagem */
 .image-side {
     flex: 1;
     background-color: #f4f4f4;  
@@ -62,6 +66,7 @@ header {
     margin: 0; 
 }
 
+/* Ajuste da imagem principal (capelo) no layout */
 .capelo {
     position: absolute; 
     top: 50%;           
@@ -71,18 +76,22 @@ header {
     max-width: 900px;   
 }
 
+/* Inclina levemente a imagem */
 .capelo img {
     transform: rotate(10deg); 
 }
 
+/* Cor padrão para os labels */
 label{
     color: #17356D;
 }
 
+/* Cor do placeholder dos inputs */
 input::placeholder {
     color: rgb(140, 140, 140);        
 }
 
+/* Estilo geral dos inputs */
 input{
     margin-top: 5px;
     padding: 13px;
@@ -92,6 +101,7 @@ input{
     padding-right: 200px;
 }
 
+/* Agrupamento do botão e do link abaixo dele */
 .btn-container {
     display: flex;
     flex-direction: column; 
@@ -100,6 +110,7 @@ input{
     margin-top: 20px;
 }
 
+/* Botão de entrar */
 .btn-entrar {
     padding: 13px 170px;
     border: none;
@@ -110,17 +121,19 @@ input{
     text-decoration: none;
 }
 
-
+/* Texto “esqueceu a senha?” abaixo do botão */
 #esqueceu-senha {
     font-size: 13px;
     margin-top: 10px; 
 }
 
+/* Estilo do link dentro do texto de recuperação */
 #esqueceu-senha a {
     text-decoration: none;
     color: #17356D;
 }
 
+/* Adiciona sublinhado ao passar o mouse */
 #esqueceu-senha a:hover {
     text-decoration: underline;
     color: #17356D;
