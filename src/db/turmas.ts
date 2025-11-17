@@ -10,6 +10,7 @@ export interface Turma{
 
 }
 
+// Função para obter todas as turmas
 export async function getAllTurmas(): Promise<Turma[]> {
     const connection = await open();
     try{
@@ -22,6 +23,7 @@ export async function getAllTurmas(): Promise<Turma[]> {
     }
 }
 
+// Função para obter todas as turmas de uma disciplina
 export async function getAllTurmasByDisciplina(id_disciplina:number): Promise<Turma[]> {
     const connection = await open();
     try{
@@ -36,6 +38,7 @@ export async function getAllTurmasByDisciplina(id_disciplina:number): Promise<Tu
     }
 }
 
+// Função para obter todas as turmas de uma Instituição
 export async function getAllTurmasByInstituicao(id_instituicao:number): Promise<Turma[]>{
     const connection = await open();
     try{
@@ -53,6 +56,7 @@ export async function getAllTurmasByInstituicao(id_instituicao:number): Promise<
     }
 }
 
+// Função para obter uma turma pelo ID
 export async function getTurmaById(id:number): Promise<Turma | null> {
     const connection = await open();
     try{
@@ -67,6 +71,7 @@ export async function getTurmaById(id:number): Promise<Turma | null> {
     }
 }
 
+// Função para inserir uma turma
 export async function addTurma(nome: string, codigo: string, turno:number, id_disciplina:number): Promise <number> {
     const connection = await open()
     try {
@@ -93,6 +98,7 @@ export async function addTurma(nome: string, codigo: string, turno:number, id_di
     }
 }
 
+// Função para editar uma turma
 export async function updateTurma(id: number, nome: string, codigo: string, turno:string): Promise<boolean> {
     const connection = await open();
     try {
@@ -110,6 +116,7 @@ export async function updateTurma(id: number, nome: string, codigo: string, turn
     }
 }
 
+// Função para exluir uma turma
 export async function deleteTurma(id: number): Promise<boolean> {
     const connection = await open();
     try {

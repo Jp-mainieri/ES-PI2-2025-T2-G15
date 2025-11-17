@@ -7,6 +7,8 @@ export interface Aluno{
     id_turma:number
 }
 
+// Função para obter todos os alunos
+
 export async function getAllAlunos(): Promise<Aluno[]> {
     const connection = await open();
     try{
@@ -18,6 +20,8 @@ export async function getAllAlunos(): Promise<Aluno[]> {
         await close(connection);
     }
 }
+
+// Função para obter todos os alunos de uma turma
 export async function getAllAlunosByTurma(id_turma:number): Promise<Aluno[]> {
     const connection = await open();
     try{
@@ -31,6 +35,7 @@ export async function getAllAlunosByTurma(id_turma:number): Promise<Aluno[]> {
     }
 }
 
+// Função para obter todos os alunos de uma intituicao
 export async function getAllAlunosByInstituicao(id_instituicao: number): Promise<Aluno[]> {
     const connection = await open()
     try{
@@ -51,6 +56,7 @@ export async function getAllAlunosByInstituicao(id_instituicao: number): Promise
     }
 }
 
+// Função para obter o aluno pelo RA
 export async function getAlunoByRA(ra:string): Promise<Aluno | null> {
     const connection = await open();
     try{
@@ -66,6 +72,7 @@ export async function getAlunoByRA(ra:string): Promise<Aluno | null> {
     }
 }
 
+// Função para inserir um aluno
 export async function addAluno(ra_aluno: string, nome: string, id_turma:number): Promise <string> {
     const connection = await open()
     try {
@@ -85,6 +92,7 @@ export async function addAluno(ra_aluno: string, nome: string, id_turma:number):
     }
 }
 
+// Função para editar um aluno
 export async function updateAluno(ra_aluno: string, nome: string, id_turma: number): Promise<boolean> {
     const connection = await open();
     try {
@@ -102,6 +110,7 @@ export async function updateAluno(ra_aluno: string, nome: string, id_turma: numb
     }
 }
 
+// Função para deletar um aluno
 export async function deleteAluno(ra: string): Promise<boolean> {
     const connection = await open();
     try {

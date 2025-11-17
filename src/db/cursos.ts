@@ -7,6 +7,7 @@ export interface Curso {
   nome: string;
 }
 
+// Função para obter todos os cursos
 export async function getAllCursos(): Promise<Curso[]> {
   const connection = await open();
   try {
@@ -19,6 +20,7 @@ export async function getAllCursos(): Promise<Curso[]> {
   }
 }
 
+// Função para obter todos os cursos de uma instituição
 export async function getAllCursosByInstituicao(
   id_instituicao: number
 ): Promise<Curso[]> {
@@ -36,6 +38,7 @@ export async function getAllCursosByInstituicao(
   }
 }
 
+// Função para obter um curso pelo ID
 export async function getCursoById(id: number): Promise<Curso | null> {
   const connection = await open();
   try {
@@ -50,11 +53,8 @@ export async function getCursoById(id: number): Promise<Curso | null> {
   }
 }
 
-export async function addCurso(
-  nome: string,
-  codigo: string,
-  id_instituicao: number
-): Promise<number> {
+// Função para inserir um curso
+export async function addCurso(nome: string, codigo: string, id_instituicao: number): Promise<number> {
   const connection = await open();
   try {
     const result = await connection.execute<{ outBinds: { id: number } }>(
@@ -84,11 +84,8 @@ export async function addCurso(
   }
 }
 
-export async function updateCurso(
-  id: number,
-  nome: string,
-  codigo: string
-): Promise<boolean> {
+// Função para editar um curso
+export async function updateCurso(id: number, nome: string, codigo: string): Promise<boolean> {
   const connection = await open();
   try {
     const result = await connection.execute(
@@ -105,6 +102,7 @@ export async function updateCurso(
   }
 }
 
+// Função para excluir um curso
 export async function deleteCurso(id: number): Promise<boolean> {
   const connection = await open();
   try {

@@ -105,6 +105,7 @@ color: var(--cinzaEscuro);
 color: var(--azulMarinho);
 }
 
+
 /* ===== Botões de ação “Ver” ===== */
 button.btn-ver-cursos,
 button.btn-ver-disciplinas,
@@ -188,6 +189,18 @@ margin-bottom: 10px;
 
 .modal-content input:focus {
 border-color: #17356d;
+}
+
+.filtro-select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background-color: #fff;
+    font-size: 14px;
+    color: #333;
+    width: 500px;
+    cursor: pointer;
+    margin-left: -20px;
 }
 
 .modal-buttons {

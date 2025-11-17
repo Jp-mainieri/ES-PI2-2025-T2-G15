@@ -28,6 +28,7 @@ export interface Formula {
     id_disciplina:number,
 }
 
+// Função para obter todas as notas
 export async function getAllNotas(): Promise<Nota[]> {
     const connection = await open();
     try{
@@ -40,6 +41,7 @@ export async function getAllNotas(): Promise<Nota[]> {
     }
 }
 
+// Função para obter uma nota pelo id
 export async function getNotaById(id:number): Promise<Nota | null> {
     const connection = await open();
     try{
@@ -54,27 +56,7 @@ export async function getNotaById(id:number): Promise<Nota | null> {
     }
 }
 
-export async function getComponentesByTurma(id_turma: number): Promise<ComponenteNota[] | null> {
-    const connection = await open();
-    try {
-        const result = await connection.execute(
-            `
-            SELECT cn.ID_COMPONENTE, cn.NOME
-            FROM COMPONENTE_NOTA cn
-            JOIN DISCIPLINAS d ON d.ID_DISCIPLINA = cn.ID_DISCIPLINA
-            JOIN TURMAS t ON t.ID_DISCIPLINA = d.ID_DISCIPLINA
-            WHERE t.ID_TURMA = :id_turma
-            ORDER BY cn.ID_COMPONENTE
-            `,
-            [id_turma]
-        );
-
-        return result.rows as ComponenteNota[] || null;
-    } finally {
-        await close(connection);
-    }
-}
-
+// Função para obter todas as notas de uma turma
 export async function getNotasByTurma(id_turma: number): Promise<NotasAlunos[] | null> {
     const connection = await open();
     try {
@@ -98,6 +80,7 @@ export async function getNotasByTurma(id_turma: number): Promise<NotasAlunos[] |
     }
 }
 
+// Função para inserir uma nota
 export async function addNota(valor: number, id_componente:number, ra_aluno:string): Promise <number> {
     const connection = await open()
     try {
@@ -124,6 +107,7 @@ export async function addNota(valor: number, id_componente:number, ra_aluno:stri
     }
 }
 
+// Função para editar uma nota
 export async function updateNota(id: number, valor: number): Promise<boolean> {
     const connection = await open();
     try {
@@ -141,6 +125,7 @@ export async function updateNota(id: number, valor: number): Promise<boolean> {
     }
 }
 
+// Função para excluir uma nota
 export async function deleteNota(id: number): Promise<boolean> {
     const connection = await open();
     try {
@@ -156,6 +141,7 @@ export async function deleteNota(id: number): Promise<boolean> {
     }
 }
 
+// Função para obter a formula de uma disciplina
 export async function getFormulaByDisciplina(id_disciplina: number): Promise<Formula | null> {
     const connection = await open();
     try {
@@ -174,6 +160,7 @@ export async function getFormulaByDisciplina(id_disciplina: number): Promise<For
     }
 }
 
+// Função para inserir a formula de uma disciplina
 export async function addFormula(formula:string,id_disciplina: number): Promise<Number> {
     const connection = await open();
     try {
@@ -200,6 +187,7 @@ export async function addFormula(formula:string,id_disciplina: number): Promise<
     }
 }
 
+// Função para editar a formula de uma disciplina
 export async function updateFormula(id_disciplina: number, formula: string): Promise<boolean> {
     const connection = await open();
     try {
@@ -217,6 +205,7 @@ export async function updateFormula(id_disciplina: number, formula: string): Pro
     }
 }
 
+// Função para obter os componentes de uma disciplina
 export async function getComponentesByDisciplina(id_disciplina: number): Promise<ComponenteNota[] | null> {
     const connection = await open();
     try {
@@ -235,6 +224,7 @@ export async function getComponentesByDisciplina(id_disciplina: number): Promise
     }
 }
 
+// Função para inserir um componente em uma disciplina
 export async function addComponente(nome:string, sigla:string, descricao:string, id_disciplina: number): Promise<Number> {
     const connection = await open();
     try {
@@ -261,6 +251,7 @@ export async function addComponente(nome:string, sigla:string, descricao:string,
     }
 }
 
+// Função para editar um componente de uma disciplina
 export async function updateComponente(nome: string, sigla: string,descricao:string, id_componente:number): Promise<boolean> {
     const connection = await open();
     try {
@@ -278,6 +269,7 @@ export async function updateComponente(nome: string, sigla: string,descricao:str
     }
 }
 
+// Função para ecluir um componente de uma disciplina
 export async function deleteComponente(id: number): Promise<boolean> {
     const connection = await open();
     try {

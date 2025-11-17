@@ -1,13 +1,17 @@
 // Feito por João Pedro Panza Mainieri - 25006642
+
+// Base da API
 const API_URL = "http://localhost:3000";
 
+// Usuário logado
 const usuarioLogado = JSON.parse(sessionStorage.getItem("usuarioLogado"));
 const idProfessor = usuarioLogado.id_professor;
+
+// Dados
 let idInstituicaoAtiva;
 let idCursoAtivo;
 let idDisciplinaAtiva;
 let idTurmaAtiva;
-
 let instituicoesData = [];
 let cursosData = [];
 let disciplinasData = [];
@@ -19,12 +23,12 @@ let modoEdicaoCompleta = false;
 let modoEdicaoPorComponente = false;
 let componenteEmEdicao = null;
 
-
+// Carregar Insituições do banco de dados
 async function carregarInstituicoes() {
     try {
         const response = await fetch(`${API_URL}/instituicoes/professor/${idProfessor}`);
         if (!response.ok) throw new Error("Erro ao carregar instituições");
-
+        
         instituicoesData = await response.json();
         renderizarOpcoesInstituicoes();
     } catch (error) {
@@ -35,14 +39,15 @@ async function carregarInstituicoes() {
     }
 }
 
+// Renderizar opções de Insituições no select
 function renderizarOpcoesInstituicoes() {
     const selects = document.querySelectorAll(".sortInstituicao");
     if (!selects) return;
-
+    
     selects.forEach(sessao => {
         const opcoesExistentes = sessao.querySelectorAll("option:not(:first-child)");
         opcoesExistentes.forEach((opcao) => opcao.remove());
-
+        
         instituicoesData.forEach((inst) => {
             const nova_opcao = document.createElement('option');
             nova_opcao.value = inst.id;
@@ -50,14 +55,15 @@ function renderizarOpcoesInstituicoes() {
             sessao.appendChild(nova_opcao);
         });
     })
-
+    
 }
 
+// Carregar Cursos do banco de dados
 async function carregarCursos() {
     try {
         const response = await fetch(`${API_URL}/cursos/instituicao/${idInstituicaoAtiva}`)
         if (!response.ok) throw new Error("Erro ao carregar turmas");
-
+        
         cursosData = await response.json();
         renderizarOpcoesCursos();
     } catch (error) {
@@ -65,14 +71,15 @@ async function carregarCursos() {
     }
 }
 
+// Renderizar opções de Cursos no select
 function renderizarOpcoesCursos() {
     const selects = document.querySelectorAll(".sortCurso");
     if (!selects) return;
-
+    
     selects.forEach(sessao => {
         const opcoesExistentes = sessao.querySelectorAll("option:not(:first-child)");
         opcoesExistentes.forEach((opcao) => opcao.remove());
-
+        
         cursosData.forEach((curso) => {
             const nova_opcao = document.createElement('option');
             nova_opcao.value = curso.id;
@@ -80,14 +87,14 @@ function renderizarOpcoesCursos() {
             sessao.appendChild(nova_opcao);
         });
     })
-
+    
 }
-
+// Carregar Disciplinas do banco de dados
 async function carregarDisciplinas() {
     try {
         const response = await fetch(`${API_URL}/disciplinas/curso/${idCursoAtivo}`)
         if (!response.ok) throw new Error("Erro ao carregar turmas");
-
+        
         disciplinasData = await response.json();
         renderizarOpcoesDisciplinas();
     } catch (error) {
@@ -95,14 +102,15 @@ async function carregarDisciplinas() {
     }
 }
 
+// Renderizar opções de Disciplinas no select
 function renderizarOpcoesDisciplinas() {
     const selects = document.querySelectorAll(".sortDisciplina");
     if (!selects) return;
-
+    
     selects.forEach(sessao => {
         const opcoesExistentes = sessao.querySelectorAll("option:not(:first-child)");
         opcoesExistentes.forEach((opcao) => opcao.remove());
-
+        
         disciplinasData.forEach((disc) => {
             const nova_opcao = document.createElement('option');
             nova_opcao.value = disc.id;
@@ -110,14 +118,15 @@ function renderizarOpcoesDisciplinas() {
             sessao.appendChild(nova_opcao);
         });
     })
-
+    
 }
 
+// Carregar Turmas do banco de dados
 async function carregarTurmas() {
     try {
         const response = await fetch(`${API_URL}/turmas/disciplina/${idDisciplinaAtiva}`)
         if (!response.ok) throw new Error("Erro ao carregar turmas");
-
+        
         turmasData = await response.json();
         renderizarOpcoesTurmas();
     } catch (error) {
@@ -125,6 +134,7 @@ async function carregarTurmas() {
     }
 }
 
+// Renderizar opções de Turmas no select
 function renderizarOpcoesTurmas() {
     const selects = document.querySelectorAll(".sortTurma");
     if (!selects) return;
@@ -143,11 +153,12 @@ function renderizarOpcoesTurmas() {
 
 }
 
+// Carrega a tabela alunos, com as notas por componente do banco de dados
 async function carregarTabelaAlunosNotas() {
     try {
         const notas = await fetch(`${API_URL}/notas/turma/${idTurmaAtiva}`)
         const componentes = await fetch(`${API_URL}/componente-nota/disciplina/${idDisciplinaAtiva}`)
-
+        
         if (!notas.ok || !componentes.ok) throw new Error("Erro ao carregar notas ou componentes");
         notasAlunosData = await notas.json();
         componentesNotasData = await componentes.json();
@@ -157,6 +168,7 @@ async function carregarTabelaAlunosNotas() {
     }
 }
 
+// Renderiza a tabela alunos, com as notas por componente
 function renderizarNotasAlunos() {
     const tabela = document.getElementById("tabela-notas");
     const thead = tabela.querySelector("thead");
@@ -164,6 +176,7 @@ function renderizarNotasAlunos() {
 
     limparTabelaNotasAlunos();
 
+    // Se não tiver data dos alunos ou das notas
     if (!notasAlunosData || notasAlunosData.length === 0) {
         tbody.innerHTML = `
       <td>Nenhum aluno para a turma ou componente de nota para a disciplina encontrado</td>
@@ -185,6 +198,7 @@ function renderizarNotasAlunos() {
         </tr>
     `;
 
+    // Agrupa notas por RA do aluno no objeto alunosMap
     const alunosMap = {};
     for (const n of notasAlunosData) {
         if (!alunosMap[n.RA_ALUNO]) {
@@ -245,7 +259,7 @@ function renderizarNotasAlunos() {
             }
         }).join("");
 
-        // Média final (só visualização mesmo)
+        // Média final - só visualização, pois é calculada a partir da fórmula da disciplina
         html += `<td>${calcularMedia(dados)}</td>`;
 
         linha.innerHTML = html;
@@ -259,6 +273,7 @@ function renderizarNotasAlunos() {
     modoEdicaoPorComponente = false;
 }
 
+// Limpa a tabela das notas dos alunos
 function limparTabelaNotasAlunos() {
     const tabela = document.getElementById("tabela-notas");
     const thead = tabela.querySelector("thead");
@@ -268,6 +283,7 @@ function limparTabelaNotasAlunos() {
     tbody.innerHTML = ``;
 }
 
+// Adiciona uma nota ao banco de dados
 async function adicionarNota(valor, id_componente, ra_aluno){
     try {
         const response = await fetch(`${API_URL}/notas`, {
@@ -288,6 +304,7 @@ async function adicionarNota(valor, id_componente, ra_aluno){
     }
 }
 
+// Edita uma nota do banco de dados
 async function editarNota(id, valor) {
     try {
         const response = await fetch(`${API_URL}/notas/${id}`, {
@@ -305,6 +322,7 @@ async function editarNota(id, valor) {
     }
 }
 
+// Carrega a formula do banco de dados a partir da disciplina
 async function carregarFormula() {
     try {
         const response = await fetch(`${API_URL}/formula/${idDisciplinaAtiva}`)
@@ -319,6 +337,7 @@ async function carregarFormula() {
     }
 }
 
+// Calcula a Média a partir da formula
 function calcularMedia(dados){
     if (!formulaData) return "";
 
@@ -342,6 +361,7 @@ function calcularMedia(dados){
     }
 }
 
+// Função para exportar a tabela que está visivel
 function exportarTabelaVisivelCSV() {
     const tabela = document.getElementById("tabela-notas");
     if (!tabela) {
@@ -394,6 +414,7 @@ function exportarTabelaVisivelCSV() {
     URL.revokeObjectURL(url);
 }
 
+// Preenche o select dos componetes para o modo de edição por componente
 function preencherSelectComponentes() {
     const select = document.getElementById("select-componente");
     select.innerHTML = `<option value="">Selecione um componente</option>`;
@@ -406,33 +427,35 @@ function preencherSelectComponentes() {
     });
 }
 
-
-carregarInstituicoes();
-
+// Se tiver mudança no select instituicao
 const selectsInstituicao = document.getElementsByClassName("sortInstituicao");
 for (const select of selectsInstituicao) {
     select.addEventListener("change", async (e) => {
         e.preventDefault();
         idInstituicaoAtiva = e.target.value;
         await carregarCursos();
-         limparTabelaNotasAlunos()
-         document.getElementById("btn-exportar").style.display="none";
+        limparTabelaNotasAlunos()
+        document.getElementById("btn-exportar").style.display="none";
         document.getElementById("btn-editar-notas").style.display="none";
         document.getElementById("btn-editar-por-componente").style.display = "none";
     });
 }
+
+// Se tiver mudança no select Curso
 const selectsCurso = document.getElementsByClassName("sortCurso");
 for (const select of selectsCurso) {
     select.addEventListener("change", async (e) => {
         e.preventDefault();
         idCursoAtivo = e.target.value;
         await carregarDisciplinas();
-         limparTabelaNotasAlunos()
-         document.getElementById("btn-exportar").style.display="none";
+        limparTabelaNotasAlunos()
+        document.getElementById("btn-exportar").style.display="none";
         document.getElementById("btn-editar-notas").style.display="none";
         document.getElementById("btn-editar-por-componente").style.display = "none";
     });
 }
+
+// Se tiver mudança no select Disciplina
 const selectsDisciplina = document.getElementsByClassName("sortDisciplina");
 for (const select of selectsDisciplina) {
     select.addEventListener("change", async (e) => {
@@ -440,12 +463,14 @@ for (const select of selectsDisciplina) {
         idDisciplinaAtiva = e.target.value;
         await carregarTurmas();
         await carregarFormula();
-         limparTabelaNotasAlunos()
-         document.getElementById("btn-exportar").style.display="none";
+        limparTabelaNotasAlunos()
+        document.getElementById("btn-exportar").style.display="none";
         document.getElementById("btn-editar-notas").style.display="none";
         document.getElementById("btn-editar-por-componente").style.display = "none";
     });
 }
+
+// Se tiver mudança no select Turma
 const selectsTurma = document.getElementsByClassName("sortTurma");
 for (const select of selectsTurma) {
     select.addEventListener("change", async (e) => {
@@ -455,6 +480,7 @@ for (const select of selectsTurma) {
     });
 }
 
+// Click no botão de editar notas
 document.getElementById("btn-editar-notas").addEventListener("click", ()=> {
     modoEdicaoCompleta = true;
     modoEdicaoPorComponente = false;
@@ -465,6 +491,7 @@ document.getElementById("btn-editar-notas").addEventListener("click", ()=> {
     document.getElementById("btn-salvar").style.display="flex";
 })
 
+// Click no botão de salvar alterações
 document.getElementById("btn-salvar").addEventListener("click", async(e) => {
     e.preventDefault();
     const notasInputs = document.querySelectorAll(".input-nota")
@@ -475,27 +502,27 @@ document.getElementById("btn-salvar").addEventListener("click", async(e) => {
         const [ra, id_componente] = input.id.split(",");
         const valorBruto = input.value;
         const valorInput = Number(valorBruto);
-
+        
         const notaExistente = notasAlunosData.find(n =>
             n.RA_ALUNO == ra && n.ID_COMPONENTE == id_componente
         );
-
+        
         const valorAntigo = notaExistente && notaExistente.VALOR != null ? Number(notaExistente.VALOR) : "";
-
+        
         // Se não mudou nada, pula
         if (valorInput === valorAntigo) {
             continue;
         }
-
+        
         if (valorBruto === "" || Number.isNaN(valorInput)) {
             continue;
         }
-
+        
         if (valorInput > 10 || valorInput < 0) {
             alert(`${valorInput}: É um valor inválido para uma nota`);
             continue;
         }
-
+        
         if (notaExistente && notaExistente.ID_NOTA) {
             await editarNota(notaExistente.ID_NOTA, valorInput);
         } else {
@@ -511,6 +538,7 @@ document.getElementById("btn-salvar").addEventListener("click", async(e) => {
     document.getElementById("btn-exportar").style.display="flex";
 })
 
+// Click no botão de editar por componente
 document.getElementById("btn-editar-por-componente").addEventListener("click", () => {
     modoEdicaoCompleta = false;
     modoEdicaoPorComponente = true;
@@ -521,9 +549,10 @@ document.getElementById("btn-editar-por-componente").addEventListener("click", (
     document.getElementById("btn-salvar").style.display = "flex";
 });
 
+// Mudança no select do componente para edição
 document.getElementById("select-componente").addEventListener("change", () => {
     componenteEmEdicao = Number(document.getElementById("select-componente").value);
-
+    
     if (componenteEmEdicao) {
         renderizarNotasAlunos();
         document.getElementById("btn-editar-notas").style.display="none";
@@ -534,29 +563,32 @@ document.getElementById("select-componente").addEventListener("change", () => {
     }
 });
 
-
-// === Abrir modal ===
+// Abrir modal de exportação
 document.querySelector('.btn-exportar').addEventListener('click', function() {
-  abrirModal('modalExportar');
+    abrirModal('modalExportar');
 });
 
 function abrirModal(id) {
-  document.getElementById(id).style.display = 'flex';
+    document.getElementById(id).style.display = 'flex';
 }
 
 function fecharModal(id) {
-  document.getElementById(id).style.display = 'none';
+    document.getElementById(id).style.display = 'none';
 }
 
-// === Envio do formulário ===
+// Confirmar a exportação
+// Podia ser feita direto no btn-exportar
 document.getElementById('btn-confirmar').addEventListener('click', function(e) {
-  e.preventDefault();
-
-  if (!idTurmaAtiva) {
-    alert('Por favor, selecione uma turma antes de exportar.');
-    return;
-  }
-  exportarTabelaVisivelCSV();
-  alert(`Exportando notas da turma em CSV...`);
-  fecharModal('modalExportar');
+    e.preventDefault();
+    
+    if (!idTurmaAtiva) {
+        alert('Por favor, selecione uma turma antes de exportar.');
+        return;
+    }
+    exportarTabelaVisivelCSV();
+    alert(`Exportando notas da turma em CSV...`);
+    fecharModal('modalExportar');
 });
+
+// Inicialização
+carregarInstituicoes();

@@ -10,6 +10,7 @@ export interface Professor{
     email:string
 }
 
+// Função para Obter todos os professores
 export async function getAllProfessores(): Promise<Professor[]> {
     const connection = await open();
     try{
@@ -23,6 +24,7 @@ export async function getAllProfessores(): Promise<Professor[]> {
     }
 }
 
+// Função para Obter um professor pelo ID
 export async function getProfessorById(id:number): Promise<Professor | null> {
     const connection = await open();
     try{
@@ -38,6 +40,7 @@ export async function getProfessorById(id:number): Promise<Professor | null> {
     }
 }
 
+// Função para inserir um professor
 export async function addProfessor(nome: string, telefone: string, senha: string, email: string): Promise <number> {
     const connection = await open()
     try {
@@ -64,6 +67,7 @@ export async function addProfessor(nome: string, telefone: string, senha: string
     }
 }
 
+// Função para editar um professor
 export async function updateProfessor(id: number, nome: string, telefone: string, senha: string, email: string): Promise<boolean> {
     const connection = await open();
     try {
@@ -72,21 +76,6 @@ export async function updateProfessor(id: number, nome: string, telefone: string
             SET NOME = :nome, TELEFONE = :telefone, SENHA = :senha, "EMAIL" = :email 
             WHERE ID_PROFESSOR = :id`,
             {id, nome, telefone, senha, email},
-            {autoCommit: true}
-        );
-
-        return (result.rowsAffected ?? 0) > 0;
-    } finally {
-        await close(connection);
-    }
-}
-
-export async function deleteProfessor(id: number): Promise<boolean> {
-    const connection = await open();
-    try {
-        const result = await connection.execute(
-            `DELETE FROM PROFESSORES WHERE ID_PROFESSOR = :id`,
-            [id],
             {autoCommit: true}
         );
 

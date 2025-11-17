@@ -1,20 +1,26 @@
 // Feito por João Pedro Panza Mainieri - 25006642
+
+// Base da API
 const API_URL = "http://localhost:3000"
 
+// Usuário logado
 const usuarioLogado = JSON.parse(sessionStorage.getItem("usuarioLogado"));
 const idProfessor = usuarioLogado.id_professor;
 
-let idInstituicaoAtiva;
-let idCursoAtivo;
-let idDisciplinaAtiva = -1;
 
+
+// Dados
 let instituicoesData = [];
 let cursosData = [];
 let disciplinasData = [];
 let formulaData;
 let variaveisFormulaData = [];
 let componentesNotasData = [];
+let idInstituicaoAtiva;
+let idCursoAtivo;
+let idDisciplinaAtiva = -1;
 
+// Função para carregar as instituções pelo professor do banco de dados
 async function carregarInstituicoes() {
     try {
         const response = await fetch(`${API_URL}/instituicoes/professor/${idProfessor}`);
@@ -30,6 +36,7 @@ async function carregarInstituicoes() {
     }
 }
 
+// Função para renderizar as opções de instituições no select
 function renderizarOpcoesInstituicoes() {
     const selects = document.querySelectorAll(".sortInstituicao");
     if (!selects) return;
@@ -45,9 +52,9 @@ function renderizarOpcoesInstituicoes() {
             sessao.appendChild(nova_opcao);
         });
     })
-
 }
 
+// Função para carregar os cursos pela instituição do banco de dados
 async function carregarCursos() {
     try {
         const response = await fetch(`${API_URL}/cursos/instituicao/${idInstituicaoAtiva}`)
@@ -60,6 +67,7 @@ async function carregarCursos() {
     }
 }
 
+// Função para renderizar as opções de cursos no select
 function renderizarOpcoesCursos() {
     const selects = document.querySelectorAll(".sortCurso");
     if (!selects) return;
@@ -78,6 +86,7 @@ function renderizarOpcoesCursos() {
 
 }
 
+// Função para carregar as disciplinas pelo curso do banco de dados
 async function carregarDisciplinas() {
     try {
         const response = await fetch(`${API_URL}/disciplinas/curso/${idCursoAtivo}`)
@@ -90,6 +99,7 @@ async function carregarDisciplinas() {
     }
 }
 
+// Função para renderizar as opções de disciplinas no select
 function renderizarOpcoesDisciplinas() {
     const selects = document.querySelectorAll(".sortDisciplina");
     if (!selects) return;
@@ -107,6 +117,7 @@ function renderizarOpcoesDisciplinas() {
     })
 }
 
+// Função para carregar a formula pelo disciplina do banco de dados
 async function carregarFormula() {
     try {
         const response = await fetch(`${API_URL}/formula/${idDisciplinaAtiva}`)
@@ -122,12 +133,14 @@ async function carregarFormula() {
     }
 }
 
+// Função para renderizar a formula da disciplinas no input
 function renderizarFormula() {
     const inputFormula = document.querySelector("#formula");
     if (!inputFormula) return;
     inputFormula.value = formulaData?.FORMULA || "";
 }
 
+// Função para adicionar a formula da disciplina no banco de dados
 async function adicionarFormula(formula){
     try {
         const response = await fetch(`${API_URL}/formula`, {
@@ -138,7 +151,7 @@ async function adicionarFormula(formula){
                 formula,
             }),
         });
-
+        
         if (!response.ok) throw new Error("Erro ao adicionar formula");
     } catch (error) {
         console.error("Erro:", error);
@@ -146,6 +159,7 @@ async function adicionarFormula(formula){
     }
 }
 
+// Função para editar a formula da disciplina no banco de dados
 async function editarFormula(formula) {
     try {
         const response = await fetch(`${API_URL}/formula/${idDisciplinaAtiva}`, {
@@ -155,7 +169,7 @@ async function editarFormula(formula) {
                 formula
             }),
         });
-
+        
         if (!response.ok) throw new Error("Erro ao atualizar formula");
     } catch (error) {
         console.error("Erro:", error);
@@ -163,6 +177,7 @@ async function editarFormula(formula) {
     }
 }
 
+// Função para carregar os componentes de nota da disciplina no banco de dados
 async function carregarComponentes() {
     try {
         const response = await fetch(`${API_URL}/componente-nota/disciplina/${idDisciplinaAtiva}`)
@@ -174,6 +189,7 @@ async function carregarComponentes() {
     }
 }
 
+// Função para renderizar os componentes de nota da disciplina na tabela dos combonentes
 function renderizarComponentes() {
     const tabela = document.getElementById("tabela-componentes");
     if (!tabela) return;
@@ -205,7 +221,7 @@ function renderizarComponentes() {
     adicionarEventosExcluir();
 }
 
-
+// Função para renderizar a linha com os inputs para adicionar um novo componente
 async function renderizarAdicionarComponente(){
     const tabela = document.getElementById("tabela-componentes");
     if (!tabela || idDisciplinaAtiva === -1) return;
@@ -221,7 +237,7 @@ async function renderizarAdicionarComponente(){
     tabela.appendChild(nova_linha);
 }
 
-
+// Função para adicionar componente de nota no banco de dados
 async function adicionarComponente(nome, sigla,descricao){
     try {
         const response = await fetch(`${API_URL}/componente-nota`, {
@@ -234,7 +250,7 @@ async function adicionarComponente(nome, sigla,descricao){
                 id_disciplina: Number(idDisciplinaAtiva),
             }),
         });
-
+        
         if (!response.ok) throw new Error("Erro ao adicionar componente");
     } catch (error) {
         console.error("Erro:", error);
@@ -242,6 +258,7 @@ async function adicionarComponente(nome, sigla,descricao){
     }
 }
 
+// Função para editar componente de nota no banco de dados
 async function editarComponente(id, nome, sigla, descricao) {
     try {
         const response = await fetch(`${API_URL}/componente-nota/${id}`, {
@@ -256,13 +273,14 @@ async function editarComponente(id, nome, sigla, descricao) {
     }
 }
 
+// Função para editar componente de nota na tabela dos componentes
 function adicionarEventosEditar() {
     const botoesEditar = document.getElementsByClassName("btn-editar");
-
+    
     for (const botao of botoesEditar) {
         botao.addEventListener("click", (e) => {
             const linha = e.target.closest("tr");
-
+            
             // Converte células em inputs
             linha.cells[0].innerHTML = `<input type="text" value="${linha.cells[0].textContent}" class="edit-nome">`;
             linha.cells[1].innerHTML = `<input type="text" value="${linha.cells[1].textContent}" class="edit-sigla">`;
@@ -271,6 +289,7 @@ function adicionarEventosEditar() {
     }
 }
 
+// Função para excluir componente de nota no banco de dados
 async function excluirComponente(id) {
     try {
         const response = await fetch(`${API_URL}/componente-nota/${id}`, {
@@ -283,9 +302,10 @@ async function excluirComponente(id) {
     }
 }
 
+// Função para excluir componente de nota na tabela dos componentes
 function adicionarEventosExcluir() {
     const botoesExcluir = document.getElementsByClassName("btn-excluir");
-
+    
     for (const botao of botoesExcluir) {
         botao.addEventListener("click", (e) => {
             const linha = e.target.closest("tr");
@@ -297,6 +317,7 @@ function adicionarEventosExcluir() {
 
 
 
+// Função para verificar se a formula é valida
 async function verificarFormula(formula) {
     // Verificar se na formula tem todos os componentes da disciplina
     
@@ -305,12 +326,12 @@ async function verificarFormula(formula) {
         if (componentesNotasData.length === 0) {
             await carregarComponentes();
         }
-
+        
         if (componentesNotasData.length === 0) {
             variaveisFormulaData = [];
             return true;
         }
-
+        
         let variaveisFormula = [];
         // Verifica se cada componente está presente na fórmula
         for (const componente of componentesNotasData) {
@@ -329,6 +350,7 @@ async function verificarFormula(formula) {
     }
 }
 
+// Função para validar a partir da verificação da formula se ela é valida
 async function validarFormula(){
     const inputFormula = document.querySelector("#formula").value;
     console.log(inputFormula);
@@ -351,6 +373,7 @@ async function validarFormula(){
     await carregarFormula()
 }
 
+// Função para validar a expressão matemática da formula
 function validarExpressao(formula) {
     if (!formula) return false;
 
@@ -380,9 +403,7 @@ function validarExpressao(formula) {
     return true;
 }
 
-
-carregarInstituicoes();
-
+// Select instituições
 const selectsInstituicao = document.getElementsByClassName("sortInstituicao");
 for (const select of selectsInstituicao) {
     select.addEventListener("change", async (e) => {
@@ -391,6 +412,8 @@ for (const select of selectsInstituicao) {
         await carregarCursos();
     });
 }
+
+// Select Cursos
 const selectsCurso = document.getElementsByClassName("sortCurso");
 for (const select of selectsCurso) {
     select.addEventListener("change", async (e) => {
@@ -399,6 +422,8 @@ for (const select of selectsCurso) {
         await carregarDisciplinas();
     });
 }
+
+// Select Disciplina
 const selectsDisciplina = document.getElementsByClassName("sortDisciplina");
 for (const select of selectsDisciplina) {
     select.addEventListener("change", async (e) => {
@@ -408,63 +433,67 @@ for (const select of selectsDisciplina) {
         await carregarFormula();
     });
 }
+
+// Botão para validar a formula inserida
 document.getElementById("btn-validar-formula").addEventListener("click", async (e)=> {
     e.preventDefault();
     await validarFormula();
 });
 
+// Botão para adicionar o componente de nota
 document.getElementById("btn-adc-componente").addEventListener("click", async (e) =>{
     e.preventDefault();
     await renderizarAdicionarComponente();
 })
 
+// Botão para salvar alterações nos componentes e verificar se a formula continua correta
 document.getElementById("btn-salvar-alteracoes").addEventListener("click", async (e) => {
     e.preventDefault();
-
+    
     const linhas = document.querySelectorAll("#tabela-componentes tr:not(:first-child)");
-
+    
     for (const linha of linhas) {
         const id = linha.dataset.id;
-
+        
         // Se a linha foi marcada para exclusão
         if (linha.dataset.excluir === "true") {
             if (id) await excluirComponente(id);
             linha.remove(); // Remove da tabela imediatamente
             continue;
         }
-
+        
         const inputNome = linha.querySelector(".edit-nome");
         const inputSigla = linha.querySelector(".edit-sigla");
         const inputDescricao = linha.querySelector(".edit-descricao");
-
+        
         // Edição de componente existente
         if (inputNome && inputSigla) {
             const novoNome = inputNome.value.trim();
             const novaSigla = inputSigla.value.trim().toUpperCase();
             const novaDescricao = inputDescricao.value.trim();
-
+            
             if (!novoNome || !novaSigla) {
                 alert("Nome e sigla obrigatórios!");
                 continue;
             }
-
+            
             await editarComponente(id, novoNome, novaSigla, novaDescricao);
         } else {
             // Novos componentes adicionados
             const novoNome = linha.querySelector(".novo-nome")?.value.trim();
             const novaSigla = linha.querySelector(".novo-sigla")?.value.trim().toUpperCase();
             const novaDescricao = linha.querySelector(".novo-descricao")?.value.trim();
-
+            
             if (novoNome && novaSigla) {
                 await adicionarComponente(novoNome, novaSigla, novaDescricao);
             }
         }
     }
-
+    
     // Recarrega tabela e valida fórmula
     await carregarComponentes();
     await validarFormula();
 });
 
-
-
+// Inicialização
+carregarInstituicoes();
