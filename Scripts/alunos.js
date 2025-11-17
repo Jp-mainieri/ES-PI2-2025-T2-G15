@@ -267,13 +267,21 @@ document.getElementById("btn-confirmarImportacao").addEventListener("click", fun
         });
     
         // Enviar pela rota
+        let tudoCerto = true;
         try {
           for (const aluno of alunos) {
-            await fetch(`${API_URL}/alunos`, {
+            response = await fetch(`${API_URL}/alunos`, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(aluno)
             })
+            if (!response.ok) {
+                console.log(`Erro ao importar ${aluno.nome}: RA já existe no sistema`);
+                tudoCerto = false
+            }
+          }
+          if (!tudoCerto) {
+              alert(`Foi(Foram) inserido/s algum(alguns) aluno/s com o RA repetido no processo de importação, verifique no console`)
           }
           fecharModal("modalImportar");
           document.getElementById("formImportarAlunos").reset();

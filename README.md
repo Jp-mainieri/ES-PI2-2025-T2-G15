@@ -83,9 +83,9 @@ ORACLE_LIB_DIR=caminho/do/instantclient
 ORACLE_WALLET_DIR=caminho/da/wallet
 
 #Credenciais do Banco
-DB_USER=WEBAPP
-DB_PASSWORD=PI2Grupo15$$
-DB_CONECTION_STRING=joaopedromainieridatabase01_high
+ORACLE_USER=WEBAPP
+ORACLE_PASSWORD=PI2Grupo15$$
+ORACLE_CONNECT_STRING=joaopedromainieridatabase01_high
 ```
 
 
