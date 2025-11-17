@@ -1,3 +1,4 @@
+// Feito por João Pedro Panza Mainieri - 25006642
 import OracleDB from "oracledb";
 import dotenv from "dotenv";
 

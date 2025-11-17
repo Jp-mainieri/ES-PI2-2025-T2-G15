@@ -23,7 +23,7 @@ Calcular automaticamente a média final de cada aluno na disciplina
 
 - Beatriz Leme	    25015554 
 - Giovanna Uchelli  25008818 
-- João Pedro Panza  25006642 
+- João Pedro Panza Mainieri  25006642 
 - Laura Carvalho	25014543 
 - Lucas Hosikawa	25014845  
 

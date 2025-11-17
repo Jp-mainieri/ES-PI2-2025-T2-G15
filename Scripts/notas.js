@@ -1,3 +1,4 @@
+// Feito por João Pedro Panza Mainieri - 25006642
 const API_URL = "http://localhost:3000";
 
 const usuarioLogado = JSON.parse(sessionStorage.getItem("usuarioLogado"));

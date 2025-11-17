@@ -1,3 +1,4 @@
+// Feito por João Pedro Panza Mainieri - 25006642
 import {open, close} from "../config/db";
 import OracleDB from "oracledb";
 

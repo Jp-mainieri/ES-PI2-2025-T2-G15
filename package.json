@@ -8,7 +8,7 @@
     "build": "tsc",
     "start": "npm run build && node dist/server.js"
   },
-  "author": "",
+  "author": "João Pedro Panza Mainieri, Giovanna Uchelli, Laura Carvalho, Lucas Hosikawa, Beatriz Leme",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^6.0.0",
