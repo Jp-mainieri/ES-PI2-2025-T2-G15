@@ -124,7 +124,7 @@
   .content {
     flex: 1;
     background-color: #f8f9fa; 
-    padding: 30px; 
+    padding: 25px 50px;
     overflow-y: auto; 
   }
   

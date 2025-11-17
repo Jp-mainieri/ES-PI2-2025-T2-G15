@@ -224,7 +224,10 @@ function renderizarComponentes() {
 // Função para renderizar a linha com os inputs para adicionar um novo componente
 async function renderizarAdicionarComponente(){
     const tabela = document.getElementById("tabela-componentes");
-    if (!tabela || idDisciplinaAtiva === -1) return;
+    if (!tabela || idDisciplinaAtiva === -1) {
+        alert("Selecione uma disciplina antes de adicionar um componente");
+        return;
+    }
 
     await carregarComponentes();
 

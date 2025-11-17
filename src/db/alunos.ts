@@ -93,14 +93,14 @@ export async function addAluno(ra_aluno: string, nome: string, id_turma:number):
 }
 
 // Função para editar um aluno
-export async function updateAluno(ra_aluno: string, nome: string, id_turma: number): Promise<boolean> {
+export async function updateAluno(ra_aluno: string, nome: string): Promise<boolean> {
     const connection = await open();
     try {
         const result = await connection.execute(
             `UPDATE ALUNOS 
-            SET NOME = :nome, ID_TURMA = :id_turma
+            SET NOME = :nome
             WHERE RA_ALUNO = :ra_aluno`,
-            {ra_aluno, nome, id_turma},
+            {ra_aluno, nome},
             {autoCommit: true}
         );
 

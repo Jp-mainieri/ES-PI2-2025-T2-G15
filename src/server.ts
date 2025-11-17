@@ -735,14 +735,14 @@ app.post("/alunos", async (req: Request, res: Response) => {
 // Rota para editar um aluno
 app.put('/alunos/:ra', async (req:Request, res:Response) => {
     try {
-        const {nome, id_turma} = req.body;
+        const {nome} = req.body;
         const ra_aluno = req.params.ra;
-        if (!nome || id_turma === undefined || !ra_aluno) {
+        if (!nome || !ra_aluno) {
             return res.status(400).json({
                 error: "Todos os campos são obrigatórios."
             });
         }
-        const updated = await updateAluno(ra_aluno, nome, Number(id_turma));
+        const updated = await updateAluno(ra_aluno, nome);
         if (updated) {
             res.status(200).json({
                 message: "Aluno atualizado com sucesso.", ra_aluno

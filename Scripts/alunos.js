@@ -37,14 +37,13 @@ async function adicionarAluno(ra_aluno, nome, id_turma){
 }
 
 // Editar Aluno no banco de dados
-async function editarAluno(ra, nome, turma) {
+async function editarAluno(ra, nome) {
     try {
         const response = await fetch(`${API_URL}/alunos/${ra}`, {
             method: "PUT",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({
                 nome,
-                id_turma: turma
             }),
         });
 
@@ -308,7 +307,7 @@ document.getElementById("tabela-alunos").addEventListener("click", async (event)
     document.getElementById("editarNomeAluno").value = aluno.NOME;
     document.getElementById("editarRaAluno").textContent = aluno.RA_ALUNO;
     await carregarTurmas();
-    document.getElementById("editarTurmaAluno").value = aluno.ID_TURMA;
+    document.getElementById("editarTurmaAluno").textContent = aluno.NOME;
 
     abrirModal("modalEditar");
   }
@@ -333,9 +332,9 @@ document.getElementById("formEditarAluno").addEventListener("submit", async (e) 
 
   const ra = document.getElementById("editarRaAluno").value;
   const nome = document.getElementById("editarNomeAluno").textContent;
-  const turma = document.querySelector('select[name="editarTurmaAluno"]')?.value;
+  const turma = document.getElementById("editarTurmaAluno").textContent;
 
-    await editarAluno(ra, nome, turma)
+    await editarAluno(ra)
     fecharModal("modalEditar");
     carregarAlunos();
 });
