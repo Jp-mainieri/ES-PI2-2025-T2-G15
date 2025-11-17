@@ -58,9 +58,6 @@ https://www.oracle.com/database/technologies/instant-client.html
 -- Extraia o conteúdo para um diretório
 *EX:* C:\oracle\instantclient_23_9
 
-É necessário adicionar o caminho do Instant Client ao PATH:
-`Painel de Controle → Sistema → Configurações Avançadas → Variáveis de Ambiente → Path → Novo → C:\oracle\instantclient_23_9`
-
 ### No sqlnet.ora:
 
 *Confirme que na sessão DIRECTORY="" tenha o caminho para a sua wallet*
