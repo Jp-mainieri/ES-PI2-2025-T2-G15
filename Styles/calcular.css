@@ -12,72 +12,58 @@
     --cinzaEscuro: #475569;
 }
 
-
-/* Fonte padrão e ajustes de renderização.
-   - Usei Poppins para manter consistência visual.
-   - -webkit-font-smoothing melhora o anti-aliasing em WebKit. */
-body {
-    font-family: "Poppins", sans-serif;
-    background-color: #f8f9fa; /* fundo neutro para destacar cards */
-    color: var(--azulMarinho);  /* cor padrão de texto */
+  body {
+    font-family: "Poppins", sans-serif;;
+    background-color: #f8f9fa;
+    color: var(--azulMarinho);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 
     height: 100%;
     margin: 0;
     padding: 0;
-}
 
+  }
 
-/* Container principal que alinha sidebar + conteúdo em linha */
-.container {
+  .container {
     display: flex;
-    height: 100vh; /* ocupa a altura total da janela */
-}
+    height: 100vh;
+  }
 
-/* Estrutura da barra lateral:
-   - largura fixa, fundo branco e borda sutil à direita */
-.sidebar {
+  .sidebar {
     width: 240px;
     background-color: #ffffff;
     border-right: 2px solid #e6e6e6;
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* mantem "outros" no rodapé */
+    justify-content: space-between;
     padding: 20px 0;
-}
+  }
 
-/* Título do app na sidebar — chama atenção, por isso cor e peso maiores */
-.sidebar h2 {
+  .sidebar h2 {
     font-size: 18px;
     font-weight: 700;
-    margin: 0 20px 18px;
+    margin: 0 20px 18px 20px;
     color: var(--azulMarinhoClaro);
-}
+  }
 
-/* Título de seção (MENU / OUTROS) */
-.section-title {
+  .section-title {
     font-size: 12px;
     font-weight: 600;
     color: #9aa0a6;
-    margin: 0 20px 8px;
+    margin: 0 20px 8px 20px;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-}
+  }
 
-/* Wrapper dos links do menu e da seção "outros" */
-.menu,
-.outros {
+  .menu, .outros {
     display: flex;
     flex-direction: column;
     gap: 8px;
     margin: 0 12px;
-}
+  }
 
-
-/* Estrutura do link do menu:
-   - ícone + texto, padding agradável e cantos arredondados */
-.menu-item {
+  .menu-item {
     display: flex;
     align-items: center;
     gap: 12px;
@@ -87,12 +73,19 @@ body {
     color: #475569;
     text-decoration: none;
     transition: background-color 0.12s ease, color 0.12s ease;
-    width: calc(100% - 24px); /* deixa espaço para margin interna */
-}
+    width: calc(100% - 24px);
+  }
 
-/* Ícone dentro do menu:
-   - fixo em tamanho para alinhar visualmente com o texto */
-.menu-item i {
+  .menu-item:link,
+  .menu-item:visited,
+  .menu-item:hover,
+  .menu-item:active,
+  .menu-item:focus {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .menu-item i {
     width: 22px;
     height: 22px;
     display: inline-flex;
@@ -100,86 +93,72 @@ body {
     justify-content: center;
     font-size: 14px;
     color: #9aa0a6;
-}
+  }
 
-/* Estado hover: realça o item sem quebrar contraste geral */
-.menu-item:hover {
+  .menu-item:hover {
     background-color: #f3f4f6;
     color: #0f172a;
-}
-.menu-item:hover i {
+  }
+  .menu-item:hover i {
     color: var(--azulMarinhoClaro);
-}
+  }
 
-/* Estado ativo do menu (página atual):
-   - cor de fundo azul escuro + texto branco para indicar seleção */
-.menu-item.active {
+  .menu-item.active {
     background-color: var(--azulMarinhoClaro);
     color: #ffffff;
     font-weight: 600;
-}
-.menu-item.active i {
+    box-shadow: none;
+  }
+  .menu-item.active i {
     color: #ffffff;
     background: rgba(255,255,255,0.08);
     padding: 4px;
     border-radius: 6px;
-}
+  }
 
-/* Espaçamento do bloco "outros" para mantê-lo no rodapé */
-.outros {
+  .outros {
     margin-top: auto;
     margin-bottom: 18px;
-}
+  }
 
-
-/* Área principal — onde ficam o card/formulário e demais conteúdos */
-.content {
+  .content {
     flex: 1;
-    background-color: #f8f9fa;
-    padding: 30px;
-    overflow-y: auto; /* permite rolagem caso o conteúdo ultrapasse a altura */
-}
-
-
-/* Card branco com sombra sutil — padrão visual para blocos */
-.card {
+    background-color: #f8f9fa; 
+    padding: 30px; 
+    overflow-y: auto; 
+  }
+  
+  .card {
     background-color: #ffffff;
     border-radius: 12px;
-    box-shadow: 
-        0 4px 6px -1px rgba(0, 0, 0, 0.1),
-        0 2px 4px -2px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+                0 2px 4px -2px rgba(0, 0, 0, 0.06);
     padding: 24px;
     width: 100%;
-}
-
-/* Título interno do card: claro e legível */
-.card h2 {
+  }
+  
+  .card h2 {
     font-size: 18px;
     font-weight: 600;
     margin: 0 0 24px 0;
     color: #111827;
-}
-
-
-/* Grupo de campo: usado para selects e inputs para posicionamento do icone */
-.form-group {
+  }
+  
+  /* --- Estilos de Formulário --- */
+  .form-group {
     margin-bottom: 16px;
-    position: relative; /* permite posicionar ícones absolutos */
-}
-
-/* Label dos campos com hierarquia clara */
-label {
+    position: relative;
+  }
+  
+  label {
     display: block;
     font-size: 14px;
     font-weight: 600;
     color: #475569;
     margin-bottom: 8px;
-}
-
-/* SELECT PADRÃO:
-   - aparencia uniforme entre navegadores
-   - padding-right para acomodar o ícone de dropdown */
-.select-field {
+  }
+  
+  .select-field {
     width: 100%;
     padding: 10px 12px;
     border: 1px solid #e6e6e6;
@@ -193,42 +172,36 @@ label {
     cursor: pointer;
     height: 40px;
     padding-right: 40px;
-}
-
-/* Ícone posicionado sobre o select (apenas visual) */
-.select-icon {
+  }
+  
+  .select-icon {
     position: absolute;
+    top: 73%;
     right: 15px;
-    top: 50%;
     transform: translateY(-50%);
     font-size: 10px;
     color: #475569;
     pointer-events: none;
-}
-
-/* Foco no select: deixa claro para o usuário qual campo está ativo */
-.select-field:focus {
+  }
+  
+  .select-field:focus {
     border-color: #17356D;
     outline: none;
-}
-
-
-/* Espaçamento global da seção de fórmula */
-.formula-section {
-    margin-top: 24px;
-    margin-bottom: 24px;
-}
-
-/* Grupo que alinha o input da fórmula com o botão validar */
-.formula-input-group {
+  }
+  
+  /* Seção de Fórmula */
+  .formula-section {
+      margin-top: 24px;
+      margin-bottom: 24px;
+  }
+  
+  .formula-input-group {
     display: flex;
     gap: 10px;
     align-items: flex-end;
-}
-
-/* Input principal para a fórmula:
-   - deve aceitar expressões como P1*0.3 + Trabalho*0.7 */
-.text-field {
+  }
+  
+  .text-field {
     flex: 1;
     padding: 10px 12px;
     border: 1px solid #e6e6e6;
@@ -236,22 +209,20 @@ label {
     font-size: 14px;
     color: #111827;
     height: 40px;
-}
-
-.text-field:focus {
+  }
+  
+  .text-field:focus {
     border-color: #17356D;
     outline: none;
-}
-
-
-/* Bloco que lista os componentes (P1, P2, Trabalho, etc.) */
-.components-section {
-    margin-bottom: 24px;
-}
-
-/* Textarea usada para mostrar componentes:
-   - readonly por padrão no HTML atual, mas estilizada para leitura */
-.textarea-field {
+  }
+  
+  /* Seção de Componentes */
+  .components-section {
+      margin-bottom: 24px;
+  }
+  
+  /* --- Área Componentes:
+  .textarea-field {
     width: 100%;
     min-height: 120px;
     padding: 12px;
@@ -259,16 +230,66 @@ label {
     border-radius: 6px;
     font-size: 14px;
     color: #111827;
+    background-color: #ffffff; 
     resize: vertical;
-    background-color: #ffffff;
     line-height: 1.5;
     font-family: 'Poppins', sans-serif;
+    text-align: left;
     white-space: pre-line;
+  }
+   */
+
+.tabelas {
+    width: 100%;
+    text-align: left;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: white;
 }
 
+.tabelas th,
+.tabelas td {
+    padding: 15px 20px;
+    border-bottom: 1px solid #ddd; /* linha contínua */
+}
 
-/* Estilo base dos botões para consistência */
-.btn {
+.tabelas input {
+    width: auto;
+    text-align: center;
+    padding: 6px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background-color: #fafafa;
+}
+
+.tabelas input:focus {
+    outline: none;
+    border-color: #0a1e50;
+    background-color: #fff;
+}
+
+.acoes {
+    display: flex;
+    gap: 10px;
+    height: 56px;
+}
+
+.btn-acao {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--cinzaEscuro);
+    font-size: 1.2em;
+}
+
+.btn-acao:hover i {
+    color: var(--azulMarinho);
+}
+  
+  /* --- Botões de Ação --- */
+  .btn {
     padding: 10px 16px;
     border-radius: 6px;
     font-size: 14px;
@@ -277,76 +298,46 @@ label {
     border: none;
     transition: background-color 0.15s ease;
     height: 40px;
-}
-
-/* Botão de validar fórmula (destaque principal) */
-.btn-validate {
+  }
+  
+  .btn-validate {
     background-color: #17356D;
     color: #ffffff;
-}
-.btn-validate:hover {
+  }
+  
+  .btn-validate:hover {
     background-color: #112850;
-}
-
-/* Container de ações (Salvar / Cancelar) alinhado à direita */
-.actions {
+  }
+  
+  .actions {
     display: flex;
     justify-content: flex-end;
     gap: 12px;
     margin-top: 24px;
-}
-
-/* Botão salvar: cor primária do projeto */
-.btn-save {
+  }
+  
+  .btn-save {
     background-color: #17356D;
     color: #ffffff;
-}
-.btn-save:hover {
+  }
+  
+  .btn-save:hover {
     background-color: #112850;
-}
+  }
+  
 
-/* Botão cancelar: visual neutro, usado para reverter operações */
-.btn-cancel {
+  .btn-cancel {
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 6px;
     padding: 10px 16px;
     cursor: pointer;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'montserrat', sans-serif;
     display: flex;
     align-items: center;
     gap: 8px;
-}
-.btn-cancel:hover{
+  }
+
+  .btn-cancel:hover{
     background-color: #f0f0f0;
-}
-
-/* MEDIA QUERIES / RESPONSIVIDADE*/
-
-/* Em telas menores, escondemos a sidebar e empilhamos conteúdo */
-@media (max-width: 900px) {
-    .container {
-        display: block;
-    }
-    .sidebar {
-        display: none;
-    }
-    .content {
-        padding: 18px;
-    }
-    .card {
-        margin: 0 6px;
-        padding: 18px;
-    }
-    .formula-input-group {
-        flex-direction: column;
-        align-items: stretch;
-    }
-    .actions {
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 10px;
-    }
-}
-
-
+  }

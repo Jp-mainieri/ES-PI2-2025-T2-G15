@@ -6,300 +6,258 @@
   }
 /*Adicionei variaveis para facilitar e padronizar as cores no projeto - João Pedro Panza Mainieri*/
 :root{
-  /* Cor principal usada em textos e elementos de destaque */
-  --azulMarinho: #111827;
-
-  /* Azul mais claro, usado em títulos/elementos de destaque como botões */
-  --azulMarinhoClaro: #17356D;
-
-  /* Cinza claro para ícones, placeholders e textos secundários */
-  --cinzaClaro: #9aa0a6;
-
-  /* Cinza escuro para textos principais e itens de menu */
-  --cinzaEscuro: #475569;
+    --azulMarinho: #111827;
+    --azulMarinhoClaro: #17356D;
+    --cinzaClaro: #9aa0a6;
+    --cinzaEscuro: #475569;
 }
 
-/* Reset / Tipografia */
-body {
-  font-family: "Poppins", sans-serif;
-  background-color: #f8f9fa; /* fundo neutro para destacar cards */
-  color: var(--azulMarinho);  /* cor padrão do texto */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  body {
+    font-family: "Poppins", sans-serif;;
+    background-color: #f8f9fa;
+    color: var(--azulMarinho);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
+    height: 100%;
+    margin: 0;
+    padding: 0;
 
-/* Container que alinha sidebar à esquerda e conteúdo à direita */
-.container {
-  display: flex;
-  height: 100vh; /* garante que a sidebar ocupe a altura da janela */
-}
+  }
 
-/* Sidebar / Navegação Lateral */
-/* Barra lateral fixa com espaçamento interno */
-.sidebar {
-  width: 240px;
-  background-color: #ffffff;
-  border-right: 2px solid #e6e6e6; /* separador sutil */
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between; /* mantém .outros no rodapé */
-  padding: 20px 0;
-}
+  .container {
+    display: flex;
+    height: 100vh;
+  }
 
-/* Título do app na sidebar */
-.sidebar h2 {
-  font-size: 18px;
-  font-weight: 700;
-  margin: 0 20px 18px 20px;
-  color: var(--azulMarinhoClaro);
-}
+  .sidebar {
+    width: 240px;
+    background-color: #ffffff;
+    border-right: 2px solid #e6e6e6;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px 0;
+  }
 
-/* Rótulos das seções dentro da sidebar (MENU / OUTROS) */
-.section-title {
-  font-size: 12px;
-  font-weight: 600;
-  color: #9aa0a6;
-  margin: 0 20px 8px 20px;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-}
+  .sidebar h2 {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0 20px 18px 20px;
+    color: var(--azulMarinhoClaro);
+  }
 
-/* Wrapper para os links do menu e para a seção "outros" */
-.menu, .outros {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin: 0 12px;
-}
+  .section-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #9aa0a6;
+    margin: 0 20px 8px 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
 
-/* Item do menu: estrutura com ícone + texto */
-.menu-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 8px 12px;
-  border-radius: 8px;
-  font-size: 14px;
-  color: #475569;
-  text-decoration: none;
-  transition: background-color 0.12s ease, color 0.12s ease;
-  width: calc(100% - 24px); /* evita tocar nas bordas da sidebar */
-}
+  .menu, .outros {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 0 12px;
+  }
 
-/* Borboletas de link (assegura que todos os estados mantenham cor) */
-.menu-item:link,
-.menu-item:visited,
-.menu-item:hover,
-.menu-item:active,
-.menu-item:focus {
-  color: inherit;
-  text-decoration: none;
-}
+  .menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #475569;
+    text-decoration: none;
+    transition: background-color 0.12s ease, color 0.12s ease;
+    width: calc(100% - 24px);
+  }
 
-/* Ícone do menu - tamanho fixo para alinhamento */
-.menu-item i {
-  width: 22px;
-  height: 22px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  color: #9aa0a6;
-}
+  .menu-item:link,
+  .menu-item:visited,
+  .menu-item:hover,
+  .menu-item:active,
+  .menu-item:focus {
+    color: inherit;
+    text-decoration: none;
+  }
 
-/* Hover do item deixa visual mais destacado */
-.menu-item:hover {
-  background-color: #f3f4f6;
-  color: #0f172a;
-}
-.menu-item:hover i {
-  color: var(--azulMarinhoClaro);
-}
+  .menu-item i {
+    width: 22px;
+    height: 22px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: #9aa0a6;
+  }
 
-/* Estado ativo do menu (a página atual) */
-.menu-item.active {
-  background-color: var(--azulMarinhoClaro);
-  color: #ffffff;
-  font-weight: 600;
-  box-shadow: none;
-}
-.menu-item.active i {
-  color: #ffffff;
-  background: rgba(255,255,255,0.08);
-  padding: 4px;
-  border-radius: 6px;
-}
+  .menu-item:hover {
+    background-color: #f3f4f6;
+    color: #0f172a;
+  }
+  .menu-item:hover i {
+    color: var(--azulMarinhoClaro);
+  }
 
-/* Mantém a área "outros" no rodapé da sidebar */
-.outros {
-  margin-top: auto;
-  margin-bottom: 18px;
-}
+  .menu-item.active {
+    background-color: var(--azulMarinhoClaro);
+    color: #ffffff;
+    font-weight: 600;
+    box-shadow: none;
+  }
+  .menu-item.active i {
+    color: #ffffff;
+    background: rgba(255,255,255,0.08);
+    padding: 4px;
+    border-radius: 6px;
+  }
 
-/* Área de Conteúdo*/
-/* Cor de fundo levemente diferente para separar do branco dos cards */
-.content {
-  flex: 1;
-  background-color: #f7f7f8;
-}
+  .outros {
+    margin-top: auto;
+    margin-bottom: 18px;
+  }
 
-/* Responsividade Sidebar*/
-/* Ajustes para telas pequenas (fonte e largura reduzidas) */
-@media (max-width: 640px) {
-  .sidebar { width: 200px; }
-  .menu-item { font-size: 13px; }
-  .sidebar h2 { font-size: 16px; }
-}
+  .content {
+    flex: 1;
+    background-color: #f7f7f8;
+  }
 
-/* Cards de Estatísticas */
-/* Container dos cards: flex para alinhamento em linha */
+  @media (max-width: 640px) {
+    .sidebar { width: 200px; }
+    .menu-item { font-size: 13px; }
+    .sidebar h2 { font-size: 16px; }
+  }
+  
+  
 .stats-cards {
   display: flex;
-  gap: 16px; /* espaçamento entre os cards */
+  gap: 16px; /* espaçamento um pouco menor */
   margin-bottom: 25px;
 }
 
-/* Estilo base do card: branco, sombra e borda sutil */
 .card {
-  flex: 1; /* cada card ocupa espaço igual */
+  flex: 1;
   background-color: #ffffff;
   border-radius: 10px;
-  padding: 25px;
+  padding: 25px; /* antes era 25px */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
   border: 1px solid #e0e0e0;
-  min-width: 180px; /* evita que o card encolha demais em larguras pequenas */
+  min-width: 180px; /* evita encolher demais */
 }
 
-/* Caixa do ícone dentro do card */
 .icon-box {
-  font-size: 25px; /* tamanho do ícone visível */
+  font-size: 25px; /* antes era 32px */
   width: 40px;
   height: 40px;
   border-radius: 8px;
-  color: #fff; /* cor do ícone (contrasta com o fundo colorido) */
+  color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 10px;
 }
 
-/* Título do card (texto explicativo) */
 .card-title {
-  font-size: 18px;
+  font-size: 18px; 
   color: #777;
   font-weight: 500;
   margin-bottom: 4px;
 }
 
-/* Valor principal do card (número grande) */
 .card-value {
-  font-size: 33px;
+  font-size: 33px; 
   font-weight: 700;
   color: #333;
   margin-top: 5px;
 }
 
-/* Cores por tipo de card (destaque visual) */
-/* Azul */
+
+
 .card-blue { border-left: 6px solid #3f51b5; }
 .card-blue .icon-box { background-color: #3f51b5; }
 
-/* Verde */
 .card-green { border-left: 6px solid #4CAF50; }
 .card-green .icon-box { background-color: #4CAF50; }
 
-/* Laranja */
 .card-orange { border-left: 6px solid #FF9800; }
 .card-orange .icon-box { background-color: #FF9800; }
 
-/* Amarelo */
 .card-yellow { border-left: 6px solid #FFC107; }
 .card-yellow .icon-box { background-color: #FFC107; }
 
-/* Seções Inferiores (gráfico + atualizações) */
-/* Wrapper que posiciona o placeholder do gráfico ao lado da caixa de updates */
 .bottom-sections {
-  display: flex;
-  gap: 20px;
+    display: flex;
+    gap: 20px;
 }
 
-/* Estilo compartilhado entre o gráfico e a caixa de atualizações */
 .chart-placeholder,
 .updates-box {
-  background-color: #ffffff;
-  border-radius: 12px;
-  padding: 25px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-  border: 1px solid #e0e0e0;
-  height: 350px; /* altura definida para consistência visual */
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e0e0e0;
+    height: 350px; 
 }
 
-/* Placeholder do gráfico: ocupa mais espaço */
 .chart-placeholder {
-  flex: 3; /* ocupa maior parte do espaço */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: #999;
+    flex: 3; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #999;
 }
 
 .chart-placeholder h2 {
-  font-size: 18px;
-  color: #333;
-  margin-bottom: 10px;
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
 }
 
-/* Caixa de atualizações: lista de eventos recentes */
 .updates-box {
-  flex: 2; /* ocupa menos espaço que o gráfico */
+    flex: 2; 
 }
 
 .updates-box h2 {
-  font-size: 18px;
-  color: #333;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 15px;
-  margin-bottom: 15px;
+    font-size: 18px;
+    color: #333;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
 }
 
-/* Lista sem estilo de marcador padrão */
 .updates-box ul {
-  list-style: none;
-  padding-left: 0;
+    list-style: none;
+    padding-left: 0;
 }
 
-/* Item da lista de atualizações (texto + ponto colorido) */
 .updates-box li {
-  font-size: 14px;
-  color: #555;
-  margin-bottom: 15px;
-  display: flex;
-  align-items: flex-start;
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: flex-start;
 }
 
-/* Pequeno ponto colorido antes de cada atualização (estético) */
 .update-dot {
-  font-size: 8px;
-  color: #3f51b5; /* acompanha o card azul por padrão */
-  margin-right: 10px;
-  margin-top: 5px; /* alinha verticalmente com o texto */
+    font-size: 8px; 
+    color: #3f51b5;
+    margin-right: 10px;
+    margin-top: 5px; 
 }
 
-/* Área principal / espaçamento */
-/* main-content (onde todo conteúdo principal é renderizado) */
 .main-content {
   flex: 1;
   background-color: #f7f7f8;
-  margin-left: 10px; /* separação visual da sidebar */
+  margin-left: 10px; /* compensa o tamanho da sidebar */
   padding: 40px 60px;
   min-height: 100vh;
 }
-
