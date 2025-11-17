@@ -306,7 +306,7 @@ document.getElementById("tabela-alunos").addEventListener("click", async (event)
     if (!aluno) return;
 
     document.getElementById("editarNomeAluno").value = aluno.NOME;
-    document.getElementById("editarRaAluno").value = aluno.RA_ALUNO;
+    document.getElementById("editarRaAluno").textContent = aluno.RA_ALUNO;
     await carregarTurmas();
     document.getElementById("editarTurmaAluno").value = aluno.ID_TURMA;
 
@@ -332,7 +332,7 @@ document.getElementById("formEditarAluno").addEventListener("submit", async (e) 
   e.preventDefault();
 
   const ra = document.getElementById("editarRaAluno").value;
-  const nome = document.getElementById("editarNomeAluno").value;
+  const nome = document.getElementById("editarNomeAluno").textContent;
   const turma = document.querySelector('select[name="editarTurmaAluno"]')?.value;
 
     await editarAluno(ra, nome, turma)
