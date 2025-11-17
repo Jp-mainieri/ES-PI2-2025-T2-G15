@@ -10,6 +10,7 @@ export interface Disciplina{
     periodo:number,
 }
 
+// Função para obter todas as Disciplinas
 export async function getAllDisciplinas(): Promise<Disciplina[]> {
     const connection = await open();
     try{
@@ -23,6 +24,7 @@ export async function getAllDisciplinas(): Promise<Disciplina[]> {
     }
 }
 
+// Função para obter todas as disciplinas de um curso
 export async function getAllDisciplinasByCurso(id_curso:number): Promise<Disciplina[]> {
     const connection = await open();
     try{
@@ -37,6 +39,7 @@ export async function getAllDisciplinasByCurso(id_curso:number): Promise<Discipl
     }
 }
 
+// Função para obter uma disciplina pelo ID
 export async function getDisciplinaById(id:number): Promise<Disciplina | null> {
     const connection = await open();
     try{
@@ -52,6 +55,7 @@ export async function getDisciplinaById(id:number): Promise<Disciplina | null> {
     }
 }
 
+// Função para inserir disciplina
 export async function addDisciplina(nome: string, sigla: string, codigo: string, periodo: number, id_curso:number): Promise <number> {
     const connection = await open()
     try {
@@ -78,6 +82,7 @@ export async function addDisciplina(nome: string, sigla: string, codigo: string,
     }
 }
 
+// Função para editar disciplina
 export async function updateDisciplina(id: number, nome: string, sigla: string, codigo: string, periodo: number): Promise<boolean> {
     const connection = await open();
     try {
@@ -95,6 +100,7 @@ export async function updateDisciplina(id: number, nome: string, sigla: string, 
     }
 }
 
+// Função para excluir disciplina
 export async function deleteDisciplina(id: number): Promise<boolean> {
     const connection = await open();
     try {

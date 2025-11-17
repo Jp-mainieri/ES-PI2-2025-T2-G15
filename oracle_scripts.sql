@@ -1,4 +1,6 @@
 -- Feito por João Pedro Panza Mainieri - 25006642
+
+-- Criando o USER WEBAPP
 CREATE USER WEBAPP IDENTIFIED BY PI2Grupo15$$;
 GRANT CREATE SESSION TO WEBAPP;
 GRANT CREATE TABLE TO WEBAPP;
@@ -22,15 +24,7 @@ SELECT tablespace_name, bytes, max_bytes
 FROM dba_ts_quotas
 WHERE username = 'WEBAPP';
 
-CREATE SEQUENCE seq_instituicoes START WITH 1 INCREMENT BY 1;
-CREATE SEQUENCE seq_cursos START WITH 1 INCREMENT BY 1;
-CREATE SEQUENCE seq_disciplinas START WITH 1 INCREMENT BY 1;
-CREATE SEQUENCE seq_turmas START WITH 1 INCREMENT BY 1;
-CREATE SEQUENCE seq_professores START WITH 1 INCREMENT BY 1;
-CREATE SEQUENCE seq_componente_nota START WITH 1 INCREMENT BY 1;
-CREATE SEQUENCE seq_nota START WITH 1 INCREMENT BY 1;
-CREATE SEQUENCE seq_auditoria START WITH 1 INCREMENT BY 1;
-CREATE SEQUENCE seq_formula_disciplina START WITH 1 INCREMENT BY 1;
+-- Tabelas do banco de dados
 
 CREATE TABLE PROFESSORES (
  id_professor NUMBER PRIMARY KEY,
@@ -127,6 +121,18 @@ FOREIGN KEY (ID_PROFESSOR) REFERENCES PROFESSORES(ID_PROFESSOR),
 CONSTRAINT fk_auditoria_nota
 FOREIGN KEY (ID_NOTA) REFERENCES NOTA(ID_NOTA) ON DELETE SET NULL);
 
+-- Sequencias para os TRIGGERS NOS IDS (AUTO INCREMENT)
+CREATE SEQUENCE seq_instituicoes START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE seq_cursos START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE seq_disciplinas START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE seq_turmas START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE seq_professores START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE seq_componente_nota START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE seq_nota START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE seq_auditoria START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE seq_formula_disciplina START WITH 1 INCREMENT BY 1;
+
+-- TRIGGERS para o AUTO INCREMENT
 CREATE OR REPLACE TRIGGER trg_professores_pk
 BEFORE INSERT ON PROFESSORES
 FOR EACH ROW
@@ -134,7 +140,6 @@ WHEN (NEW.id_professor IS NULL)
 BEGIN
   SELECT seq_professores.NEXTVAL INTO :NEW.id_professor FROM DUAL;
 END;
-/
 
 CREATE OR REPLACE TRIGGER trg_instituicoes_pk
 BEFORE INSERT ON INSTITUICOES
@@ -143,7 +148,6 @@ WHEN (NEW.id_instituicao IS NULL)
 BEGIN
   SELECT seq_instituicoes.NEXTVAL INTO :NEW.id_instituicao FROM DUAL;
 END;
-/
 
 CREATE OR REPLACE TRIGGER trg_cursos_pk
 BEFORE INSERT ON CURSOS
@@ -152,7 +156,6 @@ WHEN (NEW.id_curso IS NULL)
 BEGIN
   SELECT seq_cursos.NEXTVAL INTO :NEW.id_curso FROM DUAL;
 END;
-/
 
 CREATE OR REPLACE TRIGGER trg_disciplinas_pk
 BEFORE INSERT ON DISCIPLINAS
@@ -161,7 +164,6 @@ WHEN (NEW.id_disciplina IS NULL)
 BEGIN
   SELECT seq_disciplinas.NEXTVAL INTO :NEW.id_disciplina FROM DUAL;
 END;
-/
 
 CREATE OR REPLACE TRIGGER trg_turmas_pk
 BEFORE INSERT ON TURMAS
@@ -170,7 +172,6 @@ WHEN (NEW.id_turma IS NULL)
 BEGIN
   SELECT seq_turmas.NEXTVAL INTO :NEW.id_turma FROM DUAL;
 END;
-/
 
 CREATE OR REPLACE TRIGGER trg_componente_nota_pk
 BEFORE INSERT ON COMPONENTE_NOTA
@@ -179,7 +180,6 @@ WHEN (NEW.id_componente IS NULL)
 BEGIN
   SELECT seq_componente_nota.NEXTVAL INTO :NEW.id_componente FROM DUAL;
 END;
-/
 
 CREATE OR REPLACE TRIGGER trg_nota_pk
 BEFORE INSERT ON NOTA
@@ -188,7 +188,6 @@ WHEN (NEW.id_nota IS NULL)
 BEGIN
   SELECT seq_nota.NEXTVAL INTO :NEW.id_nota FROM DUAL;
 END;
-/
 
 CREATE OR REPLACE TRIGGER trg_auditoria_pk
 BEFORE INSERT ON AUDITORIA
@@ -197,7 +196,7 @@ WHEN (NEW.id_auditoria IS NULL)
 BEGIN
   SELECT seq_auditoria.NEXTVAL INTO :NEW.id_auditoria FROM DUAL;
 END;
-/
+
 CREATE OR REPLACE TRIGGER trg_formula_disciplina_pk
 BEFORE INSERT ON FORMULA_DISCIPLINA
 FOR EACH ROW
@@ -205,7 +204,8 @@ WHEN (NEW.id_formula IS NULL)
 BEGIN
   SELECT seq_formula_disciplina.NEXTVAL INTO :NEW.id_formula FROM DUAL;
 END;
-/
+
+-- TRIGGERS para a atualização automática na auditoria, a partir da inserção/edição de notas
 
 CREATE OR REPLACE TRIGGER trg_auditoria_nota_insert
 AFTER INSERT ON NOTA
@@ -231,7 +231,6 @@ BEGIN
     INSERT INTO AUDITORIA (descricao, id_professor, id_nota)
     VALUES (v_desc, v_prof, :NEW.id_nota);
 END;
-/
 
 CREATE OR REPLACE TRIGGER trg_auditoria_nota_upd
 AFTER UPDATE ON NOTA
@@ -258,13 +257,5 @@ BEGIN
     INSERT INTO AUDITORIA (descricao, id_professor, id_nota)
     VALUES (v_desc, v_prof, :OLD.id_nota);
 END;
-/
-
-
-
-
-COMMIT;
-
-INSERT INTO PROFESSORES (nome, telefone, senha, email) VALUES ('Renata', '123456789', 'password123', 'renata@example.com');
 
 COMMIT;

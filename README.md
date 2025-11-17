@@ -1,10 +1,11 @@
 # Projeto Integrador 2 — Engenharia de Software — PUC-Campinas
 
+![alt text](img/image.png)
+
 ## 📚 Projeto NotaDez
 
 O Projeto NotaDez é um sistema web voltado para docentes do ensino superior.
 
-![alt text](img/image.png)
 
 O objetivo é substituir o uso de planilhas genéricas por uma ferramenta própria, completa e integrada para gerenciamento de notas acadêmicas.
 
@@ -33,23 +34,23 @@ Calcular automaticamente a média final de cada aluno na disciplina
 Abaixo seguem todas as instruções necessárias para baixar, configurar e executar o projeto localmente.
 
 
-INICIAR clonando o repositório do GitHub utilizando o comando git clone git clone https://github.com/Jp-mainieri/PI_II_ES_TIME_15.git no GitHub 
+INICIAR clonando o repositório do GitHub utilizando o comando `git clone https://github.com/Jp-mainieri/PI_II_ES_TIME_15.git` no terminal 
 
-ENTRAR na pasta do projeto e inserir o comando cd (nome repositorio)   
+ENTRAR na pasta do projeto inserindo o comando `cd (path para o repositorio)`  
 
 INSTALAR as dependendencias do projeto, com o Node.js instalado execute o comando `npm install`, o comando instala todas as dependencias listadas no package.json
 
-## Configurar a Oracle OCI Wallet
+### Configurar a Oracle OCI Wallet
 `oracle/Wallet_jpDB01`
 
-*Confirme que o diretório contém arquivos como*
+*Confirme se o diretório contém arquivos como*
 
 - tnsnames.ora
 - sqlnet.ora
 - cwallet.sso
 
 
-## ORACLE INSTANT CLIENT
+### ORACLE INSTANT CLIENT
 Instalar o Oracle Instant Client
 
 Baixe o Oracle Instant Client (módulos Basic ou Basic Lite):
@@ -58,36 +59,39 @@ https://www.oracle.com/database/technologies/instant-client.html
 -- Extraia o conteúdo para um diretório
 *EX:* C:\oracle\instantclient_23_9
 
-### No sqlnet.ora:
+#### No sqlnet.ora:
 
 *Confirme que na sessão DIRECTORY="" tenha o caminho para a sua wallet*
 *EX:* 
 `WALLET_LOCATION = (SOURCE = (METHOD = file) (METHOD_DATA = (DIRECTORY="C:/oracle/Wallet_JPDB01")))
 SSL_SERVER_DN_MATCH=yes`
 
-## .ENV
+### .ENV
 
 Configuração do ambiente (.env) - Criar um arquivo chamado .env na raiz do projeto com as variáveis necessárias para
 - Conexão com o banco de dados Oracle via OCI Wallet 
 - Caminhos para os arquivos da Wallet
 - Outras variáveis internas do sistema 
 
-## Exemplo do .env
+#### Exemplo do .env
 
--- Caminho para os arquivos Oracle Instant Client
+```.dotenv
+#Caminho para os arquivos Oracle Instant Client
 ORACLE_LIB_DIR=caminho/do/instantclient
 
--- Caminhos da Wallet OCI
+#Caminhos da Wallet OCI
 ORACLE_WALLET_DIR=caminho/da/wallet
 
--- Credenciais do Banco
+#Credenciais do Banco
 DB_USER=WEBAPP
 DB_PASSWORD=PI2Grupo15$$
 DB_CONECTION_STRING=joaopedromainieridatabase01_high
+```
 
-## Executar o Projeto em Ambiente de Testes
+
+### Executar o Projeto em Ambiente de Testes
 
 *Rodar o servidor Node.js*
 Backend em Node utilizar:
-*npm run start*
-Abrir o arquivo index.html
+`npm run start`
+Abrir o arquivo `Pages/index.html` (Se tiver, utilizar o live server para rodar no navegador)

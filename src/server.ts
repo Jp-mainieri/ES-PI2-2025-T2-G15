@@ -9,7 +9,6 @@ import { gerarTokenRecuperacao } from "./db/recuperacaoSenha";
 // Imports de funções do CRUD
 
 import {
-  getAllInstituicoes,
   getAllInstituicoesByProfessor,
   addInstituicao,
   getInstituicaoById,
@@ -18,7 +17,6 @@ import {
 } from "./db/instituicoes";
 
 import {
-  getAllCursos,
   getAllCursosByInstituicao,
   getCursoById,
   addCurso,
@@ -31,11 +29,9 @@ import {
   getProfessorById,
   addProfessor,
   updateProfessor,
-  deleteProfessor,
 } from "./db/professores";
 
 import {
-  getAllDisciplinas,
   getAllDisciplinasByCurso,
   getDisciplinaById,
   addDisciplina,
@@ -44,8 +40,6 @@ import {
 } from "./db/disciplinas";
 
 import {
-    getAllTurmas,
-    getTurmaById,
     addTurma,
     updateTurma,
     deleteTurma,
@@ -54,7 +48,6 @@ import {
 } from "./db/turmas";
 
 import {
-    getAllAlunos,
     getAlunoByRA,
     addAluno,
     deleteAluno,
@@ -63,17 +56,25 @@ import {
 } from "./db/alunos";
 
 import {
-    getAllNotas,
     getNotaById,
     addNota,
     updateNota,
-    deleteNota, getNotasByTurma, getFormulaByDisciplina, addFormula, updateFormula,
-    getComponentesByDisciplina, addComponente, updateComponente,deleteComponente
+    deleteNota,
+    getNotasByTurma,
+    getFormulaByDisciplina,
+    addFormula,
+    updateFormula,
+    getComponentesByDisciplina,
+    addComponente,
+    updateComponente,
+    deleteComponente
 } from "./db/notas";
 
+// Express.js
 const app = express();
 const port = 3000;
 
+// Cors e body parser para o Express
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -87,19 +88,7 @@ app.use(express.static(path.join(__dirname, "../")));
 
 // Rotas de Instituições:
 
-// Rota para listar todas as instituições
-app.get("/instituicoes", async (req: Request, res: Response) => {
-  try {
-    const instituicoes = await getAllInstituicoes();
-    res.json(instituicoes);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({
-      error: "Erro ao buscar instituições",
-    });
-  }
-});
-
+// Rota para listar todas as instituições por professor
 app.get(
   "/instituicoes/professor/:id_professor",
   async (req: Request, res: Response) => {
@@ -136,6 +125,7 @@ app.get("/instituicoes/:id", async (req: Request, res: Response) => {
   }
 });
 
+// Rota para adicionar uma instituicão
 app.post("/instituicoes", async (req: Request, res: Response) => {
   try {
     const { nome, id_professor } = req.body;
@@ -158,6 +148,7 @@ app.post("/instituicoes", async (req: Request, res: Response) => {
   }
 });
 
+// Rota para editar uma instituicão
 app.put("/instituicoes/:id", async (req: Request, res: Response) => {
   try {
     const { nome } = req.body;
@@ -186,6 +177,7 @@ app.put("/instituicoes/:id", async (req: Request, res: Response) => {
   }
 });
 
+// Rota para deletar uma instituicão
 app.delete("/instituicoes/:id", async (req: Request, res: Response) => {
   try {
     const id = Number(req.params.id);
@@ -209,19 +201,6 @@ app.delete("/instituicoes/:id", async (req: Request, res: Response) => {
 });
 
 // Rotas de Cursos:
-
-// Rota para obter todos os cursos
-app.get("/cursos", async (req: Request, res: Response) => {
-  try {
-    const cursos = await getAllCursos();
-    res.json(cursos);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({
-      error: "Erro ao buscar cursos",
-    });
-  }
-});
 
 // Rota para obter cursos por instituição
 app.get(
@@ -336,6 +315,7 @@ app.delete("/cursos/:id", async (req: Request, res: Response) => {
 
 // Rotas de Professores:
 
+// Rota para obter todos os professores
 app.get('/professores', async (req:Request, res:Response) => {
     try {
         const professores = await getAllProfessores();
@@ -348,6 +328,7 @@ app.get('/professores', async (req:Request, res:Response) => {
     }
 });
 
+// Rota para obter um professor pelo ID
 app.get('/professores/:id', async (req:Request, res:Response) => {
     try {
         const id = Number(req.params.id);
@@ -367,6 +348,7 @@ app.get('/professores/:id', async (req:Request, res:Response) => {
     }
 });
 
+// Rota para inserir um professor
 app.post('/professores', async (req:Request, res:Response) => {
     try {
         const {nome, telefone, senha, email} = req.body;
@@ -387,6 +369,7 @@ app.post('/professores', async (req:Request, res:Response) => {
     }
 });
 
+// Rota para editar um professor
 app.put('/professores/:id', async (req:Request, res:Response) => {
     try {
         const {nome, telefone, senha, email} = req.body;
@@ -414,29 +397,7 @@ app.put('/professores/:id', async (req:Request, res:Response) => {
     }
 });
 
- // Rota para excluir um professor
-app.delete('/professores/:id', async (req:Request, res:Response) => {
-    try {
-        const id = Number(req.params.id);
-        const deleted = await deleteProfessor(id);
-        if (deleted) {
-            res.status(200).json({
-                message: "Professor excluído com sucesso.", id
-            });
-        } else {
-            res.status(404).json({
-                message: "Professor não encontrado."
-            });
-        }
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({
-            error: "Erro ao excluir professor."
-        });
-    }
-});
-
-/// Rota de login
+// Rota de login
 app.post("/login", async (req: Request, res: Response) => {
   try {
     const { email, senha } = req.body;
@@ -465,18 +426,7 @@ app.post("/login", async (req: Request, res: Response) => {
 
 // Rotas de Disciplinas:
 
-app.get("/disciplinas", async (req: Request, res: Response) => {
-  try {
-    const disciplinas = await getAllDisciplinas();
-    res.json(disciplinas);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({
-      error: "Erro ao buscar disciplinas",
-    });
-  }
-});
-
+// Rota para buscar uma disciplina pelo id
 app.get("/disciplinas/:id", async (req: Request, res: Response) => {
   try {
     const id = Number(req.params.id);
@@ -510,6 +460,7 @@ app.get("/disciplinas/curso/:id_curso", async (req: Request, res: Response) => {
   }
 });
 
+// Rota para inserir uma disciplina
 app.post("/disciplinas", async (req: Request, res: Response) => {
   try {
     const { nome, sigla, codigo, periodo, id_curso } = req.body;
@@ -531,6 +482,7 @@ app.post("/disciplinas", async (req: Request, res: Response) => {
   }
 });
 
+// Rota para editar uma disciplina
 app.put("/disciplinas/:id", async (req: Request, res: Response) => {
   try {
     const { nome, sigla, codigo, periodo } = req.body;
@@ -584,37 +536,6 @@ app.delete("/disciplinas/:id", async (req: Request, res: Response) => {
 
 // Rotas de Turmas:
 
-app.get("/turmas", async (req: Request, res: Response) => {
-  try {
-    const turmas = await getAllTurmas();
-    res.json(turmas);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({
-      error: "Erro ao buscar turmas",
-    });
-  }
-});
-
-app.get("/turmas/:id", async (req: Request, res: Response) => {
-  try {
-    const id = Number(req.params.id);
-    const turma = await getTurmaById(id);
-    if (turma) {
-      res.json(turma);
-    } else {
-      res.status(404).json({
-        message: "Turma não foi encontrada com o id fornecido.",
-      });
-    }
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({
-      error: "Erro ao buscar turma pelo ID fornecido.",
-    });
-  }
-});
-
 // Rota para obter turmas por disciplina
 app.get(
   "/turmas/disciplina/:id_disciplina",
@@ -649,6 +570,7 @@ app.get(
     }
 );
 
+// Rota para inserir uma turma
 app.post("/turmas", async (req: Request, res: Response) => {
   try {
     const { nome, codigo, turno, id_disciplina } = req.body;
@@ -670,6 +592,7 @@ app.post("/turmas", async (req: Request, res: Response) => {
   }
 });
 
+// Rota para editar uma turma
 app.put("/turmas/:id", async (req: Request, res: Response) => {
   try {
     const { nome, codigo, turno } = req.body;
@@ -723,18 +646,7 @@ app.delete("/turmas/:id", async (req: Request, res: Response) => {
 
 // Rotas de Alunos:
 
-app.get("/alunos", async (req: Request, res: Response) => {
-  try {
-    const alunos = await getAllAlunos();
-    res.json(alunos);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({
-      error: "Erro ao buscar alunos",
-    });
-  }
-});
-
+// Rota para obter um aluno pelo RA
 app.get("/alunos/:ra", async (req: Request, res: Response) => {
   try {
     const ra = req.params.ra;
@@ -753,6 +665,8 @@ app.get("/alunos/:ra", async (req: Request, res: Response) => {
     });
   }
 });
+
+// Rota para obter alunos pela turma
 app.get("/alunos/turma/:id_turma", async (req: Request, res: Response) => {
   try {
     const id_turma = req.params.id_turma;
@@ -772,6 +686,7 @@ app.get("/alunos/turma/:id_turma", async (req: Request, res: Response) => {
   }
 });
 
+// Rota para obter alunos pela instituicao
 app.get("/alunos/instituicao/:id_instituicao", async (req: Request, res: Response) => {
     try {
         const id_instituicao = req.params.id_instituicao;
@@ -791,6 +706,7 @@ app.get("/alunos/instituicao/:id_instituicao", async (req: Request, res: Respons
     }
 });
 
+// Rota para inserir um aluno em uma turma
 app.post("/alunos", async (req: Request, res: Response) => {
   try {
     const { ra_aluno, nome, id_turma} = req.body;
@@ -816,6 +732,7 @@ app.post("/alunos", async (req: Request, res: Response) => {
   }
 });
 
+// Rota para editar um aluno
 app.put('/alunos/:ra', async (req:Request, res:Response) => {
     try {
         const {nome, id_turma} = req.body;
@@ -868,18 +785,7 @@ app.delete("/alunos/:ra", async (req: Request, res: Response) => {
 
 // Rotas de Notas:
 
-app.get("/notas", async (req: Request, res: Response) => {
-  try {
-    const notas = await getAllNotas();
-    res.json(notas);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({
-      error: "Erro ao buscar notas",
-    });
-  }
-});
-
+// Rota para obter nota pelo ID
 app.get("/notas/:id", async (req: Request, res: Response) => {
   try {
     const id = Number(req.params.id);
@@ -899,6 +805,7 @@ app.get("/notas/:id", async (req: Request, res: Response) => {
   }
 });
 
+// Rota para obter notas por turma
 app.get("/notas/turma/:id_turma", async (req: Request, res: Response) => {
   try {
     const id_turma = Number(req.params.id_turma);
@@ -918,6 +825,7 @@ app.get("/notas/turma/:id_turma", async (req: Request, res: Response) => {
   }
 });
 
+// Rota para inserir nota, precisa de um componente e um aluno
 app.post("/notas", async (req: Request, res: Response) => {
   try {
     const { valor , id_componente, ra_aluno} = req.body;
@@ -939,6 +847,7 @@ app.post("/notas", async (req: Request, res: Response) => {
   }
 });
 
+// Rota para editar nota
 app.put("/notas/:id", async (req: Request, res: Response) => {
   try {
     const { valor } = req.body;
@@ -990,7 +899,7 @@ app.delete("/notas/:id", async (req: Request, res: Response) => {
   }
 });
 
-// --- Recuperação de Senha ---
+// Recuperação de Senha
 
 app.post("/recuperar-senha", async (req: Request, res: Response) => {
   try {
@@ -1073,6 +982,9 @@ app.post("/redefinir-senha", async (req: Request, res: Response) => {
   }
 });
 
+// Rotas de Componentes de Nota:
+
+// Rota para Obter componente de nota por disciplina
 app.get(`/componente-nota/disciplina/:id_disciplina`, async (req:Request, res:Response) => {
     try {
         const id_disciplina = Number(req.params.id_disciplina);
@@ -1086,6 +998,7 @@ app.get(`/componente-nota/disciplina/:id_disciplina`, async (req:Request, res:Re
     }
 });
 
+// Rota para inserir componente de nota para disciplina
 app.post(`/componente-nota`, async (req:Request, res:Response) => {
     try {
         const {nome, sigla, descricao ,id_disciplina} = req.body;
@@ -1107,6 +1020,7 @@ app.post(`/componente-nota`, async (req:Request, res:Response) => {
     }
 });
 
+// Rota para editar componente de nota de disciplina
 app.put("/componente-nota/:id", async (req: Request, res: Response) => {
     try {
         const { nome, sigla, descricao} = req.body;
@@ -1135,6 +1049,7 @@ app.put("/componente-nota/:id", async (req: Request, res: Response) => {
     }
 });
 
+// Rota para editar componente de nota de disciplina
 app.delete("/componente-nota/:id", async (req: Request, res: Response) => {
     try {
         const id = Number(req.params.id);
@@ -1157,6 +1072,9 @@ app.delete("/componente-nota/:id", async (req: Request, res: Response) => {
     }
 });
 
+// Rotas de formula da disciplina:
+
+// Rota para obter a formula da disciplina
 app.get(`/formula/:id_disciplina`, async (req:Request, res:Response) => {
     try {
         const id_disciplina = Number(req.params.id_disciplina);
@@ -1170,6 +1088,7 @@ app.get(`/formula/:id_disciplina`, async (req:Request, res:Response) => {
     }
 });
 
+// Rota para inserir formula em uma disciplina
 app.post(`/formula`, async (req:Request, res:Response) => {
     try {
         const { id_disciplina ,formula} = req.body;
@@ -1191,6 +1110,7 @@ app.post(`/formula`, async (req:Request, res:Response) => {
     }
 });
 
+// Rota para editar formula de disciplina
 app.put("/formula/:id_disciplina", async (req: Request, res: Response) => {
     try {
         const { formula } = req.body;
@@ -1219,10 +1139,7 @@ app.put("/formula/:id_disciplina", async (req: Request, res: Response) => {
     }
 });
 
-
-
-
-
+// Mensagem de Servidor Rodando:
 app.listen(port, () => {
   console.log(`Servidor rodando: http://localhost:${port}`);
 });
