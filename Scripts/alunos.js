@@ -1,14 +1,19 @@
 // Feito por João Pedro Panza Mainieri - 25006642
+
+// Dados
 let turmasData = [];
 let alunosData = [];
 let instituicoesData = [];
-
-const usuarioLogado = JSON.parse(sessionStorage.getItem("usuarioLogado"));
-const idProfessor = usuarioLogado.id_professor;
 let idInstituicaoAtiva = -1;
 
+// Usário logado
+const usuarioLogado = JSON.parse(sessionStorage.getItem("usuarioLogado"));
+const idProfessor = usuarioLogado.id_professor;
+
+// Base da API
 const API_URL = "http://localhost:3000";
 
+// Adcionar Aluno no banco de dados
 async function adicionarAluno(ra_aluno, nome, id_turma){
     try{
         const response = await fetch (`${API_URL}/alunos`, {
@@ -31,6 +36,7 @@ async function adicionarAluno(ra_aluno, nome, id_turma){
     }
 }
 
+// Editar Aluno no banco de dados
 async function editarAluno(ra, nome, turma) {
     try {
         const response = await fetch(`${API_URL}/alunos/${ra}`, {
@@ -51,6 +57,7 @@ async function editarAluno(ra, nome, turma) {
     }
 }
 
+// Deletar Aluno no banco de dados
 async function deleteAluno(ra){
     try{
         const response = await fetch(`${API_URL}/alunos/${ra}`, {
@@ -65,6 +72,7 @@ async function deleteAluno(ra){
     }
 }
 
+// Carregar as intituições a partir do professor do banco de dados
 async function carregarInstituicoes() {
     try {
         const response = await fetch(`${API_URL}/instituicoes/professor/${idProfessor}`);
@@ -80,6 +88,7 @@ async function carregarInstituicoes() {
     }
 }
 
+// Carregar turmas a partir da instituição do banco de dados
 async function carregarTurmas() {
     try {
         const response = await fetch(`${API_URL}/turmas/instituicao/${idInstituicaoAtiva}`)
@@ -92,6 +101,7 @@ async function carregarTurmas() {
     }
 }
 
+// Carregar Alunos a partir da instituição do banco de dados
 async function carregarAlunos() {
   try {
     const response = await fetch(
@@ -107,6 +117,7 @@ async function carregarAlunos() {
   await renderizarAlunos();
 }
 
+// Renderizar a tabela alunos no elemento: tabela-alunos
 function renderizarAlunos() {
     const tabela = document.getElementById("tabela-alunos");
     if (!tabela) return;
@@ -114,26 +125,26 @@ function renderizarAlunos() {
     const linhasExistentes = tabela.querySelectorAll("tr:not(:first-child)");
     linhasExistentes.forEach((linha) => linha.remove());
 
+    // Para cada aluno:
     alunosData.forEach((aluno) => {
         const nova_linha = document.createElement("tr");
         const turma = turmasData.find(t => t.id == aluno.ID_TURMA);
         nova_linha.innerHTML = `
-      <td>${aluno.NOME || "N/A"}</td>
-      <td>${aluno.RA_ALUNO}</td>
-      <td>${turma.NOME}</td>
-      <td class="acoes">
-            <button class="btn-acao btn-editar" data-id="${
-            aluno.RA_ALUNO
-        }"><i class="fa-solid fa-pen"></i></button>
-            <button class="btn-acao btn-excluir" data-id="${
-            aluno.RA_ALUNO
-        }"><i class="fa-solid fa-trash"></i></button>
+        <td>${aluno.NOME || "N/A"}</td>
+        <td>${aluno.RA_ALUNO}</td>
+        <td>${turma.NOME}</td>
+        <td class="acoes">
+        <button class="btn-acao btn-editar" data-id="${
+        aluno.RA_ALUNO}"><i class="fa-solid fa-pen"></i></button>
+        <button class="btn-acao btn-excluir" data-id="${
+        aluno.RA_ALUNO}"><i class="fa-solid fa-trash"></i></button>
       </td>
     `;
         tabela.appendChild(nova_linha);
     });
 }
 
+// Renderiza o filtro de turmas
 function renderizarOpcoesTurmas() {
     const selects = document.querySelectorAll(".opcoesTurmas");
     if (!selects) return;
@@ -151,6 +162,7 @@ function renderizarOpcoesTurmas() {
     })
 }
 
+// Renderiza o filtro de instituições
 function renderizarOpcoesInstituicoes() {
     const selects = document.querySelectorAll(".select-instituicao");
     if (!selects) return;
@@ -168,9 +180,6 @@ function renderizarOpcoesInstituicoes() {
     })
 
 }
-
-// Fim das definições de funções --
-carregarInstituicoes();
 
 // Abrir o modal quando clicar no botão "Cadastrar Aluno"
 const btnCadastrar = document.getElementById("btnCadastrar");
@@ -197,6 +206,7 @@ window.addEventListener("click", function (event) {
   }
 });
 
+// Se mudar no select de instituição: 
 document.getElementById("sortInstituicao").addEventListener("change", async(e) => {
     e.preventDefault();
     const select = document.getElementById("sortInstituicao");
@@ -243,7 +253,6 @@ document.getElementById("btn-confirmarImportacao").addEventListener("click", fun
     }
 
     // Leitura do Arquivo CSV
-      
     const reader = new FileReader();
     reader.onload = async (e) => {
         const conteudo = e.target.result;
@@ -275,10 +284,11 @@ document.getElementById("btn-confirmarImportacao").addEventListener("click", fun
         }
     }
     reader.readAsText(arquivo, "UTF-8");
-  });
+});
 
+// Quando clicar no botão editar na tabela dos alunos: 
 document.getElementById("tabela-alunos").addEventListener("click", async (event) => {
-    // === Função para abrir o modal de edição ===
+  // Função para abrir o modal de edição
   if (event.target.closest(".btn-editar")) {
     const btn = event.target.closest(".btn-editar");
     const ra = btn.getAttribute("data-id");
@@ -295,7 +305,7 @@ document.getElementById("tabela-alunos").addEventListener("click", async (event)
     abrirModal("modalEditar");
   }
 
-// Função para abrir modal de exclusão
+  // Função para abrir modal de exclusão
   if (event.target.closest(".btn-excluir")) {
     const btn = event.target.closest(".btn-excluir");
     const ra = btn.getAttribute("data-id");
@@ -309,7 +319,7 @@ document.getElementById("tabela-alunos").addEventListener("click", async (event)
   }
 });
 
-// === Enviar formulário de edição ===
+// Enviar formulário de edição de aluno
 document.getElementById("formEditarAluno").addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -332,3 +342,6 @@ document.getElementById("confirmarExcluir").addEventListener("click", async (e) 
     fecharModal("modalExcluir");
     carregarAlunos();
 });
+
+// Inicialização
+carregarInstituicoes();

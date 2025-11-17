@@ -1,26 +1,30 @@
 // Feito por João Pedro Panza Mainieri - 25006642
+
+// Base da API
 const API_URL = "http://localhost:3000";
 
+// Dados
 let instituicoesData = [];
 let cursosData = [];
 let disciplinasData = [];
 let turmasData = [];
-
-
-//Serve para guardar o id do que está em exibição
-const usuarioLogado = JSON.parse(sessionStorage.getItem("usuarioLogado"));
-const idProfessor = usuarioLogado.id_professor;
 let idIinstituicaoAtiva;
 let idCursoAtivo;
 let idDisciplinaAtiva;
 
+
+// Usuário logado
+const usuarioLogado = JSON.parse(sessionStorage.getItem("usuarioLogado"));
+const idProfessor = usuarioLogado.id_professor;
+
 // Funções para o FETCH
 
+// Carregar as instituições no banco
 async function carregarInstituicoes() {
   try {
     const response = await fetch(`${API_URL}/instituicoes/professor/${idProfessor}`);
     if (!response.ok) throw new Error("Erro ao carregar instituições");
-
+    
     instituicoesData = await response.json();
     renderizarInstituicoes();
   } catch (error) {
@@ -31,6 +35,7 @@ async function carregarInstituicoes() {
   }
 }
 
+// Renderizar as instituições na tabela
 function renderizarInstituicoes() {
   const tabela = document.getElementById("tabela-instituicoes");
   if (!tabela) return; // evita erro se o elemento não existir
@@ -62,13 +67,14 @@ function renderizarInstituicoes() {
   });
 }
 
+// Carregar Cursos no banco de dados
 async function carregarCursos(id_instituicao) {
   try {
     const response = await fetch(
       `${API_URL}/cursos/instituicao/${id_instituicao}`
     );
     if (!response.ok) throw new Error("Erro ao carregar cursos");
-
+    
     cursosData = await response.json();
     renderizarCursos();
   } catch (error) {
@@ -76,6 +82,7 @@ async function carregarCursos(id_instituicao) {
   }
 }
 
+// Rederizar Cursos na tabela, a partir da instituição ativa
 function renderizarCursos() {
   const tabela = document.getElementById("tabela-cursos");
   if (!tabela) return;
@@ -114,6 +121,7 @@ function renderizarCursos() {
   });
 }
 
+// Carregar Disciplinas no banco de dados
 async function carregarDisciplinas(id_curso) {
   try {
     const response = await fetch(`${API_URL}/disciplinas/curso/${id_curso}`);
@@ -126,6 +134,7 @@ async function carregarDisciplinas(id_curso) {
   }
 }
 
+// Renderizar Disciplinas na tabela, a partir do curso ativo
 function renderizarDisciplinas() {
   const tabela = document.getElementById("tabela-disciplinas");
 
@@ -165,6 +174,7 @@ function renderizarDisciplinas() {
   });
 }
 
+// Carregar turmas do banco de dados
 async function carregarTurmas(id_disciplina) {
   try {
     const response = await fetch(`${API_URL}/turmas/disciplina/${id_disciplina}`)
@@ -176,7 +186,7 @@ async function carregarTurmas(id_disciplina) {
     console.error("Erro:", error);
   }
 }
-
+// Renderizar Turmas na tabela, a partir da Disciplina ativa
 function renderizarTurmas() {
   const tabela = document.getElementById("tabela-turmas");
 
@@ -225,6 +235,7 @@ function renderizarTurmas() {
   });
 }
 
+// Adicionar instituição ao banco de dados
 async function adicionarInstituicao(nome) {
   try {
     const response = await fetch(`${API_URL}/instituicoes`, {
@@ -232,9 +243,9 @@ async function adicionarInstituicao(nome) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ nome, id_professor: idProfessor }),// preciso colocar o id_professor de acordo com o login
     });
-
+    
     if (!response.ok) throw new Error("Erro ao adicionar instituição");
-
+    
     alert("Instituição adicionada com sucesso!");
     await carregarInstituicoes();
   } catch (error) {
@@ -243,21 +254,22 @@ async function adicionarInstituicao(nome) {
   }
 }
 
+// Adicionar Curso ao banco de dados
 async function adicionarCurso(nome, codigo) {
   try {
     const response = await fetch(`${API_URL}/cursos`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-
+      
       body: JSON.stringify({
         nome,
         codigo,
         id_instituicao: idIinstituicaoAtiva,
       }),
     });
-
+    
     if (!response.ok) throw new Error("Erro ao adicionar curso");
-
+    
     alert("Curso adicionado com sucesso!");
     // recarrega cursos usando a instituição ativa
     await carregarCursos(idIinstituicaoAtiva);
@@ -267,6 +279,7 @@ async function adicionarCurso(nome, codigo) {
   }
 }
 
+// Adicionar Disciplina ao banco de dados
 async function adicionarDisciplina(nome, sigla, codigo, periodo) {
   try {
     const response = await fetch(`${API_URL}/disciplinas`, {
@@ -280,9 +293,9 @@ async function adicionarDisciplina(nome, sigla, codigo, periodo) {
         id_curso: idCursoAtivo,
       }),
     });
-
+    
     if (!response.ok) throw new Error("Erro ao adicionar disciplina");
-
+    
     alert("Disciplina adicionada com sucesso!");
     await carregarDisciplinas(idCursoAtivo);
   } catch (error) {
@@ -291,21 +304,22 @@ async function adicionarDisciplina(nome, sigla, codigo, periodo) {
   }
 }
 
+// Adicionar Turma ao banco de dados
 async function adicionarTurma(nome, codigo, turno) {
   try {
     const response = await fetch(`${API_URL}/turmas`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-          nome,
-          codigo,
-          turno,
-          id_disciplina: idDisciplinaAtiva
-          }),
+        nome,
+        codigo,
+        turno,
+        id_disciplina: idDisciplinaAtiva
+      }),
     });
-
+    
     if (!response.ok) throw new Error("Erro ao adicionar turma");
-
+    
     alert("Turma adicionada com sucesso!");
     await carregarTurmas(idDisciplinaAtiva);
   } catch (error) {
@@ -314,21 +328,22 @@ async function adicionarTurma(nome, codigo, turno) {
   }
 }
 
+// Deletar Instituicao do banco de dados
 async function deletarInstituicao(id) {
   if (!confirm("Tem certeza que deseja deletar esta instituição?")) return;
-
+  
   try {
-      const conteudo = await fetch(`${API_URL}/cursos/instituicao/${id}`)
-      if (conteudo) {
-          alert("Ainda tem cursos cadastrados nesta instituicão");
-          return;
-      }
+    const conteudo = await fetch(`${API_URL}/cursos/instituicao/${id}`)
+    if (conteudo) {
+      alert("Ainda tem cursos cadastrados nesta instituicão");
+      return;
+    }
     const response = await fetch(`${API_URL}/instituicoes/${id}`, {
       method: "DELETE",
     });
-
+    
     if (!response.ok) throw new Error("Erro ao deletar instituição");
-
+    
     alert("Instituição deletada com sucesso!");
     await carregarInstituicoes();
   } catch (error) {
@@ -337,21 +352,22 @@ async function deletarInstituicao(id) {
   }
 }
 
+// Deletar Curso do banco de dados
 async function deletarCurso(id) {
   if (!confirm("Tem certeza que deseja deletar este curso?")) return;
-
+  
   try {
-      const conteudo = await fetch(`${API_URL}/disciplinas/curso/${id}`)
-      if (conteudo) {
-          alert("Ainda tem disciplinas cadastrados neste curso");
-          return;
-      }
+    const conteudo = await fetch(`${API_URL}/disciplinas/curso/${id}`)
+    if (conteudo) {
+      alert("Ainda tem disciplinas cadastrados neste curso");
+      return;
+    }
     const response = await fetch(`${API_URL}/cursos/${id}`, {
       method: "DELETE",
     });
-
+    
     if (!response.ok) throw new Error("Erro ao deletar curso");
-
+    
     alert("Curso deletado com sucesso!");
     await carregarCursos(idIinstituicaoAtiva);
   } catch (error) {
@@ -360,21 +376,22 @@ async function deletarCurso(id) {
   }
 }
 
+// Deletar Disciplina do banco de dados
 async function deletarDisciplina(id) {
   if (!confirm("Tem certeza que deseja deletar esta disciplina?")) return;
-
+  
   try {
-      const conteudo = await fetch(`${API_URL}/turmas/disciplina/${id}`)
-      if (conteudo) {
-          alert("Ainda tem turmas cadastrados nesta disciplina");
-          return;
-      }
+    const conteudo = await fetch(`${API_URL}/turmas/disciplina/${id}`)
+    if (conteudo) {
+      alert("Ainda tem turmas cadastrados nesta disciplina");
+      return;
+    }
     const response = await fetch(`${API_URL}/disciplinas/${id}`, {
       method: "DELETE",
     });
-
+    
     if (!response.ok) throw new Error("Erro ao deletar disciplina");
-
+    
     alert("Disciplina deletada com sucesso!");
     await carregarDisciplinas(idCursoAtivo);
   } catch (error) {
@@ -383,20 +400,21 @@ async function deletarDisciplina(id) {
   }
 }
 
+// Deletar Turma do banco de dados
 async function deletarTurma(id) {
   if (!confirm("Tem certeza que deseja deletar esta turma?")) return;
   try {
-      const conteudo = await fetch(`${API_URL}/alunos/turma/${id}`)
-      if (conteudo) {
-          alert("Ainda tem alunos cadastrados nesta turma");
-          return;
-      }
+    const conteudo = await fetch(`${API_URL}/alunos/turma/${id}`)
+    if (conteudo) {
+      alert("Ainda tem alunos cadastrados nesta turma");
+      return;
+    }
     const response = await fetch(`${API_URL}/turmas/${id}`, {
       method: "DELETE",
     });
-
+    
     if (!response.ok) throw new Error("Erro ao deletar turma");
-
+    
     alert("Turma deletada com sucesso!");
     await carregarTurmas(idDisciplinaAtiva);
   } catch (error) {
@@ -405,12 +423,14 @@ async function deletarTurma(id) {
   }
 }
 
+// Listener do que o usuário faz
 document.addEventListener("DOMContentLoaded", () => {
   /* ======== MODAL ======== */
 
   // Carrega as instituições referentes ao professor
   carregarInstituicoes();
 
+  // Elementos base
   const popup = document.getElementById("popup-novo-elemento");
   const titulo = document.getElementById("novo-elemento-title");
   const forms = {
@@ -420,6 +440,7 @@ document.addEventListener("DOMContentLoaded", () => {
     turma: document.getElementById("nova-turma-form"),
   };
 
+  // Abrir o pop up de um certo tipo
   function abrirPopup(tipo) {
     popup.style.display = "flex";
     titulo.textContent =
@@ -434,11 +455,13 @@ document.addEventListener("DOMContentLoaded", () => {
     forms[tipo].classList.add("active");
   }
 
+  // Fechar o pop up que estiver aberto
   function fecharPopup() {
     popup.style.display = "none";
     Object.values(forms).forEach((f) => f.classList.remove("active"));
   }
 
+  // Qual pop up abrir
   document.addEventListener("click", (e) => {
     if (e.target.matches(".btn-nova-instituicao")) abrirPopup("instituicao");
     else if (e.target.matches("#btn-novo-curso")) abrirPopup("curso");
@@ -451,6 +474,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (e.target === popup) fecharPopup();
   });
 
+  // No forms instituicao: quando der submit
   document;
   forms.instituicao?.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -459,7 +483,8 @@ document.addEventListener("DOMContentLoaded", () => {
     fecharPopup();
     e.target.reset();
   });
-
+  
+  // No forms curso: quando der submit
   forms.curso?.addEventListener("submit", async (e) => {
     e.preventDefault();
     const nome = e.target.querySelector('input[name="nome"]').value;
@@ -468,7 +493,8 @@ document.addEventListener("DOMContentLoaded", () => {
     fecharPopup();
     e.target.reset();
   });
-
+  
+  // No forms disciplina: quando der submit
   forms.disciplina?.addEventListener("submit", async (e) => {
     e.preventDefault();
     const nome = e.target.querySelector('input[name="nome"]').value;
@@ -479,21 +505,24 @@ document.addEventListener("DOMContentLoaded", () => {
     fecharPopup();
     e.target.reset();
   });
-
+  
+  // No forms turma: quando der submit
   forms.turma?.addEventListener("submit", async (e) => {
     e.preventDefault();
     const nome = e.target.querySelector('input[name="nome"]').value;
     const codigo = e.target.querySelector('input[name="codigo"]').value;
-    const turno = e.target.querySelector('select[name="turno"').value;
+    const turno = e.target.querySelector('select[name="turno"]').value;
     await adicionarTurma(nome, codigo, turno);
     fecharPopup();
     e.target.reset();
   });
 
+  // Elementos das secções 
   const secCursos = document.getElementById("sec-cursos");
   const secDisciplinas = document.getElementById("sec-disciplinas");
   const secTurmas = document.getElementById("sec-turmas");
 
+  // Listener no click
   document.addEventListener("click", (e) => {
     const btn = e.target.closest("button");
 
