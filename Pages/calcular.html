@@ -2,98 +2,117 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cálculo da Nota</title>
+  <meta charset="UTF-8"> <!-- Definindo charset para evitar problemas com acentuação -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Layout responsivo -->
+  <title>Dashboard</title>
 
+  <!-- CSS principal dessa tela. Todo o estilo vem daqui. -->
   <link rel="stylesheet" href="../Styles/calcular.css">
+
+  <!-- Biblioteca de ícones que uso nos menus e botões. -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
+
 <body>
-  <div class="container">
-    <!--MENU-->
+  <div class="container"> <!-- Container geral que divide o conteúdo e a sidebar -->
+
+    <!-- Sidebar: menu lateral fixo para navegação do sistema -->
     <div class="sidebar">
       <div>
         <h2>NotaDez</h2>
 
         <p class="section-title">MENU</p>
+
+        <!-- Menu principal.
+             Usei classes para estilização e também para identificar o item ativo. -->
         <div class="menu">
           <a href="dash.html" class="menu-item"><i class="fa-solid fa-gauge"></i> Dashboard</a>
           <a href="instituicoes.html" class="menu-item"><i class="fa-solid fa-school"></i> Instituições</a>
           <a href="alunos.html" class="menu-item"><i class="fa-solid fa-user-graduate"></i> Alunos</a>
-          <a href="notas.html" class="menu-item "><i class="fa-solid fa-file-lines"></i> Notas</a>
+          <a href="notas.html" class="menu-item"><i class="fa-solid fa-file-lines"></i> Notas</a>
+
+          <!-- Página atual, por isso deixei como active -->
           <a href="#" class="menu-item active"><i class="fa-solid fa-calculator"></i> Cálculo da Nota</a>
         </div>
       </div>
 
       <div class="outros">
         <p class="section-title">OUTROS</p>
-        <a href="index.html" class="menu-item"><i class="fa-solid fa-right-from-bracket"></i> Sair</a>
+
+        <!-- Botão de saída do sistema (volta pra index).
+             Em produção deverá encerrar sessão no backend. -->
+        <a href="../index.html" class="menu-item"><i class="fa-solid fa-right-from-bracket"></i> Sair</a>
       </div>
     </div>
-      <!--Conteúdo-->
+
+    <!-- Conteúdo principal da tela -->
     <div class="content">
-        
-          <h2>Cálculo da Nota</h2>
-          
-          <div class="form-group">
-              <label for="select-instituicao">Instituição</label>
-            <select class="select-field sortInstituicao" id="select-instituicao">
-              <option value="-1">Instituição</option>
-            </select>
-            <i class="fa-solid fa-chevron-down select-icon"></i>
-          </div>
-  
-          <div class="form-group">
-              <label for="select-curso">Curso</label>
-            <select class="select-field sortCurso" id="select-curso">
-              <option value="-1">Curso</option>
-            </select>
-            <i class="fa-solid fa-chevron-down select-icon"></i>
-          </div>
-  
-          <div class="form-group">
-              <label for="select-disciplina">Disciplina</label>
-            <select class="select-field sortDisciplina" id="select-disciplina">
-              <option value="-1">Disciplinas</option>
-            </select>
-            <i class="fa-solid fa-chevron-down select-icon"></i>
-          </div>
-<hr style="margin: 30px 0">
-          <div class="components-section">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px">
-            <label>Componentes</label>
-                  <div>
-                      <button class="btn btn-validate" id="btn-adc-componente">Adicionar Componente</button>
-                      <button class="btn btn-validate" id="btn-salvar-alteracoes">Salvar Alterações</button>
-                  </div>
-              </div>
-            <table class="tabelas" id="tabela-componentes">
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Sigla</th>
-                        <th>Descrição</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
 
-                </tbody>
-            </table>
-          </div>
+      <h2>Notas</h2>
 
-          <div class="formula-section">
-            <label for="formula">Definir Fórmula <span style="color: rgb(23, 53, 109); margin-left: 60px">Dica: (Use "$" antes de cada sigla de componente de nota)</span></label>
-            <div class="formula-input-group">
-              <input type="text" id="formula" class="text-field" value="">
-              <button type="button" class="btn btn-validate" id="btn-validar-formula">Validar fórmula</button>
-            </div>
-          </div>
-  
+      <!-- SELECT: Instituição
+           Será preenchido dinamicamente pelo JS com base no banco -->
+      <div class="form-group">
+        <select class="select-field sortInstituicao">
+          <option value="-1">Instituição</option> <!-- Valor padrão -->
+        </select>
+        <i class="fa-solid fa-chevron-down select-icon"></i> <!-- Ícone visual -->
+      </div>
+
+      <!-- SELECT: Curso
+           Esse também recebe valores dinamicamente quando o usuário escolhe a instituição -->
+      <div class="form-group">
+        <select class="select-field sortCurso">
+          <option value="-1">Curso</option>
+        </select>
+        <i class="fa-solid fa-chevron-down select-icon"></i>
+      </div>
+
+      <!-- SELECT: Disciplina (depende do curso selecionado) -->
+      <div class="form-group">
+        <select class="select-field sortDisciplina">
+          <option value="-1">Disciplinas</option>
+        </select>
+        <i class="fa-solid fa-chevron-down select-icon"></i>
+      </div>
+
+      <!-- Listando os componentes que fazem parte da nota.
+           Deixei readonly porque por enquanto não podem ser editados manualmente. -->
+      <div class="components-section">
+        <label>Componentes</label>
+        <textarea class="textarea-field" readonly>P1
+P2
+P3
+Trabalho
+        </textarea>
+      </div>
+
+      <!-- Seção onde o usuário define a fórmula da nota -->
+      <div class="formula-section">
+        <label for="formula">Definir Fórmula</label>
+
+        <div class="formula-input-group">
+
+          <!-- Input onde o usuário digita a fórmula, ex: P1*0.2 + P2*0.3 + Trabalho -->
+          <input type="text" id="formula" class="text-field" value=""> <!-- Campo da fórmula -->
+
+          <!-- Botão para validar a fórmula (JS faz a checagem).
+               Usei ID para facilitar identificar no script. -->
+          <button type="button" class="btn btn-validate" id="btn-validar-formula">Validar fórmula</button>
         </div>
-      
-    </div>
+      </div>
+
+      <!-- Botões finais da página -->
+      <div class="actions">
+        <button class="btn btn-save">Salvar</button> <!-- Envia dados para serem gravados -->
+        <button class="btn btn-cancel">Cancelar</button> <!-- Cancela alterações -->
+      </div>
+
+    </div> <!-- fim content -->
+
+  </div> <!-- fim container -->
+
+  <!-- Script responsável por preencher selects, validar fórmula e salvar alterações -->
   <script src="../Scripts/calcular.js"></script>
 </body>
 </html>
