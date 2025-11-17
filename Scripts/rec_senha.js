@@ -1,4 +1,6 @@
 //Feito por Giovana Uchelli - 25008818
+
+// Função que envia o email para o backend solicitar recuperação de senha.
 async function enviarRecuperacao() {
         const btn = document.querySelector('.btn-entrar');
         try {
@@ -6,22 +8,25 @@ async function enviarRecuperacao() {
             const email = document.getElementById('email').value;
             if (!email) return alert('Digite um email válido.');
 
+            // envia o email para o backend gerar o token de recuperação
             const res = await fetch("http://localhost:3000/recuperar-senha", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email }),
             });
 
-            // Se redeu erro (ex: 404), isso pega o corpo e exibe
+            // tenta ler a resposta do servidor
             let data;
             try { data = await res.json(); } catch (e) { data = { error: 'Resposta inválida do servidor.' }; }
 
+            // se o backend retornou erro
             if (!res.ok) {
-            alert(data.error || `Erro ${res.status}`);
-            console.error('Resposta /recuperar-senha:', res.status, data);
+                alert(data.error || `Erro ${res.status}`);
+                console.error('Resposta /recuperar-senha:', res.status, data);
             } else {
-            alert(data.message || 'E-mail enviado com sucesso (verifique spam).');
-            console.log('Sucesso:', data);
+                // se deu certo, avisa o usuário
+                alert(data.message || 'E-mail enviado com sucesso (verifique spam).');
+                console.log('Sucesso:', data);
             }
         } catch (err) {
             // Erro de rede (servidor offline, CORS, etc.)
