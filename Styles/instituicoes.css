@@ -1,7 +1,9 @@
 /*Feito por laura Carvalho - 25014543*/
+
+/* Importa o CSS do dashboard, herdando estilos base */
 @import url(dash.css);
 
-/* ===== Área de conteúdo ===== */
+/* Estilização geral da área de conteúdo da página */
 .content {
   flex: 1;
   padding: 25px 50px 50px 50px;
@@ -11,7 +13,7 @@
 }
 
 
-/* ===== Containers principais ===== */
+/* Container principal das instituições e seu comportamento */
 .instituicoes-container {
 display: flex;
 flex-direction: column;
@@ -21,6 +23,7 @@ color: var(--azulMarinho);
 transition: all 0.3s ease;
 }
 
+/* Cabeçalho do container com título e botão */
 .instituicoes-container-header {
 text-align: center;
 margin-bottom: 25px;
@@ -50,11 +53,12 @@ background-color: var(--azulMarinho);
 cursor: pointer;
 }
 
+/* Conteúdo interno das instituições */
 .instituicoes-container-content {
 width: 100%;
 }
 
-/* ===== Tabelas ===== */
+/* Estilização geral das tabelas */
 .tabelas {
 width: 100%;
 border-collapse: separate;
@@ -78,6 +82,7 @@ padding: 10px 20px;
 width: 350px;
 }
 
+/* Área onde ficam os botões de ação da tabela */
 .tabela-acoes {
 width: 100%;
 display: flex;
@@ -106,7 +111,7 @@ color: var(--azulMarinho);
 }
 
 
-/* ===== Botões de ação “Ver” ===== */
+/* Estilização dos botões de ação “Ver” */
 button.btn-ver-cursos,
 button.btn-ver-disciplinas,
 button.btn-ver-turmas {
@@ -123,7 +128,7 @@ button.btn-ver-turmas:hover {
 transform: scale(1.03);
 }
 
-/* ===== Modal ===== */
+/* Estrutura do modal exibido na tela */
 .modal {
 display: none;
 position: fixed;
@@ -137,6 +142,7 @@ align-items: center;
 z-index: 1000;
 }
 
+/* Conteúdo interno do modal com animação e layout */
 .modal-content {
 background: #fff;
 padding: 25px 30px;
@@ -146,15 +152,16 @@ box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 animation: aparecer 0.2s ease-in-out;
 }
 
+/* Animação de abertura do modal */
 @keyframes aparecer {
-from {
-transform: scale(0.9);
-opacity: 0;
-}
-to {
-transform: scale(1);
-opacity: 1;
-}
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .modal-content h2 {
@@ -163,6 +170,7 @@ color: #17356d;
 text-align: center;
 }
 
+/* Formulários internos do modal com controle de exibição */
 .modal-content form {
 display: none;
 flex-direction: column;
@@ -191,6 +199,7 @@ margin-bottom: 10px;
 border-color: #17356d;
 }
 
+/* Estilização do select utilizado como filtro */
 .filtro-select {
     padding: 10px;
     border: 1px solid #ddd;
@@ -203,6 +212,7 @@ border-color: #17356d;
     margin-left: -20px;
 }
 
+/* Botões do modal como confirmar e cancelar */
 .modal-buttons {
 display: flex;
 justify-content: flex-end;
