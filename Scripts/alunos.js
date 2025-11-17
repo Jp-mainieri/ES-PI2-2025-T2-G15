@@ -307,7 +307,6 @@ document.getElementById("tabela-alunos").addEventListener("click", async (event)
     document.getElementById("editarNomeAluno").value = aluno.NOME;
     document.getElementById("editarRaAluno").textContent = aluno.RA_ALUNO;
     await carregarTurmas();
-    document.getElementById("editarTurmaAluno").textContent = turma.NOME;
 
     abrirModal("modalEditar");
   }
@@ -332,7 +331,6 @@ document.getElementById("formEditarAluno").addEventListener("submit", async (e) 
 
   const ra = document.getElementById("editarRaAluno").value;
   const nome = document.getElementById("editarNomeAluno").textContent;
-  const turma = document.getElementById("editarTurmaAluno").textContent;
 
     await editarAluno(ra)
     fecharModal("modalEditar");
