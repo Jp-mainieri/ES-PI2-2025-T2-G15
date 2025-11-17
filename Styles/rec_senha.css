@@ -1,4 +1,6 @@
 /*Feito por Giovana Uchelli - 25008818*/
+
+/* Estiliza o cabeçalho fixo e transparente no topo */
 header {
     position: absolute;  
     top: 0;
@@ -13,6 +15,7 @@ header {
     padding: 30px 90px;
 }
 
+/* Botão de Login no header */
 .btn-login {
     background-color: #17356D;
     color: #fff;
@@ -26,6 +29,7 @@ header {
 }
 
 
+/* Container geral da tela dividida em duas partes */
 .login-container {
     position: absolute;
     display: flex;
@@ -33,7 +37,7 @@ header {
     height: 100vh;              
 }
 
-/*lado esquerdo*/
+/* Lado esquerdo — área do formulário */
 .form {
     flex: 1;
     background-color: #fff;     
@@ -44,12 +48,15 @@ header {
     padding: 30px 90px;
 }
 
+/* Título principal do formulário */
 .form h3 {
     text-align: center;
     width: 100%;
     margin-bottom: 30px; 
 }
 
+
+/* Subtítulo do formulário */
 .form h4 {
     text-align: center;
     margin-bottom: 30px; 
@@ -60,7 +67,7 @@ header {
 }
 
 
-/*lado direito*/
+/* Lado direito — área da imagem */
 .image-side {
     flex: 1;
     background-color: #f4f4f4;  
@@ -71,6 +78,8 @@ header {
     margin: 0; 
 }
 
+
+/* Posicionamento e tamanho da imagem decorativa */
 .imagem {
     position: absolute; 
     top: 45%;           
@@ -80,6 +89,7 @@ header {
     width: 55%;       
 }
 
+/* Rotação e ajuste da imagem */
 .imagem img {
     transform: rotate(10deg); 
     width: 58%; /* garante que o img ocupe todo o container .imagem */
@@ -87,14 +97,18 @@ header {
     
 }
 
+/* Estilo das labels */
 label{
     color: #17356D;
 }
 
+/* Cor do placeholder dentro dos inputs */
 input::placeholder {
     color: rgb(140, 140, 140);        
 }
 
+
+/* Estilização geral dos inputs */
 input{
     margin-top: 5px;
     padding: 13px;
@@ -104,6 +118,7 @@ input{
     padding-right: 200px;
 }
 
+/* Container para organizar botões de entrar */
 .btn-container {
     display: flex;
     flex-direction: column; 
@@ -112,6 +127,7 @@ input{
     margin-top: 20px;
 }
 
+/* Botão principal de entrar */
 .btn-entrar {
     padding: 13px 160px;
     border: none;
@@ -122,6 +138,8 @@ input{
     text-decoration: none;
 }
 
+
+/* Botão alternativo para entrar (tamanho diferente) */
 .btn-entrar-alt {
     padding: 13px 147px;
     border: none;

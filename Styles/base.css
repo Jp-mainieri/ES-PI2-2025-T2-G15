@@ -1,6 +1,9 @@
 /*Feito por Giovana Uchelli - 25008818*/
+
+/* fonte padrão do site */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
+/* Configurações gerais do body */
 body {
   margin: 0;
   padding: 0;
@@ -8,12 +11,14 @@ body {
   font-family: "Poppins", sans-serif;
 }
 
+/* Define comportamento de rolagem e tamanho da página */
 html, body {
     height: 100%;
     overflow-y: auto;
     scroll-behavior: smooth;
 }
-  
+
+/* Estilização geral do cabeçalho (logo + navegação) */
 header {
 
     display: flex;
@@ -23,14 +28,14 @@ header {
     
 }
 
-  
+/* Estilo da logo do site */
 .logo {
     font-weight: bold;
     font-size: 24px;
     color: #17356D; 
 }
 
- 
+/* Container dos links do menu */
 nav {
 
     display: flex;
@@ -38,6 +43,7 @@ nav {
     gap: 20px;
 }
 
+/* Estilo dos links do header */
 nav a {
     text-decoration: none;
     color: #17356D;
@@ -45,6 +51,7 @@ nav a {
     
 }
 
+/* Botão azul de cadastro */
 .btn-cadastro {
     background-color: #17356D;
     color: #fff;
@@ -57,6 +64,7 @@ nav a {
     font-size: 12px;
 }
 
+/* Container principal com texto e imagem lado a lado */
 .container {
     display: flex;
     padding: 50px 90px;
@@ -65,7 +73,7 @@ nav a {
     background: #fff;
 }
 
-  
+/* Título principal da página */
 .texto h1 {
     font-size: 55px;
     color:rgb(4, 4, 35);
@@ -73,6 +81,7 @@ nav a {
     
 }
 
+/* Subtítulo da seção */
 .texto h2 {
     font-size: 18px;
     color: rgb(155, 154, 154);
@@ -80,12 +89,13 @@ nav a {
 }
 
 
-/* container da imagem */
+/* Área da imagem principal e elementos decorativos */
 .imagem {
   position: relative;   
   display: inline-block;
 }
 
+/* Imagem grande do layout */
 .imagem img {
   max-width: 620px;
   border-radius: 15px;
@@ -95,7 +105,7 @@ nav a {
   top: 55px;
 }
 
-/* círculos decorativos */
+/* Círculos decorativos atrás da imagem */
 .circle {
   position: absolute;
   border-radius: 50%;
@@ -136,7 +146,7 @@ nav a {
   z-index: 0; /* sempre atrás */
 }
 
-/* seção abaixo da imagem */
+/* Seção inferior cinza com os cards */
 .conteudo {
   background: #f4f4f4;  
   min-height: 350px;
@@ -145,6 +155,7 @@ nav a {
   
 }
 
+/* Container dos cards */
 .cards {
   display: flex;
   justify-content: center;
@@ -152,6 +163,7 @@ nav a {
   padding: 30px 90px;
 }
 
+/* Cada card individual */
 .card {
   background: #fff;
   padding: 50px 20px;
@@ -165,6 +177,7 @@ nav a {
   box-shadow: 0 6px 14px rgba(0,0,0,0.12);
 }
 
+/* Ícone circular dentro dos cards */
 .card .icon {
   width: 60px;
   height: 60px;
@@ -178,6 +191,7 @@ nav a {
   
 }
 
+/* Título de cada card */
 .card h3 {
   font-size: 18px;
   color: #1A2B5D;
@@ -185,6 +199,7 @@ nav a {
   text-align:left;
 }
 
+/* Descrição dos cards */
 .card p {
   font-size: 14px;
   color: #666;

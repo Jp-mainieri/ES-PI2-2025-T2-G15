@@ -5,10 +5,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Alunos</title>
+  <!-- Arquivo CSS específico da página de notas -->
   <link rel="stylesheet" href="../Styles/notas.css">
+  <!-- Biblioteca de ícones Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
+
+<!-- Contêiner principal que divide menu lateral e conteúdo -->
 <div class="container">
     <!--MENU-->
   <div class="sidebar">
@@ -16,6 +20,8 @@
       <h2>NotaDez</h2>
 
       <p class="section-title">MENU</p>
+
+      <!-- Links do menu principal -->
       <div class="menu">
         <a href="dash.html" class="menu-item"><i class="fa-solid fa-gauge"></i> Dashboard</a>
         <a href="instituicoes.html" class="menu-item"><i class="fa-solid fa-school"></i> Instituições</a>
@@ -32,11 +38,15 @@
   </div>
     <!--Conteúdo-->
   <div class="content">
+
+    <!-- Contêiner das funcionalidades de notas -->
     <section class="notas-container">
+      <!-- Cabeçalho da seção -->
       <div class="notas-container-header">
         <h1>Notas</h1>
       </div>
 
+      <!-- Filtros de seleção (Instituição, Curso, Disciplina, Turma) -->
       <div class="filtros-container">
         <select class="filtro-select sortInstituicao">
         <option value="-1">Instituição</option>
@@ -53,7 +63,8 @@
         <option value="-1">Turma</option>
         </select>  
       </div>
-            
+      
+      <!-- Botões que aparecem conforme ações do usuário -->
       <div class="botoes-container">
           <button class="btn-salvar" id="btn-editar-por-componente" style="display:none;">Editar por componente</button>
           <select class="filtro-select" id="select-componente" style="display:none;">
@@ -64,7 +75,7 @@
       </div>
       
 
-
+        <!-- Tabela onde serão carregadas as notas dos alunos -->
         <table class="tabela-notas" id="tabela-notas">
           <thead>
           </thead>
@@ -72,7 +83,7 @@
           </tbody>
         </table>
       
-    
+            <!-- Botão de exportar notas -->
             <div class="botoes-container"><button class="btn-exportar" id="btn-exportar" style="display: none; margin-top: 50px;">Exportar</button></div>
     </section>
 
@@ -87,6 +98,7 @@
           As notas exportadas corresponderão à turma selecionada.
         </p>
 
+      <!-- Escolha do formato de exportação -->
       <div class="form-group">
         <label>Formato do arquivo:</label>
         <div class="radio-group">
@@ -100,7 +112,7 @@
       </div>
   </div>
 </div>
-
+<!-- Arquivo JavaScript responsável pela lógica das notas -->
 <script src="../Scripts/notas.js"></script>
 
 </body>

@@ -3,14 +3,14 @@ import OracleDB from "oracledb";
 import { open, close } from "../config/db";
 import crypto from "crypto";
 
-// Armazena tokens em memória (token -> email)
+// mapa que guarda tokens temporários (token -> email)
 const tokensAtivos = new Map<string, string>();
 
-// Gera e guarda token temporário
+// gera um token de recuperação e associa ao email
 export async function gerarTokenRecuperacao(email: string): Promise<string | null> {
   const connection = await open();
   try {
-    // Verifica se o email existe
+    // verifica se o email existe no banco
     const result = await connection.execute(
       `SELECT ID_PROFESSOR FROM PROFESSORES WHERE EMAIL = :email`,
       { email }
@@ -20,10 +20,11 @@ export async function gerarTokenRecuperacao(email: string): Promise<string | nul
       return null; // Email não encontrado
     }
 
+    // cria token aleatório
     const token = crypto.randomBytes(32).toString("hex");
     tokensAtivos.set(token, email);
 
-    // Token expira em 15 minutos
+    // apaga o token depois de 15 minutos
     setTimeout(() => tokensAtivos.delete(token), 15 * 60 * 1000);
 
     return token;
@@ -32,10 +33,12 @@ export async function gerarTokenRecuperacao(email: string): Promise<string | nul
   }
 }
 
+// retorna o email vinculado ao token
 export async function validarToken(token: string): Promise<string | null> {
   return tokensAtivos.get(token) || null;
 }
 
+// atualiza a senha do professor no banco
 export async function redefinirSenha(email: string, novaSenha: string): Promise<boolean> {
   const connection = await open();
   try {
@@ -50,6 +53,7 @@ export async function redefinirSenha(email: string, novaSenha: string): Promise<
   }
 }
 
+// remove o token da memória
 export function invalidarToken(token: string): void {
   tokensAtivos.delete(token);
 }

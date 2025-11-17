@@ -1,12 +1,16 @@
 /*Feito por Giovana Uchelli - 25008818*/
+
+/* Importa variáveis/estilos base do dashboard*/
 @import url(dash.css);
 
+/* Área de conteúdo com rolagem */
 .content {
   overflow: scroll;
   scrollbar-width: none;
   padding: 25px 50px 0 50px;
 }
 
+/* Container geral das notas */
 .notas-container {
   display: flex;
   flex-direction: column;
@@ -14,6 +18,7 @@
   color: var(--azulMarinho);
 }
 
+/* Cabeçalho da área de notas (título + filtros) */
 .notas-container-header {
   display: flex;
   justify-content: space-between;
@@ -21,11 +26,13 @@
   margin-bottom: 25px;
 }
 
+/* Estilização do título */
 .notas-container-header h1 {
   font-size: 1.5em;
   margin: 0;
 }
 
+/* Caixa que contém todos os filtros */
 .filtros-container {
   display: flex;
   align-items: center;
@@ -36,7 +43,8 @@
   border-radius: 10px;
     
 }
-  
+
+/* Estilo do select de filtro */
 .filtro-select {
   padding: 10px;
   border: 1px solid #ddd;
@@ -48,14 +56,16 @@
   cursor: pointer;
   margin-left: -20px;
 }
-  
+
+/* Container dos botões (Salvar e Exportar) */  
 .botoes-container {
   display: flex;
   gap: 10px;
   margin-left: auto;
   margin-right: 20px;
 }
-  
+
+/* Estilo base dos botões */
 .btn-exportar,
 .btn-salvar {
   background-color: var(--azulMarinhoClaro);
@@ -67,13 +77,14 @@
   cursor: pointer;
   transition: 0.3s;
 }
-  
+
+/* Efeito hover dos botões */
 .btn-exportar:hover,
 .btn-salvar:hover {
   background-color: var(--azulMarinho);
 }
   
-  
+/* Estilização da tabela de notas */ 
 .tabela-notas {
   margin-top: 40px;
   width: 98%;
@@ -85,20 +96,22 @@
 
 }
 
-  
+/* Títulos das colunas */  
 .tabela-notas th {
   padding: 15px;
   font-weight: 600;
   background-color: #fff;
   border-bottom: 1px solid #ddd;
 }
-  
+
+/* Células de dados */  
 .tabela-notas td {
    padding: 15px;
    border-bottom: 1px solid #ddd;
   background-color: #fff;
 }
-  
+
+/* Inputs de notas dentro da tabela */
 .tabela-notas input {
   width: 60px;
   text-align: center;
@@ -109,7 +122,7 @@
 }
 
 
-  
+/* Foco nos inputs */  
 .tabela-notas input:focus {
   outline: none;
   border-color: #0a1e50;
@@ -117,7 +130,7 @@
 }
   
 
-
+/* Fundo escuro do modal */
 .modal {
   display: none; 
   position: fixed;
@@ -131,6 +144,7 @@
   align-items: center;
 }
 
+/* Caixa branca do modal */
 .modal-content {
   background: #fff;
   padding: 30px 40px;
@@ -142,21 +156,26 @@
   animation: fadeIn 0.3s ease;
 }
 
+/* Animação ao abrir o modal */
 @keyframes fadeIn {
   from { opacity: 0; transform: scale(0.9); }
   to { opacity: 1; transform: scale(1); }
 }
 
+
+/* Título do modal */
 .modal-content h2 {
   text-align: center;
   color: #17356D;
   margin-bottom: 20px;
 }
 
+/* Grupos do formulário */
 .modal-content .form-group {
   margin-bottom: 20px;
 }
 
+/* Estilo das labels */
 .modal-content label {
   display: block;
   font-weight: 600;
@@ -164,6 +183,7 @@
   margin-bottom: 6px;
 }
 
+/* Select do modal */
 .modal-content select {
   width: 100%;
   padding: 10px;
@@ -173,6 +193,7 @@
   font-family: 'Poppins', sans-serif;
 }
 
+/* Container dos radios */
 .radio-group {
   display: flex;
   gap: 25px;
@@ -184,6 +205,8 @@
   margin-right: 5px;
 }
 
+
+/* Botões dentro do modal */
 .modal-buttons {
   display: flex;
   justify-content: flex-end;
@@ -191,6 +214,7 @@
   margin-top: 25px;
 }
 
+/* Botão confirmar */
 .modal-buttons .confirmar {
   background-color: #0a1e50;
   color: white;
@@ -206,6 +230,7 @@
   background-color: #17356D;
 }
 
+/* Botão cancelar */
 .modal-buttons .cancelar {
   background-color: transparent;
   color: #17356D;
