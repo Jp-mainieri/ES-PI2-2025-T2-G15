@@ -1,3 +1,5 @@
+
+//Feito por laura Carvalho - 25014543
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("formLogin");
 
