@@ -43,7 +43,7 @@ async function editarAluno(ra, nome) {
             method: "PUT",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({
-                nome,
+                nome
             }),
         });
 
@@ -308,10 +308,8 @@ document.getElementById("tabela-alunos").addEventListener("click", async (event)
     document.getElementById("editarNomeAluno").value = aluno.NOME;
     document.getElementById("editarRaAluno").textContent = aluno.RA_ALUNO;
     // Descobre a turma
-    const turmaDoAluno = turmasData.find(t => t.id == aluno.ID_TURMA);
+    const turmaDoAluno = turmasData.find(t => t.ID_TURMA == aluno.ID_TURMA);
     document.getElementById("editarTurmaAluno").textContent = turmaDoAluno?.NOME || "N/A";
-
-    await carregarTurmas();
 
     abrirModal("modalEditar");
   }
@@ -334,8 +332,8 @@ document.getElementById("tabela-alunos").addEventListener("click", async (event)
 document.getElementById("formEditarAluno").addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const ra = document.getElementById("editarRaAluno").value;
-  const nome = document.getElementById("editarNomeAluno").textContent;
+  const ra = document.getElementById("editarRaAluno").textContent;
+  const nome = document.getElementById("editarNomeAluno").value;
 
     await editarAluno(ra, nome)
     fecharModal("modalEditar");
