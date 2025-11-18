@@ -304,8 +304,13 @@ document.getElementById("tabela-alunos").addEventListener("click", async (event)
     
     if (!aluno) return;
 
+    // Preenche os campos do modal
     document.getElementById("editarNomeAluno").value = aluno.NOME;
     document.getElementById("editarRaAluno").textContent = aluno.RA_ALUNO;
+    // Descobre a turma
+    const turmaDoAluno = turmasData.find(t => t.id == aluno.ID_TURMA);
+    document.getElementById("editarTurmaAluno").textContent = turmaDoAluno?.NOME || "N/A";
+
     await carregarTurmas();
 
     abrirModal("modalEditar");
@@ -332,7 +337,7 @@ document.getElementById("formEditarAluno").addEventListener("submit", async (e) 
   const ra = document.getElementById("editarRaAluno").value;
   const nome = document.getElementById("editarNomeAluno").textContent;
 
-    await editarAluno(ra)
+    await editarAluno(ra, nome)
     fecharModal("modalEditar");
     carregarAlunos();
 });
