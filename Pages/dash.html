@@ -2,74 +2,93 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
 
-  <link rel="stylesheet" href="../Styles/dash.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- Importa o CSS específico da página Dashboard -->
+    <link rel="stylesheet" href="../Styles/dash.css">
+
+    <!-- Importa os ícones do FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
-  <div class="container">
-      <!--MENU-->
+<div class="container">
+
+    <!-- MENU LATERAL -->
     <div class="sidebar">
-      <div>
-        <h2>NotaDez</h2>
+        <div>
+            <h2>NotaDez</h2>
 
-        <p class="section-title">MENU</p>
-        <div class="menu">
-          <a href="#" class="menu-item active"><i class="fa-solid fa-gauge"></i> Dashboard</a>
-          <a href="instituicoes.html" class="menu-item"><i class="fa-solid fa-school"></i> Instituições</a>
-          <a href="alunos.html" class="menu-item"><i class="fa-solid fa-user-graduate"></i> Alunos</a>
-          <a href="notas.html" class="menu-item"><i class="fa-solid fa-file-lines"></i> Notas</a>
-          <a href="calcular.html" class="menu-item"><i class="fa-solid fa-calculator"></i> Cálculo da Nota</a>
+            <p class="section-title">MENU</p>
+
+            <!-- Links do menu principal -->
+            <div class="menu">
+                <!-- Página atual (ativa) -->
+                <a href="#" class="menu-item active"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+                <a href="instituicoes.html" class="menu-item"><i class="fa-solid fa-school"></i> Instituições</a>
+                <a href="alunos.html" class="menu-item"><i class="fa-solid fa-user-graduate"></i> Alunos</a>
+                <a href="notas.html" class="menu-item"><i class="fa-solid fa-file-lines"></i> Notas</a>
+                <a href="calcular.html" class="menu-item"><i class="fa-solid fa-calculator"></i> Cálculo da Nota</a>
+            </div>
         </div>
-      </div>
 
-      <div class="outros">
-        <p class="section-title">OUTROS</p>
-        <a href="index.html" class="menu-item"><i class="fa-solid fa-right-from-bracket"></i> Sair</a>
-      </div>
+        <div class="outros">
+            <p class="section-title">OUTROS</p>
+
+            <!-- Botão para sair da aplicação -->
+            <a href="index.html" class="menu-item"><i class="fa-solid fa-right-from-bracket"></i> Sair</a>
+        </div>
     </div>
-      <!--Conteúdo-->
+
+    <!-- CONTEÚDO PRINCIPAL -->
     <main class="main-content">
-            <div class="stats-cards">
-                <div class="card card-blue">
-                    <div class="icon-box"><i class="fas fa-user-graduate"></i></div>
-                    <p class="card-title">Alunos Cadastrados</p>
-                    <p class="card-value">1.200</p>
-                </div>
 
-                <div class="card card-green">
-                    <div class="icon-box"><i class="fas fa-building"></i></div>
-                    <p class="card-title">Instituições Ativas</p>
-                    <p class="card-value">20</p>
-                </div>
+        <!-- CARTÕES DE ESTATÍSTICAS -->
+        <div class="stats-cards">
 
-                <div class="card card-orange">
-                    <div class="icon-box"><i class="fas fa-book"></i></div>
-                    <p class="card-title">Notas Lançadas</p>
-                    <p class="card-value">320</p>
-                </div>
-
-                <div class="card card-yellow">
-                    <div class="icon-box"><i class="fas fa-chart-pie"></i></div>
-                    <p class="card-title">Média Geral</p>
-                    <p class="card-value">7,5</p>
-                </div>
+            <!-- Card de alunos cadastrados -->
+            <div class="card card-blue">
+                <div class="icon-box"><i class="fas fa-user-graduate"></i></div>
+                <p class="card-title">Alunos Cadastrados</p>
+                <p class="card-value">1.200</p>
             </div>
 
-                <div class="updates-box">
-                    <h2>Últimas atualizações</h2>
-                    <ul>
-                        <li><i class="fas fa-circle update-dot"></i> Nota lançada para João</li>
-                        <li><i class="fas fa-circle update-dot"></i> Novo aluno 'Maria Clara' Cadastrada</li>
-                        <li><i class="fas fa-circle update-dot"></i> Nova Instituição incluída 'PUC Campinas'</li>
-                    </ul>
-                </div>
+            <!-- Card de instituições ativas -->
+            <div class="card card-green">
+                <div class="icon-box"><i class="fas fa-building"></i></div>
+                <p class="card-title">Instituições Ativas</p>
+                <p class="card-value">20</p>
             </div>
-        </main>
-    </div>
-  </div>
+
+            <!-- Card de notas lançadas -->
+            <div class="card card-orange">
+                <div class="icon-box"><i class="fas fa-book"></i></div>
+                <p class="card-title">Notas Lançadas</p>
+                <p class="card-value">320</p>
+            </div>
+
+            <!-- Card de média geral -->
+            <div class="card card-yellow">
+                <div class="icon-box"><i class="fas fa-chart-pie"></i></div>
+                <p class="card-title">Média Geral</p>
+                <p class="card-value">7,5</p>
+            </div>
+        </div>
+
+        <!-- SEÇÃO DE ÚLTIMAS ATUALIZAÇÕES -->
+        <div class="updates-box">
+            <h2>Últimas atualizações</h2>
+
+            <!-- Lista de eventos recentes -->
+            <ul>
+                <li><i class="fas fa-circle update-dot"></i> Nota lançada para João</li>
+                <li><i class="fas fa-circle update-dot"></i> Novo aluno 'Maria Clara' Cadastrada</li>
+                <li><i class="fas fa-circle update-dot"></i> Nova Instituição incluída 'PUC Campinas'</li>
+            </ul>
+        </div>
+
+    </main>
+</div>
 </body>
 </html>

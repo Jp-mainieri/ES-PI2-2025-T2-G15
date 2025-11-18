@@ -1,4 +1,4 @@
--- Feito por João Pedro Panza Mainieri - 25006642
+-- Feito por Lucas Kendi Panini Hosikawa- 25014045
 
 -- Criando o USER WEBAPP
 CREATE USER WEBAPP IDENTIFIED BY PI2Grupo15$$;

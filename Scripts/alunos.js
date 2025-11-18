@@ -299,21 +299,17 @@ document.getElementById("tabela-alunos").addEventListener("click", async (event)
   if (event.target.closest(".btn-editar")) {
     const btn = event.target.closest(".btn-editar");
     const ra = btn.getAttribute("data-id");
-
+    
     const aluno = alunosData.find(a => a.RA_ALUNO == ra);
+    
     if (!aluno) return;
 
-    // Preenche os campos do modal
     document.getElementById("editarNomeAluno").value = aluno.NOME;
     document.getElementById("editarRaAluno").textContent = aluno.RA_ALUNO;
-
-    // Descobre a turma
-    const turmaDoAluno = turmasData.find(t => t.id == aluno.ID_TURMA);
-    document.getElementById("editarTurmaAluno").textContent = turmaDoAluno?.NOME || "N/A";
+    await carregarTurmas();
 
     abrirModal("modalEditar");
-}
-
+  }
 
   // Função para abrir modal de exclusão
   if (event.target.closest(".btn-excluir")) {
@@ -333,12 +329,10 @@ document.getElementById("tabela-alunos").addEventListener("click", async (event)
 document.getElementById("formEditarAluno").addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const ra = document.getElementById("editarRaAluno").textContent;
-  const nome = document.getElementById("editarNomeAluno").value;
+  const ra = document.getElementById("editarRaAluno").value;
+  const nome = document.getElementById("editarNomeAluno").textContent;
 
-  const turma = document.getElementById("editarTurmaAluno").textContent;
-
-    await editarAluno(ra, nome)
+    await editarAluno(ra)
     fecharModal("modalEditar");
     carregarAlunos();
 });

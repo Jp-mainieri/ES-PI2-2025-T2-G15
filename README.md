@@ -1,3 +1,4 @@
+<!--Feito por Lucas Kendi Panini Hosikawa - 25014845 -->
 # Projeto Integrador 2 — Engenharia de Software — PUC-Campinas
 
 ![alt text](img/image.png)
