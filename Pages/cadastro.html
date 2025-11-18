@@ -1,0 +1,78 @@
+<!--Feito por laura Carvalho - 25014543-->
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>NOTADEZ</title>
+
+    <!-- Importa o CSS principal da página -->
+    <link rel="stylesheet" href="../Styles/base.css">
+
+    <!-- Importa o CSS específico da página de login/cadastro -->
+    <link rel="stylesheet" href="../Styles/login.css">
+    
+    <!-- Importa os ícones do FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Importa o JavaScript responsável pelo cadastro -->
+    <script src="../Scripts/cadastro.js"></script>
+</head>
+<body>
+
+     <!-- Cabeçalho com logo e navegação -->
+    <header>
+        <div class="logo">NotaDez</div>
+        <nav>
+             <!-- Link para a página de login -->
+            <a href="login.html" ><strong>LOGIN</strong></a>
+
+            <!-- Link marcado como ativo (página atual de cadastro) -->
+            <a href="cadastro.html" class="btn-cadastro"><strong>CADASTRO</strong></a>
+        </nav>
+    </header>
+
+    <!-- Container principal do layout de login/cadastro -->
+    <div class="login-container">
+
+        <!-- Lado da imagem / decoração visual -->
+        <div class="image-side">
+            <!-- fundo cinza -->
+             <img src="../img/computador.png" alt="Computador">
+        </div>
+
+        <!-- Lado que contém o formulário -->
+        <div class="form">
+            <h3>Seja bem-vindo(a)!</h3>
+
+            <!-- Formulário de cadastro -->
+            <form id="formCadastro">
+
+                <!-- Campo Nome -->
+                <label for="nome"><strong>Nome:</strong></label><br>
+                <input type="text" id="nome" name="nome" placeholder="Digite seu nome" required><br><br>
+
+                <!-- Campo Email -->
+                <label for="email"><strong>Email:</strong></label><br>
+                <input type="email" id="email" name="email" placeholder="Digite seu email" required><br><br>
+
+                <!-- Campo Telefone -->
+                <label for="telefone"><strong>Telefone:</strong></label><br>
+                <input type="tel" id="telefone" name="telefone" placeholder="Digite seu telefone" required><br><br>
+
+                <!-- Campo Senha -->
+                <label for="senha"><strong>Senha:</strong></label><br>
+                <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required><br><br>
+
+                <!-- Botão de envio do formulário -->
+                <div class="btn-container">
+                    <button type="submit" class="btn-entrar"><strong>Cadastrar</strong></button>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+
+
+</body>
+</html>

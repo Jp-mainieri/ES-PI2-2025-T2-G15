@@ -1,0 +1,6 @@
+# Feito por João Pedro Panza Mainieri - 25006642
+.idea
+node_modules
+dist
+.env
+oracle/instantclient_23_9

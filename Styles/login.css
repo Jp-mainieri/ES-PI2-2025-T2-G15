@@ -1,0 +1,140 @@
+/*Feito por laura Carvalho - 25014543*/
+
+/* Header fixo no topo com layout horizontal */
+header {
+    position: absolute;  
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: transparent; 
+    box-sizing: border-box;
+    z-index: 10;          
+
+    display: flex;
+    justify-content: space-between;
+    padding: 30px 90px;
+}
+
+/* Botão de login básico com estilo arredondado */
+.btn-login {
+    background-color: #17356D;
+    color: #fff;
+    border: none;
+    padding: 18px 45px;
+    border-radius: 25px;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    transition: background-color 0.3s;
+    font-size: 12px;
+}
+
+/* Container geral que divide tela em duas partes */
+.login-container {
+    position: absolute;
+    display: flex;
+    width: 100%;
+    height: 100vh;              
+}
+
+/* Lado esquerdo contendo o formulário */
+.form {
+    flex: 1;
+    background-color: #fff;     
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+    padding: 30px 90px;
+}
+
+/* Estilo do título dentro do formulário */
+.form h3 {
+    text-align: center;
+    width: 100%;
+    margin-bottom: 30px; 
+}
+
+
+/* Lado direito destinado à imagem */
+.image-side {
+    flex: 1;
+    background-color: #f4f4f4;  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;       
+    margin: 0; 
+}
+
+/* Ajuste da imagem principal (capelo) no layout */
+.capelo {
+    position: absolute; 
+    top: 50%;           
+    left: 53%;          
+    transform: translate(-20%, -50%); 
+    z-index: 5;         
+    max-width: 900px;   
+}
+
+/* Inclina levemente a imagem */
+.capelo img {
+    transform: rotate(10deg); 
+}
+
+/* Cor padrão para os labels */
+label{
+    color: #17356D;
+}
+
+/* Cor do placeholder dos inputs */
+input::placeholder {
+    color: rgb(140, 140, 140);        
+}
+
+/* Estilo geral dos inputs */
+input{
+    margin-top: 5px;
+    padding: 13px;
+    border: 2px solid #17356D;
+    border-radius: 25px;
+    outline: none; 
+    padding-right: 200px;
+}
+
+/* Agrupamento do botão e do link abaixo dele */
+.btn-container {
+    display: flex;
+    flex-direction: column; 
+    align-items: flex-end;  
+    width: fit-content;     
+    margin-top: 20px;
+}
+
+/* Botão de entrar */
+.btn-entrar {
+    padding: 13px 170px;
+    border: none;
+    border-radius: 25px;
+    background-color: #17356D;
+    color: #fff;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+/* Texto “esqueceu a senha?” abaixo do botão */
+#esqueceu-senha {
+    font-size: 13px;
+    margin-top: 10px; 
+}
+
+/* Estilo do link dentro do texto de recuperação */
+#esqueceu-senha a {
+    text-decoration: none;
+    color: #17356D;
+}
+
+/* Adiciona sublinhado ao passar o mouse */
+#esqueceu-senha a:hover {
+    text-decoration: underline;
+    color: #17356D;
+}

@@ -1,0 +1,63 @@
+<!--Feito por Giovana Uchelli - 25008818-->
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>NOTADEZ</title>
+<!--Link para o arquivo base de CSS-->
+    <link rel="stylesheet" href="../Styles/base.css">
+    <link rel="stylesheet" href="../Styles/rec_senha.css">
+    <!--Link para os icones-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<!--Link para o arquivo de JavaScript-->
+    <script src="../Scripts/main.js"></script>
+
+
+</head>
+<body>
+
+    <header>
+        <div class="logo">NotaDez</div>
+        <nav>
+            <a href="login.html" class="btn-login"><strong>LOGIN</strong></a>
+        
+        </nav>
+    </header>
+
+    <!-- Contêiner principal que organiza o formulário e a imagem -->
+    <div class="login-container">
+
+    <!--Forms de Recuperar a senha-->
+        <div class="form">
+            <h3>Recupere a sua senha!</h3>
+            <h4> Digite o e-mail utilizado no cadastro para redefinir sua senha.</h4>
+
+            <form method="post" action="#">
+                <label for="email"><strong>Email:</strong></label><br>
+                <input type="email" id="email" name="email" placeholder="Digite seu email" required><br><br>
+
+                <!-- Botão para enviar o pedido de recuperação -->
+                <div class="btn-container">
+                    <button type="button" class="btn-entrar" onclick="enviarRecuperacao()"><strong>Confirmar</strong></button>
+                </div>
+            </form>
+        </div>
+        
+
+        <div class="imagem">
+        <img src="../img/img_recuperacao_senha.png" alt="Imagem">
+        </div>
+
+        <div class="image-side">
+            <!-- fundo cinza -->
+        </div>
+
+    </div>
+    
+    <!-- Script JS específico da tela de recuperação de senha -->
+    <script src="../Scripts/rec_senha.js"></script>
+
+
+
+</body>
+</html>

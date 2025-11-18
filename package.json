@@ -1,0 +1,35 @@
+{
+  "name": "notadez",
+  "version": "1.0.0",
+  "description": "Projeto Integrador - Grupo 15",
+  "main": "app.js",
+  "scripts": {
+    "verifyts": "ts-node src/teste.ts",
+    "build": "tsc",
+    "start": "npm run build && node dist/server.js"
+  },
+  "author": "João Pedro Panza Mainieri, Giovanna Uchelli, Laura Carvalho, Lucas Hosikawa, Beatriz Leme",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "dotenv": "^17.2.3",
+    "jsonwebtoken": "^9.0.2",
+    "nodemailer": "^7.0.10",
+    "oracledb": "^6.10.0"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "@types/body-parser": "^1.19.6",
+    "@types/cors": "^2.8.19",
+    "@types/dotenv": "^6.1.1",
+    "@types/express": "^5.0.5",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^24.8.1",
+    "@types/nodemailer": "^7.0.3",
+    "@types/oracledb": "^6.10.0",
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "typescript": "^5.9.3"
+  }
+}

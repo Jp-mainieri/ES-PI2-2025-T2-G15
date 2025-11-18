@@ -1,0 +1,137 @@
+<!--Feito por Beatriz Leme - 25015554-->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cálculo da Nota</title>
+
+    <!-- Importa o CSS da página de cálculo da nota -->
+    <link rel="stylesheet" href="../Styles/calcular.css">
+
+    <!-- Importa os ícones do FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+<div class="container">
+
+    <!-- MENU LATERAL -->
+    <div class="sidebar">
+        <div>
+            <h2>NotaDez</h2>
+
+            <p class="section-title">MENU</p>
+
+            <!-- Links do menu -->
+            <div class="menu">
+                <a href="dash.html" class="menu-item"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+                <a href="instituicoes.html" class="menu-item"><i class="fa-solid fa-school"></i> Instituições</a>
+                <a href="alunos.html" class="menu-item"><i class="fa-solid fa-user-graduate"></i> Alunos</a>
+                <a href="notas.html" class="menu-item "><i class="fa-solid fa-file-lines"></i> Notas</a>
+
+                <!-- Página atual (ativa) -->
+                <a href="#" class="menu-item active"><i class="fa-solid fa-calculator"></i> Cálculo da Nota</a>
+            </div>
+        </div>
+
+        <div class="outros">
+            <p class="section-title">OUTROS</p>
+
+            <!-- Botão para sair da aplicação -->
+            <a href="index.html" class="menu-item"><i class="fa-solid fa-right-from-bracket"></i> Sair</a>
+        </div>
+    </div>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <div class="content">
+
+        <h2>Cálculo da Nota</h2>
+
+        <!-- FILTRO POR INSTITUIÇÃO -->
+        <div class="form-group">
+            <label for="select-instituicao">Instituição</label>
+            <select class="select-field sortInstituicao" id="select-instituicao">
+                <option value="-1">Instituição</option>
+            </select>
+            <i class="fa-solid fa-chevron-down select-icon"></i>
+        </div>
+
+        <!-- FILTRO POR CURSO -->
+        <div class="form-group">
+            <label for="select-curso">Curso</label>
+            <select class="select-field sortCurso" id="select-curso">
+                <option value="-1">Curso</option>
+            </select>
+            <i class="fa-solid fa-chevron-down select-icon"></i>
+        </div>
+
+        <!-- FILTRO POR DISCIPLINA -->
+        <div class="form-group">
+            <label for="select-disciplina">Disciplina</label>
+            <select class="select-field sortDisciplina" id="select-disciplina">
+                <option value="-1">Disciplina</option>
+            </select>
+            <i class="fa-solid fa-chevron-down select-icon"></i>
+        </div>
+
+        <hr style="margin: 30px 0">
+
+        <!-- TABELA DE COMPONENTES DE NOTA -->
+        <div class="components-section">
+
+            <!-- Cabeçalho da seção de componentes com botões -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px">
+                <label>Componentes</label>
+                <div>
+                    <!-- Botão para adicionar novo componente -->
+                    <button class="btn btn-validate" id="btn-adc-componente">Adicionar Componente</button>
+
+                    <!-- Botão para salvar alterações nos componentes -->
+                    <button class="btn btn-validate" id="btn-salvar-alteracoes">Salvar Alterações</button>
+                </div>
+            </div>
+
+            <!-- Tabela onde os componentes de nota serão listados -->
+            <table class="tabelas" id="tabela-componentes">
+                <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th style="width: 17%">Sigla
+                        <span style="font-size: 12px; color: rgb(23, 53, 109)">
+                  (max:5 caracteres)
+                </span>
+                    </th>
+                    <th>Descrição</th>
+                    <th>Ações</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <!-- Linhas da tabela serão inseridas dinamicamente via JavaScript -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SEÇÃO DE FÓRMULA -->
+        <div class="formula-section">
+            <label for="formula">
+                Definir Fórmula
+                <span style="color: rgb(23, 53, 109); margin-left: 20px">
+            (Use "$" antes de cada sigla de componente de nota)
+          </span>
+            </label>
+
+            <!-- Input e botão para validar fórmula -->
+            <div class="formula-input-group">
+                <input type="text" id="formula" class="text-field" value="">
+                <button type="button" class="btn btn-validate" id="btn-validar-formula">Validar fórmula</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Importa o JavaScript da página de cálculo da nota -->
+<script src="../Scripts/calcular.js"></script>
+</body>
+</html>

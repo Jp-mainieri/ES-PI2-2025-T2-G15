@@ -1,0 +1,209 @@
+/*Feito por Giovana Uchelli - 25008818*/
+
+/* fonte padrão do site */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+/* Configurações gerais do body */
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Define comportamento de rolagem e tamanho da página */
+html, body {
+    height: 100%;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+}
+
+/* Estilização geral do cabeçalho (logo + navegação) */
+header {
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 90px;
+    
+}
+
+/* Estilo da logo do site */
+.logo {
+    font-weight: bold;
+    font-size: 24px;
+    color: #17356D; 
+}
+
+/* Container dos links do menu */
+nav {
+
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Estilo dos links do header */
+nav a {
+    text-decoration: none;
+    color: #17356D;
+    font-size: 14px;
+    
+}
+
+/* Botão azul de cadastro */
+.btn-cadastro {
+    background-color: #17356D;
+    color: #fff;
+    border: none;
+    padding: 18px 45px;
+    border-radius: 25px;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    transition: background-color 0.3s;
+    font-size: 12px;
+}
+
+/* Container principal com texto e imagem lado a lado */
+.container {
+    display: flex;
+    padding: 50px 90px;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+}
+
+/* Título principal da página */
+.texto h1 {
+    font-size: 55px;
+    color:rgb(4, 4, 35);
+    margin-top: -40px;
+    
+}
+
+/* Subtítulo da seção */
+.texto h2 {
+    font-size: 18px;
+    color: rgb(155, 154, 154);
+    font-weight: 100;
+}
+
+
+/* Área da imagem principal e elementos decorativos */
+.imagem {
+  position: relative;   
+  display: inline-block;
+}
+
+/* Imagem grande do layout */
+.imagem img {
+  max-width: 620px;
+  border-radius: 15px;
+  position: relative;
+  z-index: 0; /* sempre na frente */
+  right: -30px;
+  top: 55px;
+}
+
+/* Círculos decorativos atrás da imagem */
+.circle {
+  position: absolute;
+  border-radius: 50%;
+  background: #dfdfdf8b;
+  z-index: 1;
+}
+
+.c1 {
+  width: 110px;
+  height: 110px;
+  top: -10px;
+  left: 155px;
+}
+
+.c2 {
+  width: 60px;
+  height: 60px;
+  left: 60px;
+  top: 100px
+}
+
+.c3 {
+  width: 160px;
+  height: 160px;
+  bottom: 10%;
+  left: -10px;
+}
+
+/* quadrado atrás */
+.square {
+  position: absolute;
+  width: 370px;
+  height: 400px;
+  top: 25px;
+  right: 10px;
+  background: #e6eef9d5;
+  border-radius: 30px;
+  z-index: 0; /* sempre atrás */
+}
+
+/* Seção inferior cinza com os cards */
+.conteudo {
+  background: #f4f4f4;  
+  min-height: 350px;
+  width: 100%;           
+  display: block;
+  
+}
+
+/* Container dos cards */
+.cards {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  padding: 30px 90px;
+}
+
+/* Cada card individual */
+.card {
+  background: #fff;
+  padding: 50px 20px;
+  width: 280px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  text-align: center;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+}
+
+/* Ícone circular dentro dos cards */
+.card .icon {
+  width: 60px;
+  height: 60px;
+  background: #1A2B5D;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  
+}
+
+/* Título de cada card */
+.card h3 {
+  font-size: 18px;
+  color: #1A2B5D;
+  margin-bottom: 10px;
+  text-align:left;
+}
+
+/* Descrição dos cards */
+.card p {
+  font-size: 14px;
+  color: #666;
+  text-align: left;
+  letter-spacing: 1px;
+}
+

@@ -1,0 +1,210 @@
+<!--Feito por laura Carvalho - 25014543-->
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <!-- página é responsiva -->
+    <title>Instituições</title>
+
+    <!-- CSS da página de instituições -->
+    <link rel="stylesheet" href="../Styles/instituicoes.css" />
+
+    <!-- Importa o JavaScript responsável pela lógica da página -->
+    <script src="../Scripts/instituicoes.js" defer></script> <!-- "defer" faz o script carregar depois do HTML -->
+
+    <!-- Biblioteca de ícones FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  </head>
+  <body>
+    <div class="container">
+
+        <!--MENU LATERAL-->
+      <div class="sidebar">
+        <div>
+          <h2>NotaDez</h2>
+          <p class="section-title">MENU</p>
+
+          <!-- Links para as outras páginas -->
+          <div class="menu">
+            <a href="dash.html" class="menu-item"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+
+            <!-- Página atual marcada como ativa -->
+            <a href="#" class="menu-item active"><i class="fa-solid fa-school"></i> Instituições</a>
+            <a href="alunos.html" class="menu-item"><i class="fa-solid fa-user-graduate"></i> Alunos</a>
+            <a href="notas.html" class="menu-item"><i class="fa-solid fa-file-lines"></i> Notas</a>
+            <a href="calcular.html" class="menu-item"><i class="fa-solid fa-calculator"></i> Cálculo da Nota</a>
+          </div>
+        </div>
+
+         <!-- Seção inferior do menu -->
+        <div class="outros">
+          <p class="section-title">OUTROS</p>
+          <a href="index.html" class="menu-item"><i class="fa-solid fa-right-from-bracket"></i> Sair</a>
+        </div>
+      </div>
+
+      <!--CONTEÚDO PRINCIPAL-->
+      <div class="content">
+
+        <!-- ====== SEÇÃO INSTITUIÇÕES ====== -->
+        <section id="sec-instituicoes" class="instituicoes-container">
+          <div class="instituicoes-container-header">
+            <h1>Minhas Instituições</h1>
+
+            <!-- Botão para abrir popup de nova instituição -->
+            <button class="btn-nova-instituicao"><i class="fa-solid fa-plus"></i> Nova Instituição</button>
+          </div>
+
+          <!-- Tabela que lista instituições -->
+          <div class="instituicoes-container-content">
+            <table class="tabelas" id="tabela-instituicoes">
+              <tr>
+                <th>Instituição</th>
+                <th></th> <!-- Ações -->
+              </tr>
+              <tr></tr><!-- Linhas serão adicionadas via JS -->
+            </table>
+          </div>
+        </section>
+        <br /><br />
+
+        <!-- ====== SEÇÃO CURSOS (inicialmente escondida) ====== -->
+        <section id="sec-cursos" class="instituicoes-container" style="display: none">
+          <div class="instituicoes-container-header">
+            <h1>Cursos</h1>
+            <button id="btn-novo-curso"><i class="fa-solid fa-plus"></i> Novo Curso</button>
+          </div>
+
+          <!-- Tabela de cursos -->
+          <div class="instituicoes-container-content">
+            <table class="tabelas" id="tabela-cursos">
+              <tr>
+                <th>Curso</th>
+                <th>Código</th>
+                <th></th> <!-- Ações -->
+              </tr>
+              <tr></tr>
+            </table>
+          </div>
+        </section>
+        <br /><br />
+
+        <!-- ====== SEÇÃO DISCIPLINAS (escondida no início) ====== -->
+        <section id="sec-disciplinas" class="instituicoes-container" style="display: none" >
+          <div class="instituicoes-container-header">
+            <h1>Disciplinas</h1>
+            <button id="btn-nova-disciplina"><i class="fa-solid fa-plus"></i> Nova Disciplina</button>
+          </div>
+          <div class="instituicoes-container-content">
+            <table class="tabelas" id="tabela-disciplinas">
+              <tr>
+                <th>Nome</th>
+                <th>Sigla</th>
+                <th>Código</th>
+                <th>Período</th>
+                <th></th>
+              </tr>
+              <tr>
+              </tr>
+            </table>
+          </div>
+        </section>
+        <br /><br />
+
+        <!-- ====== SEÇÃO TURMAS (escondida no início) ====== -->
+        <section id="sec-turmas" class="instituicoes-container" style="display: none">
+          <div class="instituicoes-container-header">
+            <h1>Turmas</h1>
+            <button class="btn-nova-turma"><i class="fa-solid fa-plus"></i> Nova Turma</button>
+          </div>
+          <div class="instituicoes-container-content">
+            <table class="tabelas" id="tabela-turmas">
+              <tr>
+                <th>Nome</th>
+                <th>Código</th>
+                <th>Turno</th>
+                <th></th>
+              </tr>
+              <tr>
+              </tr>
+            </table>
+          </div>
+        </section>
+        
+        <!-- ======================= POPUP / MODAL ======================= -->
+        <div id="popup-novo-elemento" class="modal">
+          <div class="modal-content">
+            <h2 id="novo-elemento-title">Novo Elemento</h2>
+
+            <!-- ===== FORM NOVA INSTITUIÇÃO ===== -->
+            <form id="nova-instituicao-form" class="popup-form">
+              <label for="input-nome-instituicao">Nome:</label>
+              <input type="text" id="input-nome-instituicao" name="nome"required/>
+
+              <div class="modal-buttons">
+                <button type="button" class="btn-cancelar cancelar">Cancelar</button>
+                <button type="submit" class="btn-salvar confirmar">Salvar</button>
+              </div>
+            </form>
+
+            <!-- ===== FORM NOVO CURSO ===== -->
+            <form id="novo-curso-form" class="popup-form">
+              <label for="input-nome-curso">Nome do Curso:</label>
+              <input type="text" id="input-nome-curso" name="nome" required />
+
+              <label for="input-codigo-curso">Código:</label>
+              <input type="text" id="input-codigo-curso" name="codigo" required/>
+
+              <div class="modal-buttons">
+                <button type="button" class="btn-cancelar cancelar">Cancelar</button>
+                <button type="submit" class="btn-salvar confirmar">Salvar</button>
+              </div>
+            </form>
+
+            <!-- ===== FORM NOVA DISCIPLINA ===== -->
+            <form id="nova-disciplina-form" class="popup-form">
+              <label for="input-nome-disciplina">Nome:</label>
+              <input type="text" id="input-nome-disciplina" name="nome" required />
+
+              <label for="input-sigla-disciplina">Sigla:</label>
+              <input type="text" id="input-sigla-disciplina" name="sigla" required/>
+
+              <label for="input-codigo-disciplina">Código:</label>
+              <input type="text" id="input-codigo-disciplina" name="codigo" required/>
+
+              <label for="input-periodo-disciplina">Período:</label>
+              <input type="number" id="input-periodo-disciplina" name="periodo" required>
+
+              <div class="modal-buttons">
+                <button type="button" class="btn-cancelar cancelar">Cancelar</button>
+                <button type="submit" class="btn-salvar confirmar">Salvar</button>
+              </div>
+            </form>
+
+            <!-- ===== FORM NOVA TURMA ===== -->
+            <form id="nova-turma-form" class="popup-form">
+              <label for="input-nome-turma">Nome:</label>
+              <input type="text" id="input-nome-turma" name="nome" required />
+
+              <label for="input-codigo-turma">Código:</label>
+              <input type="text" id="input-codigo-turma" name="codigo" required/>
+
+              <label for="input-turno-turma">Turno:</label>
+              <select class="filtro-select" id="input-turno-turma" name="turno" required>
+                <option value="1">Matutino</option>
+                <option value="2">Vespertino</option>
+                <option value="3">Noturno</option>
+                <option value="4">Integral</option>
+              </select>
+
+              <div class="modal-buttons">
+                <button type="button" class="btn-cancelar cancelar">Cancelar</button>
+                <button type="submit" class="btn-salvar confirmar">Salvar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

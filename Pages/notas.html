@@ -1,0 +1,119 @@
+<!--Feito por Giovana Uchelli - 25008818-->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alunos</title>
+  <!-- Arquivo CSS específico da página de notas -->
+  <link rel="stylesheet" href="../Styles/notas.css">
+  <!-- Biblioteca de ícones Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<!-- Contêiner principal que divide menu lateral e conteúdo -->
+<div class="container">
+    <!--MENU-->
+  <div class="sidebar">
+    <div>
+      <h2>NotaDez</h2>
+
+      <p class="section-title">MENU</p>
+
+      <!-- Links do menu principal -->
+      <div class="menu">
+        <a href="dash.html" class="menu-item"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+        <a href="instituicoes.html" class="menu-item"><i class="fa-solid fa-school"></i> Instituições</a>
+        <a href="alunos.html" class="menu-item"><i class="fa-solid fa-user-graduate"></i> Alunos</a>
+        <a href="#" class="menu-item active"><i class="fa-solid fa-file-lines"></i> Notas</a>
+        <a href="calcular.html" class="menu-item"><i class="fa-solid fa-calculator"></i> Cálculo da Nota</a>
+      </div>
+    </div>
+
+    <div class="outros">
+      <p class="section-title">OUTROS</p>
+      <a href="index.html" class="menu-item"><i class="fa-solid fa-right-from-bracket"></i> Sair</a>
+    </div>
+  </div>
+    <!--Conteúdo-->
+  <div class="content">
+
+    <!-- Contêiner das funcionalidades de notas -->
+    <section class="notas-container">
+      <!-- Cabeçalho da seção -->
+      <div class="notas-container-header">
+        <h1>Notas</h1>
+      </div>
+
+      <!-- Filtros de seleção (Instituição, Curso, Disciplina, Turma) -->
+      <div class="filtros-container">
+        <select class="filtro-select sortInstituicao">
+        <option value="-1">Instituição</option>
+        </select>
+
+        <select class="filtro-select sortCurso">
+        <option value="-1">Curso</option>
+        </select>
+
+        <select class="filtro-select sortDisciplina">
+        <option value="-1">Disciplina</option>
+        </select>  
+        <select class="filtro-select sortTurma">
+        <option value="-1">Turma</option>
+        </select>  
+      </div>
+      
+      <!-- Botões que aparecem conforme ações do usuário -->
+      <div class="botoes-container">
+          <button class="btn-salvar" id="btn-editar-por-componente" style="display:none;">Editar por componente</button>
+          <select class="filtro-select" id="select-componente" style="display:none;">
+              <option value="-1">Componente de nota</option>
+          </select>
+          <button class="btn-salvar" id="btn-editar-notas" style="display: none;">Editar notas</button>
+        <button class="btn-salvar" id="btn-salvar" style="display: none;">Salvar alterações</button>
+      </div>
+      
+
+        <!-- Tabela onde serão carregadas as notas dos alunos -->
+        <table class="tabela-notas" id="tabela-notas">
+          <thead>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      
+            <!-- Botão de exportar notas -->
+            <div class="botoes-container"><button class="btn-exportar" id="btn-exportar" style="display: none; margin-top: 50px;">Exportar</button></div>
+    </section>
+
+  </div>
+</div>
+
+<!-- ===== Modal Exportar Notas ===== -->
+<div id="modalExportar" class="modal">
+  <div class="modal-content">
+    <h2>Exportar Notas</h2>
+        <p style="font-size: 0.9em; color: #555; margin-top: 4px;">
+          As notas exportadas corresponderão à turma selecionada.
+        </p>
+
+      <!-- Escolha do formato de exportação -->
+      <div class="form-group">
+        <label>Formato do arquivo:</label>
+        <div class="radio-group">
+          <label><input type="radio" name="formato" value="csv" checked> CSV</label>
+        </div>
+      </div>
+
+      <div class="modal-buttons">
+        <button type="button" class="cancelar" onclick="fecharModal('modalExportar')">Cancelar</button>
+        <button type="click" id="btn-confirmar" class="confirmar">Confirmar</button>
+      </div>
+  </div>
+</div>
+<!-- Arquivo JavaScript responsável pela lógica das notas -->
+<script src="../Scripts/notas.js"></script>
+
+</body>
+</html>
