@@ -96,3 +96,5 @@ ORACLE_CONNECT_STRING=joaopedromainieridatabase01_high
 Backend em Node utilizar:
 `npm run start`
 Abrir o arquivo `Pages/index.html` (Se tiver, utilizar o live server para rodar no navegador)
+
+--- Commit de Release tag: v1.0.0-final ---
