@@ -13,11 +13,13 @@ if (usuarioLogado.id_professor === undefined) {
     window.location.href = "login.html";
 }
 
+//Cards para colocar as contagens
 const cardQtdAlunos = document.getElementById("qtdAlunos");
 const cardQtdInstituicoes = document.getElementById("qtdInstituicoes");
 const cardQtdNotas = document.getElementById("qtdNotas");
 //const cardMediaGeral = document.getElementById("mediaGeral");
 
+//Carrega a contagem de quantas notas tem no banco de dados relacionadas com o professor logado
 async function carregarContagemNotas() {
     try {
         const response = await fetch(`${API_URL}/notas/professor/${idProfessor}`);
@@ -34,6 +36,7 @@ async function carregarContagemNotas() {
         );
     }
 }
+//Carrega a contagem de quantos alunos tem no banco de dados relacionados com o professor logado
 async function carregarContagemAlunos() {
     try {
         const response = await fetch(`${API_URL}/alunos/professor/${idProfessor}`);
@@ -49,6 +52,9 @@ async function carregarContagemAlunos() {
         );
     }
 }
+
+
+//Carrega as instituições do professor logado e conta quantas são
 async function carregarContagemInstituicoes() {
     try {
         const response = await fetch(`${API_URL}/instituicoes/professor/${idProfessor}`);
@@ -64,8 +70,10 @@ async function carregarContagemInstituicoes() {
     }
 }
 
+//Card para colocar os logs da auditoria
 const cardAuditoria = document.getElementById("updates-list")
 
+//Carrega e renderiza as entradas na tabela auditoria do professor logado
 async function carregarAuditoria() {
     try {
         const response = await fetch(`${API_URL}/auditoria/professor/${idProfessor}`);
@@ -97,6 +105,7 @@ async function carregarAuditoria() {
     }
 }
 
+// Inicializar
 async function carregarDashboard() {
     await carregarContagemInstituicoes();
     await carregarContagemAlunos();
