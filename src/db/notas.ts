@@ -1,6 +1,7 @@
 // Feito por João Pedro Panza Mainieri - 25006642
 import {open, close} from "../config/db";
 import OracleDB from "oracledb";
+import {Instituicao} from "./instituicoes";
 
 export interface Nota{
     id_nota:number,
@@ -26,6 +27,15 @@ export interface Formula {
     id_formula:number,
     formula:string,
     id_disciplina:number,
+}
+
+export interface CountResult {
+    total: number;
+}
+
+export interface Auditoria {
+    descricao: string,
+    data_hora: string
 }
 
 // Função para obter todas as notas
@@ -79,6 +89,30 @@ export async function getNotasByTurma(id_turma: number): Promise<NotasAlunos[] |
         await close(connection);
     }
 }
+
+// Função para obter todas as notas de um professor
+export async function countNotasByProfessor(id_professor: number): Promise<CountResult | null> {
+    const connection = await open();
+    try {
+        const result = await connection.execute(
+            `
+                SELECT COUNT(n.ID_NOTA) AS total_notas
+                FROM NOTA n
+                         JOIN COMPONENTE_NOTA cn ON cn.ID_COMPONENTE = n.ID_COMPONENTE
+                         JOIN DISCIPLINAS d ON d.ID_DISCIPLINA = cn.ID_DISCIPLINA
+                         JOIN CURSOS c ON c.ID_CURSO = d.ID_CURSO
+                         JOIN INSTITUICOES i ON i.ID_INSTITUICAO = c.ID_INSTITUICAO
+                WHERE i.ID_PROFESSOR = :id_professor
+            `,
+            { id_professor }
+        );
+
+        return (result.rows && result.rows[0]) as CountResult | null;
+    }finally {
+        await close(connection);
+    }
+}
+
 
 // Função para inserir uma nota
 export async function addNota(valor: number, id_componente:number, ra_aluno:string): Promise <number> {
@@ -281,6 +315,19 @@ export async function deleteComponente(id: number): Promise<boolean> {
 
         return (result.rowsAffected ?? 0) > 0;
     } finally {
+        await close(connection);
+    }
+}
+
+export async function getAuditoriaByProfessor(id_professor: number): Promise<Auditoria[]> {
+    const connection = await open();
+    try{
+        const result = await connection.execute(
+            'SELECT DESCRICAO as "descricao", DATA_HORA as "data_hora" FROM AUDITORIA WHERE id_professor = :id_professor',
+            [id_professor]
+        )
+        return result.rows as Auditoria[];
+    }finally {
         await close(connection);
     }
 }
