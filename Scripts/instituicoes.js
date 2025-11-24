@@ -409,6 +409,7 @@ async function deletarTurma(id) {
   try {
     let conteudo = await fetch(`${API_URL}/alunos/turma/${id}`)
       conteudo = await conteudo.json()
+      console.log(conteudo)
     if (conteudo.length !==  0) {
       alert("Ainda tem alunos cadastrados nesta turma");
       return;

@@ -671,8 +671,8 @@ app.get("/alunos/:ra", async (req: Request, res: Response) => {
 // Rota para obter alunos pela turma
 app.get("/alunos/turma/:id_turma", async (req: Request, res: Response) => {
   try {
-    const id_turma = req.params.id_turma;
-    const alunos = await getAllAlunosByTurma(Number(id_turma));
+    const id_turma = Number(req.params.id_turma);
+    const alunos = await getAllAlunosByTurma(id_turma);
     if (alunos) {
       res.json(alunos);
     } else {
@@ -683,7 +683,7 @@ app.get("/alunos/turma/:id_turma", async (req: Request, res: Response) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({
-      error: "Erro ao buscar aluno pelo RA fornecido.",
+      error: "Erro ao buscar aluno pelo id fornecido.",
     });
   }
 });
