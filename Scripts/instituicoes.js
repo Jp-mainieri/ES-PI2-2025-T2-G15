@@ -333,8 +333,9 @@ async function deletarInstituicao(id) {
   if (!confirm("Tem certeza que deseja deletar esta instituição?")) return;
   
   try {
-    const conteudo = await fetch(`${API_URL}/cursos/instituicao/${id}`)
-    if (conteudo) {
+    let conteudo = await fetch(`${API_URL}/cursos/instituicao/${id}`)
+      conteudo = await conteudo.json()
+    if (conteudo.length !== 0 ) {
       alert("Ainda tem cursos cadastrados nesta instituicão");
       return;
     }
@@ -357,8 +358,9 @@ async function deletarCurso(id) {
   if (!confirm("Tem certeza que deseja deletar este curso?")) return;
   
   try {
-    const conteudo = await fetch(`${API_URL}/disciplinas/curso/${id}`)
-    if (conteudo) {
+    let conteudo = await fetch(`${API_URL}/disciplinas/curso/${id}`)
+      conteudo = await conteudo.json()
+    if (conteudo.length !== 0) {
       alert("Ainda tem disciplinas cadastrados neste curso");
       return;
     }
@@ -381,8 +383,9 @@ async function deletarDisciplina(id) {
   if (!confirm("Tem certeza que deseja deletar esta disciplina?")) return;
   
   try {
-    const conteudo = await fetch(`${API_URL}/turmas/disciplina/${id}`)
-    if (conteudo) {
+    let conteudo = await fetch(`${API_URL}/turmas/disciplina/${id}`)
+      conteudo = await conteudo.json()
+    if (conteudo.length !== 0) {
       alert("Ainda tem turmas cadastrados nesta disciplina");
       return;
     }
@@ -404,8 +407,9 @@ async function deletarDisciplina(id) {
 async function deletarTurma(id) {
   if (!confirm("Tem certeza que deseja deletar esta turma?")) return;
   try {
-    const conteudo = await fetch(`${API_URL}/alunos/turma/${id}`)
-    if (conteudo) {
+    let conteudo = await fetch(`${API_URL}/alunos/turma/${id}`)
+      conteudo = await conteudo.json()
+    if (conteudo.length !==  0) {
       alert("Ainda tem alunos cadastrados nesta turma");
       return;
     }
