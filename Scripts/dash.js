@@ -26,8 +26,6 @@ async function carregarContagemNotas() {
         if (!response.ok) throw new Error("Erro ao contar notas");
 
         const countNotas = await response.json();
-        console.log(response)
-        console.log(countNotas)
         cardQtdNotas.innerText = countNotas.TOTAL_NOTAS
     } catch (error) {
         console.error("Erro:", error);
@@ -43,7 +41,6 @@ async function carregarContagemAlunos() {
         if (!response.ok) throw new Error("Erro ao contar alunos");
 
         const countAlunos = await response.json()
-        console.log(response)
         cardQtdAlunos.innerText = countAlunos.TOTAL_ALUNOS
     } catch (error) {
         console.error("Erro:", error);

@@ -323,7 +323,7 @@ export async function getAuditoriaByProfessor(id_professor: number): Promise<Aud
     const connection = await open();
     try{
         const result = await connection.execute(
-            'SELECT DESCRICAO as "descricao", DATA_HORA as "data_hora" FROM AUDITORIA WHERE id_professor = :id_professor',
+            `SELECT DESCRICAO as "descricao", DATA_HORA as "data_hora" FROM AUDITORIA WHERE id_professor = :id_professor ORDER BY DATA_HORA DESC`,
             [id_professor]
         )
         return result.rows as Auditoria[];
