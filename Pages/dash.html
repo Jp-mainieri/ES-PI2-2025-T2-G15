@@ -47,33 +47,34 @@
         <!-- CARTÕES DE ESTATÍSTICAS -->
         <div class="stats-cards">
 
-            <!-- Card de alunos cadastrados -->
-            <div class="card card-blue">
-                <div class="icon-box"><i class="fas fa-user-graduate"></i></div>
-                <p class="card-title">Alunos Cadastrados</p>
-                <p class="card-value">1.200</p>
-            </div>
-
             <!-- Card de instituições ativas -->
             <div class="card card-green">
                 <div class="icon-box"><i class="fas fa-building"></i></div>
                 <p class="card-title">Instituições Ativas</p>
-                <p class="card-value">20</p>
+                <p class="card-value" id="qtdInstituicoes">-</p>
             </div>
+
+            <!-- Card de alunos cadastrados -->
+            <div class="card card-blue">
+                <div class="icon-box"><i class="fas fa-user-graduate"></i></div>
+                <p class="card-title">Alunos Cadastrados</p>
+                <p class="card-value" id="qtdAlunos">-</p>
+            </div>
+
 
             <!-- Card de notas lançadas -->
             <div class="card card-orange">
                 <div class="icon-box"><i class="fas fa-book"></i></div>
                 <p class="card-title">Notas Lançadas</p>
-                <p class="card-value">320</p>
+                <p class="card-value" id="qtdNotas">-</p>
             </div>
 
             <!-- Card de média geral -->
-            <div class="card card-yellow">
+            <!--<div class="card card-yellow">
                 <div class="icon-box"><i class="fas fa-chart-pie"></i></div>
                 <p class="card-title">Média Geral</p>
-                <p class="card-value">7,5</p>
-            </div>
+                <p class="card-value" id="mediaGeral">7,5</p>
+            </div>-->
         </div>
 
         <!-- SEÇÃO DE ÚLTIMAS ATUALIZAÇÕES -->
@@ -81,14 +82,13 @@
             <h2>Últimas atualizações</h2>
 
             <!-- Lista de eventos recentes -->
-            <ul>
-                <li><i class="fas fa-circle update-dot"></i> Nota lançada para João</li>
-                <li><i class="fas fa-circle update-dot"></i> Novo aluno 'Maria Clara' Cadastrada</li>
-                <li><i class="fas fa-circle update-dot"></i> Nova Instituição incluída 'PUC Campinas'</li>
+            <ul id="updates-list" style="overflow-y: scroll; height: 333px">
+                <li><i class="fas fa-circle update-dot"></i> -</li>
             </ul>
         </div>
 
     </main>
 </div>
+<script src="../Scripts/dash.js"></script>
 </body>
 </html>

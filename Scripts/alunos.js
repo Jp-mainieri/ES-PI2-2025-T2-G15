@@ -308,7 +308,7 @@ document.getElementById("tabela-alunos").addEventListener("click", async (event)
     document.getElementById("editarNomeAluno").value = aluno.NOME;
     document.getElementById("editarRaAluno").textContent = aluno.RA_ALUNO;
     // Descobre a turma
-    const turmaDoAluno = turmasData.find(t => t.ID_TURMA == aluno.ID_TURMA);
+    const turmaDoAluno = turmasData.find(t => t.id === aluno.ID_TURMA);
     document.getElementById("editarTurmaAluno").textContent = turmaDoAluno?.NOME || "N/A";
 
     abrirModal("modalEditar");

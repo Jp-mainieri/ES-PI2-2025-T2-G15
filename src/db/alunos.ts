@@ -1,5 +1,6 @@
 // Feito por João Pedro Panza Mainieri - 25006642
 import {open, close} from "../config/db";
+import {CountResult, Nota} from "./notas";
 
 export interface Aluno{
     ra_aluno:string,
@@ -26,7 +27,7 @@ export async function getAllAlunosByTurma(id_turma:number): Promise<Aluno[]> {
     const connection = await open();
     try{
         const result = await connection.execute(
-            `SELECT RA_ALUNO, NOME FROM ALUNOS WHERE ID_TURMA = :id_turma`
+            `SELECT RA_ALUNO, NOME FROM ALUNOS WHERE ID_TURMA = :id_turma`,
             [id_turma]
         );
         return result.rows as Aluno[];
@@ -51,6 +52,29 @@ export async function getAllAlunosByInstituicao(id_instituicao: number): Promise
             [id_instituicao]
         );
         return result.rows as Aluno[];
+    }finally {
+        await close(connection);
+    }
+}
+
+// Função para contar os alunos de um professor
+export async function countAlunosByProfessor(id_professor: number): Promise<CountResult | null > {
+    const connection = await open();
+    try {
+        const result = await connection.execute(
+            `
+                SELECT COUNT(a.RA_ALUNO) AS total_alunos
+                FROM ALUNOS a
+                         JOIN TURMAS t ON t.ID_TURMA = a.ID_TURMA
+                         JOIN DISCIPLINAS d ON d.ID_DISCIPLINA = t.ID_DISCIPLINA
+                         JOIN CURSOS c ON c.ID_CURSO = d.ID_CURSO
+                         JOIN INSTITUICOES i ON i.ID_INSTITUICAO = c.ID_INSTITUICAO
+                WHERE i.ID_PROFESSOR = :id_professor
+            `,
+            { id_professor }
+        );
+
+        return (result.rows && result.rows[0]) as CountResult | null;
     }finally {
         await close(connection);
     }
