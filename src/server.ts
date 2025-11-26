@@ -975,19 +975,14 @@ app.post("/recuperar-senha", async (req: Request, res: Response) => {
       html: `<p>Para redefinir sua senha clique: <a href="${link}">${link}</a></p>`
     };
 
-    // verificar conexão SMTP (apenas para debug)
-    await transporter.verify();
-    console.log('[RECUPERAR-SENHA] Transporter verificado.');
+      
 
     const info = await transporter.sendMail(mailOptions);
     console.log('[RECUPERAR-SENHA] E-mail enviado. info=', info);
 
-    // Se estivermos usando Ethereal, vamos logar a URL de visualização
-    if (nodemailer.getTestMessageUrl(info)) {
-      console.log('[RECUPERAR-SENHA] Preview URL:', nodemailer.getTestMessageUrl(info));
-    }
+    
+    res.json({ message: "E-mail de recuperação enviado com sucesso!" });
 
-    res.json({ message: "E-mail de recuperação enviado com sucesso!", previewUrl: nodemailer.getTestMessageUrl(info) || null });
   } catch (err) {
     console.error('[RECUPERAR-SENHA] Erro:', err);
     res.status(500).json({ error: "Erro ao enviar e-mail de recuperação. Confira logs do servidor." });
