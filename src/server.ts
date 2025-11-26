@@ -52,7 +52,9 @@ import {
     addAluno,
     deleteAluno,
     getAllAlunosByTurma,
-    updateAluno, getAllAlunosByInstituicao
+    updateAluno,
+    getAllAlunosByInstituicao,
+    countAlunosByProfessor
 } from "./db/alunos";
 
 import {
@@ -67,7 +69,7 @@ import {
     getComponentesByDisciplina,
     addComponente,
     updateComponente,
-    deleteComponente
+    deleteComponente, countNotasByProfessor, getAuditoriaByProfessor
 } from "./db/notas";
 
 // Express.js
@@ -669,8 +671,8 @@ app.get("/alunos/:ra", async (req: Request, res: Response) => {
 // Rota para obter alunos pela turma
 app.get("/alunos/turma/:id_turma", async (req: Request, res: Response) => {
   try {
-    const id_turma = req.params.id_turma;
-    const alunos = await getAllAlunosByTurma(Number(id_turma));
+    const id_turma = Number(req.params.id_turma);
+    const alunos = await getAllAlunosByTurma(id_turma);
     if (alunos) {
       res.json(alunos);
     } else {
@@ -681,7 +683,7 @@ app.get("/alunos/turma/:id_turma", async (req: Request, res: Response) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({
-      error: "Erro ao buscar aluno pelo RA fornecido.",
+      error: "Erro ao buscar aluno pelo id fornecido.",
     });
   }
 });
@@ -702,6 +704,26 @@ app.get("/alunos/instituicao/:id_instituicao", async (req: Request, res: Respons
         console.error(err);
         res.status(500).json({
             error: "Erro ao buscar aluno pelo id da turma fornecido.",
+        });
+    }
+});
+
+// Rota para contar alunos por professor
+app.get("/alunos/professor/:id_professor", async (req: Request, res: Response) => {
+    try {
+        const id_professor = Number(req.params.id_professor);
+        const countAlunos = await countAlunosByProfessor(id_professor);
+        if (countAlunos !== null) {
+            res.json(countAlunos);
+        } else {
+            res.status(404).json({
+                message: "Alunos não foram encontradas com o id fornecido.",
+            });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            error: "Erro ao buscar nota pelo ID fornecido.",
         });
     }
 });
@@ -823,6 +845,26 @@ app.get("/notas/turma/:id_turma", async (req: Request, res: Response) => {
       error: "Erro ao buscar nota pelo ID fornecido.",
     });
   }
+});
+
+// Rota para contar notas por professor
+app.get("/notas/professor/:id_professor", async (req: Request, res: Response) => {
+    try {
+        const id_professor = Number(req.params.id_professor);
+        const countNotas = await countNotasByProfessor(id_professor);
+        if (countNotas !== null) {
+            res.json(countNotas);
+        } else {
+            res.status(404).json({
+                message: "Notas não foram encontradas com o id fornecido.",
+            });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            error: "Erro ao buscar nota pelo ID fornecido.",
+        });
+    }
 });
 
 // Rota para inserir nota, precisa de um componente e um aluno
@@ -1138,6 +1180,23 @@ app.put("/formula/:id_disciplina", async (req: Request, res: Response) => {
         });
     }
 });
+
+// Rota para listar todas as entradas da auditoria por professor
+app.get(
+    "/auditoria/professor/:id_professor",
+    async (req: Request, res: Response) => {
+        try {
+            const id_professor = Number(req.params.id_professor);
+            const auditorias = await getAuditoriaByProfessor(id_professor);
+            res.json(auditorias);
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({
+                error: "Erro ao buscar auditorias pelo id do professor.",
+            });
+        }
+    }
+);
 
 // Mensagem de Servidor Rodando:
 app.listen(port, () => {
