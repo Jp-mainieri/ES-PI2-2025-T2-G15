@@ -959,13 +959,12 @@ app.post("/recuperar-senha", async (req: Request, res: Response) => {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: "notadezpi2@gmail.com", // seu Gmail real
-      pass: "f q e d u z w s x t v z g i o m"   // senha de app gerada no Gmail
+      user: "notadezpi2@gmail.com",
+      pass: "f q e d u z w s x t v z g i o m" 
       }
     });
 
 
-    // link (ajuste para seu front)
   const link = `http://localhost:3000/pages/alterar_senha.html?token=${token}`;
 
     const mailOptions = {
